@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  
+  }
+  
+  .logo-img{
+    background-image: url('./assets/moki_logo.svg');
+    background-size: contain;
+    width: 100px;
+    height: 42px;
+  }
+  
+  .logo-div{
+    width: 100%;
+    height : 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  .login-page{
+    width: 390px;
+    height: 862px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .input-div{
+    width: 100%;
+    height : 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .login-desc{
+    width: 70%;
+    height: 50%;
+  }
+  
+  .login-input{
+    width: 70%;
+    height: 50%;
+  }
+  .login-input-img{
+    border: none;
+    width: 100%;
+    height: 100%;
+    font-size: 80%;
+    border-bottom: 2px solid #ccc;
+  }
+  .button-div{
+    width: 60%;
+    height: 10%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .button{
+    width: 100%;
+    height: 60%;
+    padding: 10px 20px 10px 20px;
+    gap: 16px;
+    border-radius: 10px;
+    border: 1px;
+    opacity: 0px;
+    font-size: larger;
+  
+  }
+  
+  .button#black{
+    background-color: black;
+    color: white;
+  }
+
+  .login-msg{
+    color: #FF4C77;
+    ;
+  }
