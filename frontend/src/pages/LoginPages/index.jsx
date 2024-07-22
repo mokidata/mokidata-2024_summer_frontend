@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import Button from "../../component/common/Button";
+import Header from "../../component/common/Header";
 function Login(){
     const [passed,setPassed] = useState(true);
+    console.log("log")
     return (
         <div className="login-page">
-            
-            <div> 
-                
-            </div>
+            <Header page="login"></Header>
             <div className="logo-div">
                 <svg className="logo-img"></svg>
             </div>
