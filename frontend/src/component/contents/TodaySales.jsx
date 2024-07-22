@@ -1,6 +1,6 @@
 import React from "react";
 import Triangle from "../common/Triangle";
-import Price from "../common/price";
+import Price from "../common/Price";
 
 function TodaySales (props){
     return(

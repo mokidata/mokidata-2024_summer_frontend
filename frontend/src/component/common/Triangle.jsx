@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Price from "./price";
+import Price from "./Price";
 
 function Triangle(props){
     const [diff, setDiff] = useState(0);
