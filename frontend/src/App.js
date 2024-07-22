@@ -8,6 +8,7 @@ function App() {
     <BrowserRouter>
        <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/daily" element={<TodaySales />} />
       </Routes>
     </BrowserRouter>
   );
