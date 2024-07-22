@@ -33,8 +33,8 @@ body {
   }
   
   .login-page{
-    width: 100%;
-    height: 862px;
+    width: 100vw;
+    height: 100vh ;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,7 +63,7 @@ body {
     border: none;
     width: 100%;
     height: 100%;
-    font-size: 80%;
+    font-size:larger;
     border-bottom: 2px solid #ccc;
   }
   .button-div{
