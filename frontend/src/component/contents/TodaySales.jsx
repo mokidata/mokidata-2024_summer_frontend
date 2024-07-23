@@ -5,18 +5,23 @@ import Price from "../common/Price";
 function TodaySales (props){
     return(
         <div className="report-component">
-            {props.page}
-            <span className="report-title">
-                <div>
-                    <span className="today-desc__sales">
-                    오늘 매출
-                    </span>
+            <div>
+                  {props.page}
+            </div>
+            <span className="report-title">   
+                
+               
+                <div className="report-title__benefit">
+                    <div> 오늘 매출  &nbsp;</div>
                     <Price value={123456789} underline={true} unit="원"> </Price>
                 </div>
+                기록했어요 🥳
+                
             </span>
             <span className="today-desc__day">
                 월요일
             </span>
+            
             <div className="today-img">
                 <div className="today-img__img"></div>
             </div>

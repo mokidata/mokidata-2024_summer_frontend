@@ -140,8 +140,8 @@ body {
   }
   
   .report-title{
-    display: flex;
-    width:80%;
+    /* display: inline; */
+    /* width:80%; */
     padding-top: 10px;
     padding-bottom: 10px;
     font-family: 'SUIT Variable';
@@ -149,7 +149,9 @@ body {
     font-size: larger;
 
   }
-
+  .report-title__benefit{
+    display: flex;
+  }
   .today-desc__day{
     width: 10%;
     font-family: 'SUIT Variable';
@@ -298,6 +300,27 @@ body {
   
   
   .chart__element#bar{
-    width: 52px;
+    width: 70%;
+    min-width: 40px;
     border-radius: 4px;
+  }
+
+  .chart__value{
+    padding-block: 10px;
+  }
+
+  .chart__column{
+    padding-block: 10px;
+  }
+
+  .predict__detail{
+    font-size: medium;
+    color:#717171;
+    font-weight: 400;
+  }
+
+  .predict__notice{
+    font-size: small;
+    font-weight: 400;
+    color: #A9A9A9;
   }
