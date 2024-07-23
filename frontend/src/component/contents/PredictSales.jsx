@@ -44,7 +44,7 @@ function PredictSales (props){
                 평균 매출은 한달에 270 만원 정도에요.
             </div>
             <Chart data={data} type="bar"></Chart>
-            <div className="predict__notice">
+            <div className="notice">
             ❕계절과 휴일에 따른 매출 데이터 변화를 종합한 결과에요.
             </div>
         </div>

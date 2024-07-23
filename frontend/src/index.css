@@ -156,7 +156,7 @@ body {
     padding-bottom: 10px;
     font-family: 'SUIT Variable';
     font-weight: 600;
-    font-size: larger;
+    font-size: 24px ;
 
   }
   .report-title__benefit{
@@ -263,8 +263,7 @@ body {
   .triangle-img{
     width : 35px;
     height: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-right: 10px;
     background-color: transparent;
     background-size: cover;
     background-position: center;
@@ -329,7 +328,7 @@ body {
     font-weight: 400;
   }
 
-  .predict__notice{
+  .notice{
     font-size: small;
     font-weight: 400;
     color: #A9A9A9;
@@ -347,7 +346,7 @@ body {
     margin-inline: 2%;
     padding: 5%;
     border-radius: 15px;
-    height: 160px;
+    /* height: 160px; */
     background-color: white;
   }
   .best-menu__second{
@@ -393,4 +392,32 @@ body {
     width: 105px;
     height: 105px;
     
+  }
+
+  .diff{
+    font-family: 'SUIT Variable';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+  }
+  .diff-desc__title{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22.46px;
+   
+  }
+  .diff-desc__percent{
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 43.57px;
+    text-align: left;
+  
+  }
+
+
+  .diff-img{
+    margin: auto;
+    height: 140px;
+    width: 140px;
   }

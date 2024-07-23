@@ -1,5 +1,6 @@
 import Header from "../../component/common/Header";
 import BestMenu from "../../component/contents/BestMenu";
+import BiggestDiffMenu from "../../component/contents/BiggestDiffMenu";
 import CompPredictSales from "../../component/contents/CompPredictSales";
 import PredictSales from "../../component/contents/PredictSales";
 import TodaySales from "../../component/contents/TodaySales";
@@ -16,6 +17,7 @@ function ReportPage(props){
             <CompPredictSales page={page}></CompPredictSales>
             <PredictSales page={page}></PredictSales>
             <BestMenu page={page}></BestMenu>
+            <BiggestDiffMenu page={page}></BiggestDiffMenu>
         </div>
         
     );
