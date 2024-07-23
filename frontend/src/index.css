@@ -101,6 +101,7 @@ body {
     left: 0;
     width: 100%;
     height: 66px;
+    background-color: #fdfdfd;
     border: #ccc;
     z-index: 1;
   }
@@ -126,9 +127,8 @@ body {
     align-items: center;
   }
 
-  .today-sales{
+  .report-component{
     display: block;
-    margin-block: 10px;
     width: 90%;
     /* height : 300px; */
     padding-left: 5%;
@@ -139,29 +139,24 @@ body {
     border-style:solid;
   }
   
-  .today-desc{
+  .report-title{
     display: flex;
-    width:100%;
+    width:80%;
     padding-top: 10px;
     padding-bottom: 10px;
-  }
-  .today-desc__sales{
-    display: flex;
-    width: 80%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'SUIT Variable';
     font-weight: 600;
     font-size: larger;
+
   }
 
   .today-desc__day{
-    width: 80%;
-    font-family: Arial, Helvetica, sans-serif;
+    width: 10%;
+    font-family: 'SUIT Variable';
     font-weight: 600;
     font-size: larger;
   }
-  .today-desc__day{
-    width:20%;
-  }
+  
   .today-img{
     width:100%;
     height: 180px;
@@ -202,7 +197,7 @@ body {
     font-size: medium;
     font-weight: 600;
     color: #1881FC;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:'SUIT Variable';
     border-radius: 25px;
   }
   .today-cmp__date#yesterday{
@@ -218,7 +213,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Inter';
+    font-family: 'SUIT Variable';
     font-weight: 700;
     font-size: 20px;
   }
@@ -239,7 +234,7 @@ body {
   }
   .triangle-quantity{
     display: flex;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'SUIT Variable';
     font-weight: 700;
     font-size: 18px;
   }
@@ -276,4 +271,33 @@ body {
 
   .price#underline{
     text-decoration: underline;
+  }
+
+  .report-page{
+    display: block;
+  }
+  .chart{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: end;
+    color: #717171;
+    font-family: 'SUIT Variable';
+  }
+  .chart__data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-inline: auto;
+  }
+  .chart__data#highlight{
+    color: #FF4C77;
+    font-weight: 600 ;
+  }
+  
+  
+  .chart__element#bar{
+    width: 52px;
+    border-radius: 4px;
   }
