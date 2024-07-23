@@ -26,7 +26,7 @@ function Chart(props){
             {
                 value.map((data) =>(
                     <div className= "chart__data" id={data.highlight ? "highlight" : "" }>
-                        <div className="chart__value" id={chartType}>
+                        <div className="chart__value" id={data.highlight ? "highlight" : "" }>
                             <Price value={data.value}></Price>
                         </div>
                         {

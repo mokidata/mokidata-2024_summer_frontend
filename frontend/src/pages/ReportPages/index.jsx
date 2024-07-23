@@ -1,5 +1,6 @@
 import Header from "../../component/common/Header";
 import CompPredictSales from "../../component/contents/CompPredictSales";
+import PredictSales from "../../component/contents/PredictSales";
 import TodaySales from "../../component/contents/TodaySales";
 import usePageInfo from "../../hooks/usePageInfo";
 
@@ -12,6 +13,7 @@ function ReportPage(props){
             <Header page={page}></Header>
             <TodaySales page={page}></TodaySales>
             <CompPredictSales page={page}></CompPredictSales>
+            <PredictSales page={page}></PredictSales>
         </div>
         
     );
