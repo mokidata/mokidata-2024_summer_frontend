@@ -1,3 +1,4 @@
+import BottomNavbar from "../../component/common/BottomNavbar";
 import Header from "../../component/common/Header";
 import BestMenu from "../../component/contents/BestMenu";
 import BiggestDiffMenu from "../../component/contents/BiggestDiffMenu";
@@ -18,6 +19,7 @@ function ReportPage(props){
             <PredictSales page={page}></PredictSales>
             <BestMenu page={page}></BestMenu>
             <BiggestDiffMenu page={page}></BiggestDiffMenu>
+            <BottomNavbar></BottomNavbar>
         </div>
         
     );
