@@ -1,7 +1,13 @@
+import { useEffect } from "react";
 import Button from "../common/Button";
 import Triangle from "../common/Triangle";
 
 function BiggestDiffMenu(props){
+    // const []
+    // useEffect(()=>{
+
+
+    // },[props.value])
 
     return(
         <div className="report-component" id="biggest-diff-menu" >
