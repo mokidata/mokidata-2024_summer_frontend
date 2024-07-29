@@ -9,7 +9,13 @@ function Price (props){
         }
     },[props.underline])
     useEffect(()=>{
-        const target  = props.value.toString();
+        let target;
+        try {
+            target = props.value.toString();
+        } catch (error) {
+            console.error('Error converting props.value to string:', error);
+            target = '';
+        }
         const altered = Number(target.replace(/,/g, ''));
         if(isNaN(altered)) {
             setValue(0);
