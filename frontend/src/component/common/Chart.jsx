@@ -5,18 +5,27 @@ import Price from "./Price";
 function Chart(props){
 
     /*
-    {column : "어제매출" , value : 123456, highlight : true}
+    {"predict":{value : 123456, highlight : true} ,"today ":{value : 123456, highlight : true}}
     */ 
-    const [value, setValue] = useState([]);
+   
+    const [value, setValue] = useState([{"column":'',"value":0}]);
     const [chartType, setChartType] = useState("bar");
     const [max,setMax] = useState(0);
     useEffect(() => {
-        setValue(props.data);
-        setMax(Math.max(...value.map((item) => item.value)));
-    },[value]);
+        console.log(props.data)
+        setValue(props.data)
+        let highestValue = -Infinity; // 초기값을 매우 작은 값으로 설정
+        for (const element of value) {
+            console.log(element)
+            if (element.value > highestValue) {
+                highestValue = element.value;
+            }
+        }
+        setMax(highestValue)
+    },[props.data]);
     useEffect(() => {
         setChartType(props.type);
-    },[chartType]);
+    },[props.type]);
     
     
     
