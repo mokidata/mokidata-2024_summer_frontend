@@ -13,9 +13,10 @@ export const totalThunks = createAsyncThunk(
   'saleSlice/fetchData',
   async (_,thunkAPI) => {
     let data = {"today":{},"predictToday":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[]}
+    //오늘 날짜 받기
     const todayDate = new Date();
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    console.log(options)
+    //날짜를 2024-07-28 형태로 변경하는 함수 
     function formatDate(date) {
       const local_Date = date.toLocaleDateString('ko-KR', options)
           .split('.')
@@ -24,16 +25,21 @@ export const totalThunks = createAsyncThunk(
       return local_Date.endsWith('-') ? local_Date.slice(0, -1) : local_Date;
     }
     const today_date = formatDate(todayDate)
+    
+    //오늘 날짜를 초기에 받고 배열 첫 element로 세팅
     const oneDayAgo = new Date()
     const sevenDaysAgo = new Date()
     const thirtyDaysAgo = new Date()
-    const daily_dates = []
-    const weekly_dates = []
-    const monthly_dates = []
+    const daily_dates = [formatDate(todayDate)]
+    const weekly_dates = [formatDate(todayDate)]
+    const monthly_dates = [formatDate(todayDate)]
+    //daily_dates = 하루단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-27,...]
+    //weekly_dates = 주단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-21,...]
+    //monthly_dates = 월단위 매출 얻기위한 날짜들 [2024-07-28,2024-06-28,...]
     for(let i = 1; i< 5;i++){
-      oneDayAgo.setDate(todayDate.getDate()-1)
-      sevenDaysAgo.setDate(todayDate.getDate()-7)
-      thirtyDaysAgo.setDate(todayDate.getDate()-30)
+      oneDayAgo.setDate(oneDayAgo.getDate()-1)
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate()-7)
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate()-30)
       const seven_days_ago = formatDate(sevenDaysAgo)
       const thirthy_days_ago = formatDate(thirtyDaysAgo)
       const one_day_ago = formatDate(oneDayAgo)
@@ -190,9 +196,10 @@ export const totalThunks = createAsyncThunk(
       data.rankDetail.monthly = {}
       console.log(error)
     }
-    //어제와 오늘 비교
+    //일단위 오늘 비교
     let compare_data = []
     try{
+      console.log([daily_dates,weekly_dates,monthly_dates])
       compare_data = []
       for(const dates of daily_dates){
         const response = await mokiApi.get(`/api/sale/daily-detail`, {
@@ -216,7 +223,7 @@ export const totalThunks = createAsyncThunk(
     try{
       compare_data = []
       for(const dates of weekly_dates){
-        const response = await mokiApi.get(`/api/sale/daily-detail`, {
+        const response = await mokiApi.get(`/api/sale/weekly-detail`, {
           params: {
             localDate: dates,
           },
@@ -225,16 +232,17 @@ export const totalThunks = createAsyncThunk(
           compare_data.push(response.data)
         }
       }
-      data.rankCompare.daily = compare_data
+      data.rankCompare.weekly = compare_data
     }
     catch(error){
       data.rankCompare.weekly= compare_data
       console.log(error)
     }
+    //지난달과 이번달 비교
     try{
-      let compare_data = []
+      compare_data = []
       for(const dates of monthly_dates){
-        const response = await mokiApi.get(`/api/sale/daily-detail`, {
+        const response = await mokiApi.get(`/api/sale/monthly-detail`, {
           params: {
             localDate: dates,
           },
@@ -244,7 +252,7 @@ export const totalThunks = createAsyncThunk(
         }
         
       }
-      data.rankCompare.daily = compare_data
+      data.rankCompare.monthly = compare_data
     }
     catch(error){
       data.rankCompare.monthly= compare_data
