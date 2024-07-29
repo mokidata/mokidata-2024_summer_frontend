@@ -388,12 +388,12 @@ body {
   }
   .best-menu__img{
     position: relative;
-    background-image: url('');
     alt: "image down";
     top:20%;
     left: 40%; 
     width: 105px;
     height: 105px;
+    background-size: cover;
     
   }
 
