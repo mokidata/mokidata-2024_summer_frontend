@@ -290,7 +290,8 @@ body {
   .chart{
     display: flex;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
+    /* justify-content: center; */
     align-items: end;
     color: #717171;
     font-family: 'SUIT Variable';
@@ -393,6 +394,7 @@ body {
     left: 40%; 
     width: 105px;
     height: 105px;
+    border-radius: 15px;
     background-size: cover;
     
   }
@@ -423,6 +425,8 @@ body {
     margin: auto;
     height: 140px;
     width: 140px;
+    background-size: cover;
+    border-radius: 15px;
   }
 
   .bottom-nav{
