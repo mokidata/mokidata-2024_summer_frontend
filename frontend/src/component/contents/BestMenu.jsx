@@ -31,17 +31,20 @@ function BestMenu(props){
                     break;
                    
             }
-            console.log(rankDetail); 
-            setRankFirst(rankDetail[0]);
-            setRankSecond(rankDetail[1]);
-            setRankThird(rankDetail[2]);
+           
             
             
         } catch (error) {
             console.log(error)
         }
-        
-    },[props.value, props.menuObject]);
+    },[]);
+    
+    useEffect(()=>{
+        console.log(rankDetail); 
+        setRankFirst(rankDetail[0]);
+        setRankSecond(rankDetail[1]);
+        setRankThird(rankDetail[2]);
+    },[rankDetail])
 
     useEffect(()=>{
         if(rankFirst.name && Object.keys(props.menuObject).length !== 0 ){
