@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Chart from "../common/Chart";
 import Price from "../common/Price";
+import GetInteger from "../common/GetInteger";
 
 function CompPredictSales (props){
     const [predictTotal,setPredictTotal] = useState(0)
@@ -17,9 +18,10 @@ function CompPredictSales (props){
             
             for (const key in predictValue) {
                 if (menuData[key] !== undefined && predictValue[key] !== undefined) {
-                    totalSum += menuData[key].price * Math.floor(predictValue[key]) ;
+                    totalSum += menuData[key].price * predictValue[key] ;
                 }
             }
+            totalSum = GetInteger(totalSum)
             setPredictTotal(totalSum);
             setTodayTotal(props.todayValue[props.page]['today'])
            
