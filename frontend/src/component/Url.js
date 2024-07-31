@@ -1,1 +1,1 @@
-export const BASE_URL = process.env.URL;
+export const BASE_URL = 'https://king-seungkyu2.shop';
