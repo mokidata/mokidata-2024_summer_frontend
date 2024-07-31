@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 function BestMenuDetail(props){
     const location = useLocation()
-    const {state } = location
+    const {state} = location
     const [rankArray,setRankArray] = useState([])
     const [lastRank,setLastRank] = useState({})
     useEffect(()=>{
@@ -27,6 +27,10 @@ function BestMenuDetail(props){
     useEffect(()=>{
         console.log(rankArray)
     },[rankArray])
+    useEffect(()=>{
+        console.log(lastRank)
+    },[lastRank])
+
 
 
     return(
@@ -39,16 +43,16 @@ function BestMenuDetail(props){
                 </div>
                 <div className="best-rank__table">
                     <div className="best-rank__column-info">
-                        <div className="best-rank__column" id="rank">
+                        <div className="best-rank__column" id="rank__rank">
                             순위
                         </div>
-                        <div className="best-rank__column" id="diff">
+                        <div className="best-rank__column" id="rank__diff">
                             변동
                         </div>
-                        <div className="best-rank__column" id="menu-info">
+                        <div className="best-rank__column" id="rank__menu-info">
                             메뉴명<br></br>판매갯수
                         </div>
-                        <div className="best-rank__column" id="profit">
+                        <div className="best-rank__column" id="rank__profit">
                             판매금액
                         </div>
 
@@ -56,13 +60,13 @@ function BestMenuDetail(props){
                     {
                         rankArray.map((element,index) => (
                             <div className="best-rank__each" id={(index+1) %2 === 0 ? "even":"odd"}>
-                                <div className="best-rank__row" id="rank">
+                                <div className="best-rank__row" id="rank__rank">
                                     {index+1}
                                 </div>
-                                <div className="best-rank__row" id="diff">
-                                    <Triangle diff={index+1 - lastRank[element.name] } unit=""></Triangle>
+                                <div className="best-rank__row" id="rank__diff">
+                                    <Triangle diff={lastRank[element.name] - (index+1)  } unit=""></Triangle>
                                 </div>
-                                <div className="best-rank__row" id="menu-info">
+                                <div className="best-rank__row" id="rank__menu-info">
                                     <div className="best-rank__row__menu">
                                         {element.name}
                                     </div>
@@ -71,7 +75,7 @@ function BestMenuDetail(props){
                                     </div>
 
                                 </div>
-                                <div className="best-rank__row" id="profit">
+                                <div className="best-rank__row" id="rank__profit">
                                     <Price value={element.count * element.price} unit="원"></Price>
                                 </div>
 
