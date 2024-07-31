@@ -154,7 +154,7 @@ body {
     /* width:80%; */
     padding-top: 10px;
     padding-bottom: 10px;
-    font-family: 'SUIT Variable';
+    /* font-family: 'SUIT Variable'; */
     font-weight: 600;
     font-size: 24px ;
 
@@ -164,7 +164,7 @@ body {
   }
   .today-desc__day{
     width: 10%;
-    font-family: 'SUIT Variable';
+    /* font-family: 'SUIT Variable'; */
     font-weight: 600;
     font-size: larger;
   }
@@ -209,7 +209,7 @@ body {
     font-size: medium;
     font-weight: 600;
     color: #1881FC;
-    font-family:'SUIT Variable';
+    /* font-family:'SUIT Variable'; */
     border-radius: 25px;
   }
   .today-cmp__date#yesterday{
@@ -225,7 +225,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'SUIT Variable';
+    /* font-family: 'SUIT Variable'; */
     font-weight: 700;
     font-size: 20px;
   }
@@ -246,7 +246,7 @@ body {
   }
   .triangle-quantity{
     display: flex;
-    font-family: 'SUIT Variable';
+    /* font-family: 'SUIT Variable'; */
     font-weight: 700;
     font-size: 18px;
   }
@@ -294,7 +294,7 @@ body {
     /* justify-content: center; */
     align-items: end;
     color: #717171;
-    font-family: 'SUIT Variable';
+    /* font-family: 'SUIT Variable'; */
   }
   .chart__data{
     display: flex;
@@ -344,7 +344,7 @@ body {
 
   .best-menu{
     display: flex;
-    font-family: "SUIT Variable";
+    /* font-family: 'SUIT Variable'; */
   }
   .best-menu__first{
     width: 40%;
@@ -401,7 +401,7 @@ body {
   }
 
   .diff{
-    font-family: 'SUIT Variable';
+    /* font-family: 'SUIT Variable'; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -462,7 +462,7 @@ body {
   }
 
   .report-component#best-rank{
-    font-family: 'SUIT Variable';
+    /* font-family: 'SUIT Variable'; */
 
   }
 
@@ -558,7 +558,7 @@ body {
     height: 40px;
   }
   .best-rank__row#rank__profit{
-    font-family: SUIT Variable;
+    /* font-family: 'SUIT Variable'; */
     font-size: 20px;
     font-weight: 700;
     line-height: 24.96px;
