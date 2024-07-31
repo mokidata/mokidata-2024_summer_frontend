@@ -35,7 +35,7 @@ function ReportPage(props){
                 <TodaySales page={page} value={todayValue}></TodaySales>
                 <CompPredictSales page={page} value={predictTodayValue} todayValue={todayValue} menuObject={menuObject}></CompPredictSales>
                 <PredictSales page={page} value={predictDetailValue} menuObject={menuObject} rankCompareValue={rankCompareValue}></PredictSales>
-                <BestMenu page={page} value={rankDetailValue} menuObject={menuObject}></BestMenu>
+                <BestMenu page={page} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue}></BestMenu>
                 <BiggestDiffMenu page={page} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}></BiggestDiffMenu>
                 <BottomNavbar></BottomNavbar>
             </div>
