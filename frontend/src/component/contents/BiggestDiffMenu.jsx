@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import Button from "../common/Button";
 import Triangle from "../common/Triangle";
 import { BASE_URL } from "../Url";
+import { useNavigate } from "react-router-dom";
 
 function BiggestDiffMenu(props){
     console.log(props.todayValue)
     console.log(props.lastDetailValue)
+    const navigate = useNavigate()
 
     const [salesDetailValue,setSalesDetailValue] = useState({})
     const [lastDetailValue,setLastDetailValue] = useState({})
@@ -75,11 +77,9 @@ function BiggestDiffMenu(props){
         
     },[diffArray])
 
-    useEffect(()=>{
-        
-
-    }, [ bestMenu ])
-
+    function BiggestDiffDetailNavigate (){
+        navigate("/biggestdiff",{state:{todayValue:props.todayValue, lastDetailValue:props.lastDetailValue , page:props.page}})
+    }
     
     /*
     diffArray [{
@@ -144,7 +144,10 @@ function BiggestDiffMenu(props){
             <div className="notice" style={{textAlign:"left"}}>
                 ❕판매기록이 없었던 제품은 제외됩니다.
             </div>
-            <div className="button-div">
+            <div className="button-div" onClick={(event)=>{
+                BiggestDiffDetailNavigate()
+
+            }}>
                 <Button txt="자세히 보기 &nbsp;> " color="transparent"></Button>
             </div>
             

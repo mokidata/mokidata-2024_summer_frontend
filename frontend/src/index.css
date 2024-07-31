@@ -320,6 +320,7 @@ body {
   }
 
   .chart__column{
+    
     padding-block: 10px;
   }
 
@@ -493,17 +494,20 @@ body {
     justify-content: center;
     border-bottom: 1px solid var(--gray-text-neutral-500, #717171);
   }
-  #rank{
+  #rank__rank{
     width: 10%;
   }
-  #diff{
+  #rank__diff{
     width: 20%;
   }
-  #menu-info{
+  #rank__menu-info{
     width: 35%;
   }
-  #profit{
+  #rank__profit{
     width: 35%;
+  }
+  #rank__last-profit{
+    width: 20%;
   }
 
   .best-rank__each{
@@ -520,14 +524,14 @@ body {
     align-items: center;
     justify-content: center;
   }
-  .best-rank__row#rank{
+  .best-rank__row#rank__rank{
     font-size: 15px;
     font-weight: 700;
     line-height: 18.72px;
     text-align: left;
   }
 
-  .best-rank__row#menu-info{
+  .best-rank__row#rank__menu-info{
     display: block;
   }
 
@@ -553,7 +557,7 @@ body {
     align-items: center;
     height: 40px;
   }
-  .best-rank__row#profit{
+  .best-rank__row#rank__profit{
     font-family: SUIT Variable;
     font-size: 20px;
     font-weight: 700;
@@ -562,4 +566,31 @@ body {
     justify-content: center;
     align-items: center;
   }
-  
+  .best-rank__notice{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block: 10px;
+  }
+  .best-rank__button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .best-rank__row#rank__last-profit{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.97px;
+    text-align: center;
+    color : #717171
+
+
+  }
+  .best-rank__each-button{
+    margin-inline: 10px;
+    width: 108px;
+    height: 38px;
+    font-size: 16px;
+
+  }

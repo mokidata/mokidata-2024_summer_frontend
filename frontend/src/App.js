@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { persistor,store } from './app/store';
 import BestMenuDetail from './pages/ReportPages/BestMenuDetail';
 import { PersistGate } from 'redux-persist/integration/react';
+import BiggestDiffDetail from './pages/ReportPages/BiggestDiffDetail';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
             <Route path="/weekly" element={<ReportPage page="weekly" />} />
             <Route path="/monthly" element={<ReportPage page="monthly" />} />
             <Route path="/bestmenu" element={<BestMenuDetail page="weekly" />} />
-            
+            <Route path="/biggestdiff" element={<BiggestDiffDetail page="weekly" />}/>
           </Routes>
 
         </PersistGate>
