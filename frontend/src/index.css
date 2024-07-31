@@ -459,3 +459,107 @@ body {
 
 
   }
+
+  .report-component#best-rank{
+    font-family: 'SUIT Variable';
+
+  }
+
+  .best-rank__goback{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29.95px;
+    text-align: left;
+  }
+
+  .best-rank__column-info{
+    display: flex;
+    width: 100%;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18.72px;
+    text-align: left;
+    color : #717171;
+  }
+  .best-rank__table{
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .best-rank__column{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--gray-text-neutral-500, #717171);
+  }
+  #rank{
+    width: 10%;
+  }
+  #diff{
+    width: 20%;
+  }
+  #menu-info{
+    width: 35%;
+  }
+  #profit{
+    width: 35%;
+  }
+
+  .best-rank__each{
+    height: 80px;
+    width: 100%;
+    display: flex;
+  }
+  .best-rank__each#even{
+    background-color: #F3F4F6;
+  }
+  
+  .best-rank__row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .best-rank__row#rank{
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 18.72px;
+    text-align: left;
+  }
+
+  .best-rank__row#menu-info{
+    display: block;
+  }
+
+  .best-rank__row__menu{
+    font-size: 15px;  
+    font-weight: 500;
+    line-height: 18.72px;
+    text-align: left;
+    color:#717171;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 40px;
+  }
+  .best-rank__row__sales{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.96px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+  }
+  .best-rank__row#profit{
+    font-family: SUIT Variable;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.96px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

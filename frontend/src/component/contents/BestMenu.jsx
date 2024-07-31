@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "../common/Button";
 import Price from "../common/Price";
 import { BASE_URL } from "../Url";
+import { useLocation, useNavigate } from "react-router-dom";
 function BestMenu(props){
 
     const [rankDetail,setRankDetail] = useState([{name:"",price:"",count:""},{name:"",price:"",count:""},{name:"",price:"",count:""}]);
@@ -9,25 +10,27 @@ function BestMenu(props){
     const [rankSecond,setRankSecond] = useState({})
     const [rankThird,setRankThird] = useState({})
     const [firstUrl,setFirstUrl] = useState("")
-    
+    const navigate = useNavigate();
+    const location = useLocation()
 
     useEffect(()=>{
         try {
-            console.log(props.value);
+            console.log(props.rankDetailValue);
+            console.log(props.lastDetailValue)
             console.log(props.menuObject)
             switch(props.page){
                 
                 case 'daily':
-                    setRankDetail(props.value.daily.saleGetResList)
+                    setRankDetail(props.rankDetailValue.daily.saleGetResList)
                     break;
                 case 'weekly':
-                    setRankDetail(props.value.weekly.saleGetResList)
+                    setRankDetail(props.rankDetailValue.weekly.saleGetResList)
                     break;
                 case 'monthly':
-                    setRankDetail(props.value.monthly.saleGetResList)
+                    setRankDetail(props.rankDetailValue.monthly.saleGetResList)
                     break;
                 default:
-                    setRankDetail(props.value.daily.saleGetResList)
+                    setRankDetail(props.rankDetailValue.daily.saleGetResList)
                     break;
                    
             }
@@ -55,6 +58,11 @@ function BestMenu(props){
         }
         
     },[rankFirst])
+
+    const navigateRankDetail= () => {
+        navigate("/bestmenu",{state:{rankDetail:props.rankDetailValue, lastDetail: props.lastDetailValue, page:props.page}})
+
+    }
 
     
     
@@ -98,7 +106,11 @@ function BestMenu(props){
                     </div>
                 </div>
             </div>
-            <div className="button-div">
+            <div className="button-div" onClick={(event)=>{
+                navigateRankDetail()
+            }
+                
+            }>
                 <Button txt="자세히 보기 &gt;" color="transparent"></Button>
             </div>
             
