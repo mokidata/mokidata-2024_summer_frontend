@@ -13,7 +13,7 @@ function BiggestDiffDetail (props){
     const [diffRank,setDiffRank] = useState([])
     const [diffType,setDiffType] = useState("sale")
     useEffect(()=>{
-        if(Object.keys(state.todayValue[state.page]) !== 0 ){
+        if(Object.keys(state.todayValue[state.page]).length !== 0 ){
             const todayArray = state.todayValue[state.page]['saleGetResList']
             const lastArray = state.lastDetailValue[state.page]['saleGetResList']
             const diffArray = []
