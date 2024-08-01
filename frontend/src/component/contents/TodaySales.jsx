@@ -7,7 +7,6 @@ function TodaySales (props){
     const [todayTotal, setTodayTotal] = useState(0);
     const [yesterdayTotal , setYesterdayTotal] = useState(0); 
     useEffect(()=>{
-        console.log(props)
         try {
             console.log(props.value)
             setTodayTotal(props.value[props.page]['today']);
