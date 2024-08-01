@@ -19,8 +19,8 @@ function App() {
             <Route path="/daily" element={<ReportPage page="daily" />} />
             <Route path="/weekly" element={<ReportPage page="weekly" />} />
             <Route path="/monthly" element={<ReportPage page="monthly" />} />
-            <Route path="/bestmenu" element={<BestMenuDetail page="weekly" />} />
-            <Route path="/biggestdiff" element={<BiggestDiffDetail page="weekly" />}/>
+            <Route path="/bestmenu" element={<BestMenuDetail page="daily" />} />
+            <Route path="/biggestdiff" element={<BiggestDiffDetail page="daily" />}/>
           </Routes>
 
         </PersistGate>
