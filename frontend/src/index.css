@@ -70,12 +70,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40%;
-    height: 10%;
+    width: 145px;
+    height: 42px;
     margin-inline: 30%;
     min-height: 42px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    
     
   }
   .button{
@@ -84,8 +85,11 @@ body {
     min-height: 42px;
     border-radius: 25px;
     border: 1px;
-    font-size: larger;
-  
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 500;
+    line-height: 21.78px;
+    text-align: center;
   }
   
   .button#black{
@@ -94,8 +98,8 @@ body {
   }
   .button#transparent{
     background-color: transparent;
-    color:black;
-    border-color: black;
+    color:#717171;
+    border-color:#E1E1E1 ;
     border-style:solid;
   }
 
@@ -150,23 +154,34 @@ body {
   }
   
   .report-title{
-    /* display: inline; */
-    /* width:80%; */
     padding-top: 10px;
     padding-bottom: 10px;
-    /* font-family: 'SUIT Variable'; */
     font-weight: 600;
     font-size: 24px ;
 
+  }
+  .report-title__div{
+    display: flex;
+    justify-content:space-between;
+    width: 100%;
   }
   .report-title__benefit{
     display: flex;
   }
   .today-desc__day{
-    width: 10%;
-    /* font-family: 'SUIT Variable'; */
-    font-weight: 600;
-    font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block: 27px;
+    font-size: 16px;
+    background-color: red;
+    background-size:cover;
+    border-radius: 25px;
+    height: 26px;
+    width: 70px;
+    
+    color: white;
+    
   }
   
   .today-img{
@@ -192,40 +207,39 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     display:flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .today-cmp__date-div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .today-cmp__sales-div{
+    display: flex;
   }
   .today-cmp__sales{
     width: 45%;
-    padding-left: 20px;
-    padding-right: 20px;
   }
   .today-cmp__date{
     display: flex;
     justify-content:center;
     align-items: center;
+    margin-inline: 20px;
     height: 28px;
+    width: 62px;
     background-color: #D7E9FF;
     background-position: center;
     background-repeat: no-repeat;
-    font-size: medium;
+    font-size: 15px;
     font-weight: 600;
     color: #1881FC;
-    /* font-family:'SUIT Variable'; */
     border-radius: 25px;
-  }
-  .today-cmp__date#yesterday{
-    margin-left:30px;
-    margin-right: 10px;
-
-  }
-  .today-cmp__date#today{
-    margin-left: 10px;
-    margin-right: 30px;
   }
   .today-cmp__benefits{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* font-family: 'SUIT Variable'; */
     font-weight: 700;
     font-size: 20px;
   }
@@ -241,12 +255,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
   }
   .triangle-quantity{
     display: flex;
-    /* font-family: 'SUIT Variable'; */
     font-weight: 700;
     font-size: 18px;
   }
@@ -291,12 +302,11 @@ body {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    /* justify-content: center; */
     align-items: end;
     color: #717171;
-    /* font-family: 'SUIT Variable'; */
   }
   .chart__data{
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -312,6 +322,7 @@ body {
   .chart__element#bar{
     width: 70%;
     min-width: 40px;
+    max-width: 52px;
     border-radius: 4px;
   }
 
@@ -320,7 +331,7 @@ body {
   }
 
   .chart__column{
-    
+    height: 42px;
     padding-block: 10px;
   }
 
@@ -344,19 +355,21 @@ body {
 
   .best-menu{
     display: flex;
-    /* font-family: 'SUIT Variable'; */
+    justify-content: space-between;
+    height: 160px;
+    
   }
   .best-menu__first{
     width: 40%;
+    padding: 3%;
     margin-inline: 2%;
-    padding: 5%;
     border-radius: 15px;
     /* height: 160px; */
     background-color: white;
   }
   .best-menu__second{
     display: flex;
-    width: 50%;
+    width: 45%;
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
@@ -365,10 +378,10 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 80%;
     border-radius: 15px;
-    height: 30%;
-    padding: 10%;
+    height: 56px;
+    width: 100%;
+    padding: 10px;
     background-position: center;
     background-color: white;
   }
@@ -380,19 +393,19 @@ body {
   }
 
   .best-menu__benefits{
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
   }
   .best-menu__benefits#best{
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     color: #FF4C77;
   }
   .best-menu__img{
     position: relative;
     alt: "image down";
-    top:20%;
-    left: 40%; 
+    top:10px;
+    left: 40px; 
     width: 105px;
     height: 105px;
     border-radius: 15px;
@@ -401,16 +414,27 @@ body {
   }
 
   .diff{
-    /* font-family: 'SUIT Variable'; */
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 5%;
+  }
+
+  .diff-desc{
+    display: flex;
+    width: 155px;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
   }
   .diff-desc__title{
     font-size: 18px;
     font-weight: 500;
     line-height: 22.46px;
+    text-align: center;
    
   }
   .diff-desc__percent{
@@ -423,7 +447,6 @@ body {
 
 
   .diff-img{
-    margin: auto;
     height: 140px;
     width: 140px;
     background-size: cover;
@@ -436,13 +459,13 @@ body {
     justify-content: center;
     align-items: center;
     height: 70px;
-    bottom: 0px;
+    bottom: 0px; 
+    width: 100%;
     left: 0px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-radius: 20px 20px 0px 0px;
     box-shadow: 0px -4px 10px 0px #0000000D;
     border-bottom: none;
-    width: 100%;
+    
   }
   .botton-nav__button{
     width: 33%;
@@ -457,12 +480,12 @@ body {
     font-weight: 400;
     line-height: 21.78px;
     text-align: left;
+    color: black;
 
 
   }
 
   .report-component#best-rank{
-    /* font-family: 'SUIT Variable'; */
 
   }
 
@@ -558,7 +581,6 @@ body {
     height: 40px;
   }
   .best-rank__row#rank__profit{
-    /* font-family: 'SUIT Variable'; */
     font-size: 20px;
     font-weight: 700;
     line-height: 24.96px;
