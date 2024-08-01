@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useState } from "react";
 import BottomNavbar from "../../component/common/BottomNavbar";
 import Header from "../../component/common/Header";
 import BestMenu from "../../component/contents/BestMenu";
@@ -8,13 +7,16 @@ import PredictSales from "../../component/contents/PredictSales";
 import TodaySales from "../../component/contents/TodaySales";
 import usePageInfo from "../../hooks/usePageInfo";
 import useSalesData from "../../hooks/useSalesData";
-import { useSelector } from "react-redux";
+
+
 
 function ReportPage(props){
     console.log("!!!report page!!!")
     const [page] = usePageInfo(props.page)
+    console.log(page)
     const {isLoadingState,todayValue,predictTodayValue,predictDetailValue,rankDetailValue,rankCompareValue,menuObject,lastDetailValue} = useSalesData();
-   
+
+
     //custom hook -> 여러 데이터 받아옴
     if(isLoadingState){
         console.log("isloading")
