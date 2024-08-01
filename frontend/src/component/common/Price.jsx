@@ -28,7 +28,7 @@ function Price (props){
 
     return(
         <div className="price" id={underline ?"underline": ""}>
-            {value} {props.unit}
+            {value}{props.unit}
         </div>
     )
 }
