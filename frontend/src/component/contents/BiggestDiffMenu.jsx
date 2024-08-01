@@ -5,8 +5,6 @@ import { BASE_URL } from "../Url";
 import { useNavigate } from "react-router-dom";
 
 function BiggestDiffMenu(props){
-    console.log(props.todayValue)
-    console.log(props.lastDetailValue)
     const navigate = useNavigate()
 
     const [salesDetailValue,setSalesDetailValue] = useState({})
