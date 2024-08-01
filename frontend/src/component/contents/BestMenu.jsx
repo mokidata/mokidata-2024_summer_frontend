@@ -4,56 +4,38 @@ import Price from "../common/Price";
 import { BASE_URL } from "../Url";
 import { useLocation, useNavigate } from "react-router-dom";
 function BestMenu(props){
-
-    const [rankDetail,setRankDetail] = useState([{name:"",price:"",count:""},{name:"",price:"",count:""},{name:"",price:"",count:""}]);
+    const [rankDetail,setRankDetail] = useState([]);
     const [rankFirst,setRankFirst] = useState({})
     const [rankSecond,setRankSecond] = useState({})
     const [rankThird,setRankThird] = useState({})
     const [firstUrl,setFirstUrl] = useState("")
     const navigate = useNavigate();
-    const location = useLocation()
 
     useEffect(()=>{
         try {
-            console.log(props.rankDetailValue);
-            console.log(props.lastDetailValue)
-            console.log(props.menuObject)
-            switch(props.page){
-                
-                case 'daily':
-                    setRankDetail(props.rankDetailValue.daily.saleGetResList)
-                    break;
-                case 'weekly':
-                    setRankDetail(props.rankDetailValue.weekly.saleGetResList)
-                    break;
-                case 'monthly':
-                    setRankDetail(props.rankDetailValue.monthly.saleGetResList)
-                    break;
-                default:
-                    setRankDetail(props.rankDetailValue.daily.saleGetResList)
-                    break;
-                   
+            
+            if(Object.keys(props.rankDetailValue[props.page]).length !== 0){
+                setRankDetail(props.rankDetailValue[props.page]['saleGetResList'])
             }
-           
-            
-            
+            else{
+                setRankDetail([{name:"",price:0,count:0},{name:"",price:0,count:0},{name:"",price:0,count:0}])
+            }
         } catch (error) {
             console.log(error)
         }
-    },[]);
+    },[props.page]);
     
     useEffect(()=>{
-        console.log(rankDetail); 
-        setRankFirst(rankDetail[0]);
-        setRankSecond(rankDetail[1]);
-        setRankThird(rankDetail[2]);
+        if(rankDetail.length !== 0){
+            setRankFirst(rankDetail[0]);
+            setRankSecond(rankDetail[1]);
+            setRankThird(rankDetail[2]);
+        }
+        
     },[rankDetail])
 
     useEffect(()=>{
         if(rankFirst.name && Object.keys(props.menuObject).length !== 0 ){
-            console.log(rankFirst.name)
-            console.log(props.menuObject[rankFirst.name])
-            console.log(props.menuObject[rankFirst.name]['img'])
             setFirstUrl( props.menuObject[rankFirst.name]['img'])
         }
         

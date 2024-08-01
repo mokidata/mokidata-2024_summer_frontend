@@ -9,8 +9,6 @@ function CompPredictSales (props){
     const [chartData,setChartData] = useState([]);
     useEffect(()=>{
         try {
-            
-            console.log(props.value[props.page])
             const predictValue = props.value[props.page]["predictData"]
             const menuData = props.menuObject
             // 모든 값을 더하는 코드
@@ -29,13 +27,10 @@ function CompPredictSales (props){
             console.log(error)
         }
         
-    }, [props.value,props.menuObject])
+    }, [props.page])
 
     useEffect(()=>{
-        console.log(predictTotal)
-        console.log(todayTotal)
-        setChartData([{"column":"예상 매출" , "value" : predictTotal,"highlight":false},{"column":"실제 매출" , "value" : todayTotal,"highlight":true}])
-        console.log(chartData)
+        setChartData([{"column":"예상 매출" , "value" : predictTotal,"highlight":false,"valueHightlight":false},{"column":"실제 매출" , "value" : todayTotal,"highlight":true ,"valueHighlight":true}])
     },[todayTotal,predictTotal])
    
     
@@ -43,15 +38,13 @@ function CompPredictSales (props){
     return(
         <div className="report-component">
             <div className="report-title">
-                <div className="report-title__benefit">
-                    <div>
-                         오늘 예상보다&nbsp;
-                    </div>
-                    <Price value={todayTotal - predictTotal} unit="원"></Price>
-                    
-                </div>
                 <div>
-                    더 벌었어요!
+                        오늘 예상보다😆
+                </div>
+                <div className="report-title__benefit">
+                    
+                    <Price value={todayTotal - predictTotal} unit="원"></Price>
+                    &nbsp; 더 벌었어요!
                 </div>
 
             </div>
