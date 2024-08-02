@@ -300,6 +300,7 @@ body {
   }
   .chart{
     display: flex;
+    height: 300px;
     width: 100%;
     justify-content: space-between;
     align-items: end;
