@@ -92,7 +92,13 @@ function BiggestDiffMenu(props){
     return(
         <div className="report-component" id="biggest-diff-menu" >
             <div className="report-title"> 
-                지난주 대비 많이 팔린 메뉴
+                {
+                    props.page === 'daily'? '어제':
+                    props.page === 'weekly'? '지난 주':
+                    props.page === 'monthly' ? '지난 달':
+                    '어제'
+
+                } 대비 많이 팔린 메뉴
             </div>
             <div className="diff">
                 <div className="diff-desc" style={{textAlign:"left"}}>
@@ -117,7 +123,13 @@ function BiggestDiffMenu(props){
            
         
             <div className="report-title">
-                지난주 대비 적게 팔린 메뉴
+                {
+                    props.page === 'daily'? '어제':
+                    props.page === 'weekly'? '지난 주':
+                    props.page === 'monthly' ? '지난 달':
+                    '어제'
+
+                } 대비 적게 팔린 메뉴
             </div>
             <div>
 

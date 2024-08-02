@@ -47,10 +47,16 @@ function BiggestDiffDetail (props){
 
     return(
         <div className="report-page">
-            <Header page={props.page}></Header>
+            <Header page={state.page}></Header>
             <div className="report-component" id="best-rank">
                 <div className="best-rank__goback">
-                    &lt; 지난주 판매 비교
+                    &lt; {
+                    props.page === 'daily'? '어제와':
+                    props.page === 'weekly'? '지난 주와':
+                    props.page === 'monthly' ? '지난 달과':
+                    '어제와'
+
+                } 판매 비교
                 </div>
                 <div className="best-rank__notice">
                     <div className="notice">

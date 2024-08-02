@@ -21,14 +21,24 @@ function TodaySales (props){
             <div className="report-title__div">
                 <div className="report-title" id="todaysales"> 
                     <div className="report-title__benefit">
-                        <div> 오늘 매출  &nbsp;</div>
+                        <div> {
+                            props.page === 'daily' ? '오늘 ':
+                            props.page === 'weekly' ? '이번 주 ':
+                            props.page === 'monthly' ? '이번 달 ':
+                            '오늘'
+                            } 매출  &nbsp;</div>
                         <Price value={todayTotal} underline={true} unit="원"> </Price>
                     </div>
                     기록했어요 🥳
                 </div>
-                <div className="today-desc__day">
-                    월요일
-                </div>
+                {
+                    props.page === 'daily' ? 
+                    <div className="today-desc__day">
+                        월요일
+                    </div>
+                    :""
+                }
+                
             </div>
             
             

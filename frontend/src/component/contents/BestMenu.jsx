@@ -38,7 +38,13 @@ function BestMenu(props){
     return(
         <div className="report-component" id="best-menu">
             <div className="report-title">
-                이번 주에 가장 많이 팔린 메뉴
+                {
+                    props.page === 'daily'? '오늘':
+                    props.page === 'weekly'? '이번 주에':
+                    props.page === 'monthly' ? '이번 달에':
+                    '오늘'
+
+                } 가장 많이 팔린 메뉴
             </div>
             <div className="best-menu">
                 <div className="best-menu__first">

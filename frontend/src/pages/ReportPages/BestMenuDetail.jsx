@@ -32,10 +32,15 @@ function BestMenuDetail(props){
 
     return(
         <div className="report-page">
-            <Header page={props.page}></Header>
+            <Header page={state.page}></Header>
             <div className="report-component" id="best-rank">
                 <div className="best-rank__goback">
-                    &lt; 오늘 판매 순위
+                    &lt; {
+                    state.page === 'daily'? '오늘':
+                    state.page === 'weekly'? '이번 주':
+                    state.page === 'monthly' ? '이번 달':
+                    '오늘'
+                    } 판매 순위
 
                 </div>
                 <div className="best-rank__table">

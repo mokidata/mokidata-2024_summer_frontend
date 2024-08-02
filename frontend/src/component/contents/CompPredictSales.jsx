@@ -39,7 +39,13 @@ function CompPredictSales (props){
         <div className="report-component">
             <div className="report-title">
                 <div>
-                        오늘 예상보다😆
+                        {
+                            props.page === 'daily'? '오늘은':
+                            props.page === 'weekly'? '이번 주는':
+                            props.page === 'monthly' ? '이번 달은':
+                            '오늘'
+
+                        } 예상보다😆
                 </div>
                 <div className="report-title__benefit">
                     

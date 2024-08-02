@@ -48,7 +48,12 @@ function PredictSales (props){
     return (
         <div className="report-component">
             <div className="report-title">
-                다음주 매출 예상
+              {
+                props.page === 'daily'? '내일':
+                props.page === 'weekly'? '다음 주':
+                props.page === 'monthly' ? '다음 달':
+                '내일'
+              } 매출 예상
             </div>
             <div className="predict__detail">
                 평균 매출은 한달에 270 만원 정도에요.
