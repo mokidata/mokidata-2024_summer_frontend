@@ -48,7 +48,7 @@ function CompPredictSales (props){
                 </div>
 
             </div>
-            <Chart type="bar" data={chartData}></Chart>
+            <Chart isVisible={props.isVisible} type="bar" data={chartData}></Chart>
 
         </div>
         
