@@ -15,7 +15,6 @@ function ReportPage(props){
     
     console.log("!!!report page!!!")
     const [page] = usePageInfo(props.page)
-    console.log(page)
     const [pageOpen, setPageOpen] = useState(false)
     const {isLoadingState,todayValue,predictTodayValue,predictDetailValue, predictLastValue,rankDetailValue,rankCompareValue,menuObject,lastDetailValue} = useSalesData();
     const [componentFade ,setComponentFade] = useState([true,false,false,false,false])
@@ -34,27 +33,19 @@ function ReportPage(props){
         });
     };
     useEffect(()=>{
-        if(!pageOpen){
-            setPageOpen(true)
-            window.scrollTo(0,0)
-        }
-    },[pageOpen])
+        window.scrollTo(0,0)
+        
+        setComponentFade([true,false,false,false,false])
+        
+    },[props.page])
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [componentFade]);
 
-    
-    useEffect(()=>{
-        console.log(componentFade[1]);
-        console.log(componentFade[2])
-    },[componentFade[1],componentFade[2]])
-
-
     //페이지 옮길 때 스크롤 맨 위로 올림
 
     if(isLoadingState){
-        console.log("isloading")
         return (
             <div>
                 loading...
@@ -62,18 +53,19 @@ function ReportPage(props){
         )
     }
     else{
-        console.log("!!!Loading end!!!")
+        
         console.log({isLoadingState,todayValue,predictTodayValue,predictDetailValue,predictLastValue,rankDetailValue,lastDetailValue,rankCompareValue,menuObject})
          return(
             <div className="report-page">
                 <Header page={page}></Header>
+                
                 <motion.div
                     className="report-item"
                     initial={{opacity:0}}
                     whileInView={{opacity:1}}
                     viewport={{once:true}}
                     animate={{ opacity: componentFade[0] ? 1 : 0 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.7 }}
                 >
                     <TodaySales page={page} value={todayValue}></TodaySales> 
                 </motion.div>
@@ -83,7 +75,7 @@ function ReportPage(props){
                     whileInView={{opacity: componentFade[1] ? 1 : 0 }}
                     viewport={{once:true}}
                     animate={{ opacity: componentFade[1] ? 1 : 0 }}
-                    transition={{ duration: 0.7 }}
+                    transition={{ duration: componentFade[1] ?  0.7 : 0 }}
                 >
                     <CompPredictSales page={page} isVisible={componentFade[1]} value={predictLastValue} todayValue={todayValue} menuObject={menuObject}></CompPredictSales>
                 </motion.div>

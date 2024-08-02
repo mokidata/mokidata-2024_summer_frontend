@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { mokiApi } from "../app/api/loginApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { act } from "react";
+import { formatDate } from "../component/common/DateConverter";
 
 const initialState = {
     totalData:{},
@@ -15,15 +16,9 @@ export const totalThunks = createAsyncThunk(
     let data = {"today":{},"predictToday":{},"predictLast":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
     //오늘 날짜 받기
     const todayDate = new Date();
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    
     //날짜를 2024-07-28 형태로 변경하는 함수 
-    function formatDate(date) {
-      const local_Date = date.toLocaleDateString('ko-KR', options)
-          .split('.')
-          .map(part => part.trim())
-          .join('-');
-      return local_Date.endsWith('-') ? local_Date.slice(0, -1) : local_Date;
-    }
+    
     const today_date = formatDate(todayDate)
     
     //오늘 날짜를 초기에 받고 배열 첫 element로 세팅

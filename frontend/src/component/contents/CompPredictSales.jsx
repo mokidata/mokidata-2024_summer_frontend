@@ -37,23 +37,46 @@ function CompPredictSales (props){
     
     return(
         <div className="report-component">
-            <div className="report-title">
-                <div>
-                        {
-                            props.page === 'daily'? '오늘은':
-                            props.page === 'weekly'? '이번 주는':
-                            props.page === 'monthly' ? '이번 달은':
-                            '오늘'
+            {
+                todayTotal - predictTotal > 0 ?
+                <div className="report-title">
+                    <div>
+                            {
+                                props.page === 'daily'? '오늘은':
+                                props.page === 'weekly'? '이번 주는':
+                                props.page === 'monthly' ? '이번 달은':
+                                '오늘'
 
-                        } 예상보다😆
+                            } 예상보다 😆
+                    </div>
+                    <div className="report-title__benefit">
+                        
+                        <Price value={todayTotal - predictTotal} unit="원"></Price>
+                        &nbsp; 더 벌었어요!
+                    </div>
+
                 </div>
-                <div className="report-title__benefit">
-                    
-                    <Price value={todayTotal - predictTotal} unit="원"></Price>
-                    &nbsp; 더 벌었어요!
+                :
+                <div className="report-title">
+                    <div>
+                            {
+                                props.page === 'daily'? '오늘 매출은 ':
+                                props.page === 'weekly'? '이번 주 매출은':
+                                props.page === 'monthly' ? '이번 달 매출은':
+                                '오늘'
+                            } 예상보다 
+                    </div>
+                    <div className="report-title__benefit">
+                        
+                        <Price value={predictTotal-todayTotal} unit="원"></Price>
+                        &nbsp; 낮아요
+                    </div>
+
                 </div>
 
-            </div>
+
+            }
+            
             <Chart isVisible={props.isVisible} type="bar" data={chartData}></Chart>
 
         </div>

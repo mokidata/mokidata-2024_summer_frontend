@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Triangle from "../common/Triangle";
 import Price from "../common/Price";
+import Clapping from "../../assets/clapping_cycles.mp4";
+import Cheerup from "../../assets/cheerup_cycles.mp4";
+import { formatDate, formatDay } from "../common/DateConverter";
+
 
 function TodaySales (props){
 
@@ -29,12 +33,14 @@ function TodaySales (props){
                             } 매출  &nbsp;</div>
                         <Price value={todayTotal} underline={true} unit="원"> </Price>
                     </div>
-                    기록했어요 🥳
+                    기록했어요 {todayTotal - yesterdayTotal >= 0 ? "🥳":""}
                 </div>
                 {
                     props.page === 'daily' ? 
                     <div className="today-desc__day">
-                        월요일
+                        {
+                            formatDay(formatDate(new Date()))
+                        }
                     </div>
                     :""
                 }
@@ -44,15 +50,41 @@ function TodaySales (props){
             
             
             <div className="today-img">
-                <div className="today-img__img"></div>
+                <div className="today-img__img">
+
+                    <video
+                    src={ todayTotal - yesterdayTotal>= 0 ?Clapping : Cheerup}
+                    autoPlay
+                    muted
+                    onEnded={() => {
+                        // 비디오가 끝났을 때의 추가 동작이 필요하다면 여기에 작성
+                    }}
+                    style={{
+                        width: '180px',
+                        height: '180px',
+                        objectFit: 'cover', // 비디오가 div를 가득 채우도록 설정
+                    }}
+                    />
+                </div>
             </div>
             <div className="today-cmp">
                 <div className="today-cmp__date-div"> 
                     <div className="today-cmp__date" id="yesterday">
-                        지난달
+                        {
+                            props.page === 'daily' ? '어제':
+                            props.page === 'weekly' ? '지난주':
+                            props.page === 'monthly' ? '지난달':
+                            '어제'
+                        }
+                        
                     </div>
                     <div className="today-cmp__date" id="today">
-                        이번달
+                        {
+                            props.page === 'daily' ? '오늘':
+                            props.page === 'weekly' ? '이번주':
+                            props.page === 'monthly' ? '이번달':
+                            '오늘'
+                        }
                     </div>
                 </div>
                 <div className="today-cmp__sales-div">
