@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 function BiggestDiffMenu(props){
     const navigate = useNavigate()
-
     const [salesDetailValue,setSalesDetailValue] = useState({})
     const [lastDetailValue,setLastDetailValue] = useState({})
     const [diffArray , setDiffArray] = useState([])
@@ -14,18 +13,17 @@ function BiggestDiffMenu(props){
     const [worstMenu,setWorstMenu] = useState({"name":"","percentage" : 0,"diff" : 0,"img":""})
     let result = {};
     useEffect(()=>{
-        
-        if(props.todayValue[props.page]['saleGetResList'] !== undefined){
+        if(props.todayValue[props.page].length !== 0){
             result ={}
-            props.todayValue[props.page]['saleGetResList'].forEach(item => {
+            props.todayValue[props.page].forEach(item => {
                 const { name, count, price } = item;
                 result[name] = { count, price };
             });
             setSalesDetailValue(result);
         }
-        if(props.lastDetailValue[props.page]['saleGetResList'] !== undefined){
+        if(props.todayValue[props.page].length !== 0){
             result ={}
-            props.lastDetailValue[props.page]['saleGetResList'].forEach(item => {
+            props.lastDetailValue[props.page].forEach(item => {
                 const { name, count, price } = item;
                 result[name] = { count, price };
             });
@@ -37,10 +35,13 @@ function BiggestDiffMenu(props){
             const diff = Object.keys(salesDetailValue).map((name)=>{
                 const obj = {}
                 obj['name'] = name
-                const todayProfit = salesDetailValue[name].price * salesDetailValue[name].count
-                const lastProfit = lastDetailValue[name].price * lastDetailValue[name].count
-                obj['diff'] =  todayProfit - lastProfit
-                obj['percentage'] = Math.round((todayProfit - lastProfit) / lastProfit * 100 * 100  )/100 //소숫점 둘째자리로 반올림
+                if(lastDetailValue[name] !== undefined){
+                    const todayProfit = salesDetailValue[name].price * salesDetailValue[name].count
+                    const lastProfit = lastDetailValue[name].price * lastDetailValue[name].count
+                    obj['diff'] =  todayProfit - lastProfit
+                    obj['percentage'] = Math.round((todayProfit - lastProfit) / lastProfit * 100 * 100  )/100 //소숫점 둘째자리로 반올림
+                }
+                
                 return obj;
             })
             setDiffArray(diff)

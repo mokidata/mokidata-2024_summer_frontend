@@ -8,14 +8,14 @@ import Price from "../../component/common/Price";
 function BiggestDiffDetail (props){
     const location = useLocation()
     const {state} = location
-    
+    const todayArray = state.todayValue[state.page]
+    const lastArray = state.lastDetailValue[state.page]
     console.log(state)
     const [diffRank,setDiffRank] = useState([])
     const [diffType,setDiffType] = useState("sale")
     useEffect(()=>{
         if(Object.keys(state.todayValue[state.page]).length !== 0 ){
-            const todayArray = state.todayValue[state.page]['saleGetResList']
-            const lastArray = state.lastDetailValue[state.page]['saleGetResList']
+            
             const diffArray = []
             todayArray.forEach(element => {
                 const obj = {}

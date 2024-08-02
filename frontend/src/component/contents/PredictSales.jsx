@@ -4,6 +4,7 @@ import GetInteger from "../common/GetInteger";
 import DateConVerter, { formatMonth, formatWeek } from "../common/DateConverter";
 
 function PredictSales (props){
+    console.log(props)
     const predictValue = props.value[props.page]['predicts']
     const compareValue = props.rankCompareValue[props.page]
     const menuObject = props.menuObject
@@ -11,7 +12,7 @@ function PredictSales (props){
     var profit = 0
     for (const dates of Object.keys(compareValue).reverse()){
       profit = 0
-      compareValue[ dates].saleGetResList.forEach(element => {
+      compareValue[dates].forEach(element => {
         profit += element.count * element.price
       });
       const obj = {column: `${formatWeek(dates)} ` ,value:GetInteger(profit / 10000),highlight:false, valueHighlight: false}
@@ -52,7 +53,7 @@ function PredictSales (props){
             <div className="predict__detail">
                 평균 매출은 한달에 270 만원 정도에요.
             </div>
-            <Chart data={data} type="bar" ></Chart>
+            <Chart isVisible={props.isVisible} data={data} type="bar" ></Chart>
             <div className="notice">
             ❕계절과 휴일에 따른 매출 데이터 변화를 종합한 결과에요.
             </div>

@@ -7,21 +7,18 @@ import { useEffect, useState } from "react";
 function BestMenuDetail(props){
     const location = useLocation()
     const {state} = location
-    const [rankArray,setRankArray] = useState([])
+    const rankArray = state.rankDetail[state.page]
     const [lastRank,setLastRank] = useState({})
     useEffect(()=>{
         const obj = {}
-        if(Object.keys(state.lastDetail[state.page]).length !== 0)
+        if(state.lastDetail[state.page].length !== 0)
         {
-            state.lastDetail[state.page]['saleGetResList'].forEach((element,index) => {
+            state.lastDetail[state.page].forEach((element,index) => {
                 obj[element.name] = index+1
             });
             setLastRank(obj);
         }
        
-        if( Object.keys(state.rankDetail[state.page]).length !== 0){
-            setRankArray(state.rankDetail[state.page]['saleGetResList'])
-        }
         
     },[state])
     useEffect(()=>{

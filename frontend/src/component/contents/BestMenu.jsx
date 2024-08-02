@@ -4,27 +4,13 @@ import Price from "../common/Price";
 import { BASE_URL } from "../Url";
 import { useLocation, useNavigate } from "react-router-dom";
 function BestMenu(props){
-    const [rankDetail,setRankDetail] = useState([]);
+    const rankDetail = props.rankDetailValue[props.page]
     const [rankFirst,setRankFirst] = useState({})
     const [rankSecond,setRankSecond] = useState({})
     const [rankThird,setRankThird] = useState({})
     const [firstUrl,setFirstUrl] = useState("")
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        try {
-            
-            if(Object.keys(props.rankDetailValue[props.page]).length !== 0){
-                setRankDetail(props.rankDetailValue[props.page]['saleGetResList'])
-            }
-            else{
-                setRankDetail([{name:"",price:0,count:0},{name:"",price:0,count:0},{name:"",price:0,count:0}])
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    },[props.page]);
-    
     useEffect(()=>{
         if(rankDetail.length !== 0){
             setRankFirst(rankDetail[0]);
