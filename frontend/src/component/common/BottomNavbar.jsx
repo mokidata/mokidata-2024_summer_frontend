@@ -29,7 +29,7 @@ const BottomNavbar = (props) => {
         <div className="bottom-nav">
            {
                 links.map((link)=>(
-                    <button className="botton-nav__button" onClick={(event => {
+                    <button className="botton-nav__button" key={link} onClick={(event => {
                         changeDateType(link)
                     })}>
                         {link}
