@@ -6,8 +6,9 @@ function Button (props){
             id={props.color} 
             style={{borderRadius: 
                 props.shape === 'rect' ? '10px' :
-                props.shage === 'circle' ?'25px':
-                '25px'                                        
+                props.shape === 'circle' ?'25px':
+                '25px'  ,
+                fontSize: props.fontSize                                 
         }}>
             {props.txt}
         </button>

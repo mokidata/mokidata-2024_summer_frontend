@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Button from "../../component/common/Button";
+import { useNavigate } from "react-router-dom";
 
 function AdminLogin(){
+    const navigate = useNavigate()
     const [inputValue, setInputValue] = useState({ id: "", pswd: "" });
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -13,7 +15,7 @@ function AdminLogin(){
     };
     const handleLogin = async (event,inputValue) => {
         
-        
+        navigate("./main",{relative:true})
         // try {
         //     const response = await mokiApi.post("/api/auth/login", {
         //         id: inputValue.id,
