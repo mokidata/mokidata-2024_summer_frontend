@@ -8,7 +8,8 @@ import { persistor,store } from './app/store';
 import BestMenuDetail from './pages/ReportPages/BestMenuDetail';
 import { PersistGate } from 'redux-persist/integration/react';
 import BiggestDiffDetail from './pages/ReportPages/BiggestDiffDetail';
-import AdminLogin from './pages/LoginPages/adminLogin';
+import AdminLogin from './pages/LoginPages/AdminLogin';
+import AdminIndex from './pages/AdminPages/AdminIndex';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/bestmenu" element={<BestMenuDetail page="daily" />} />
             <Route path="/biggestdiff" element={<BiggestDiffDetail page="daily" />}/>
             <Route path="/admin" element={<AdminLogin /> }></Route>
+            <Route path="/admin/main" element={<AdminIndex/>}></Route>
           </Routes>
 
         </PersistGate>
