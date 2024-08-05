@@ -198,10 +198,16 @@ body {
     width: 100%;
     height: 100%;
     background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+    background-image: url('./assets/congratulation.png');
+    background-size: 180px 180px;
+    background-position: center;
+    background-repeat:no-repeat;
+  }
+  .today-img__img#clapping{
+    background-image: url('./assets/clapping.gif');
+  }
+  .today-img__img#cheer-up{
+    background-image: url('./assets/cheerup.gif');
   }
   .today-cmp{
     padding-top: 10px;

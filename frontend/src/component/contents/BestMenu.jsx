@@ -55,9 +55,12 @@ function BestMenu(props){
                         
                         <Price value={rankFirst.count * rankFirst.price} unit="원"></Price>
                     </div>
-                    <div className="best-menu__img" style={{backgroundImage:`url(${BASE_URL}${firstUrl})`}} >
+                    <div className="best-menu__img-div">
+                        <div className="best-menu__img" style={{backgroundImage:`url(${BASE_URL}${firstUrl})`}} >
                         
+                        </div>  
                     </div>
+                    
                 </div>
                 <div className="best-menu__second">
                     <div className="best-menu__other">

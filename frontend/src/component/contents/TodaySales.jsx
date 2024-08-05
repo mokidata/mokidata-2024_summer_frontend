@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Triangle from "../common/Triangle";
 import Price from "../common/Price";
-import Clapping from "../../assets/clapping_cycles.mp4";
-import Cheerup from "../../assets/cheerup_cycles.mp4";
 import { formatDate, formatDay } from "../common/DateConverter";
 
 
@@ -50,22 +48,7 @@ function TodaySales (props){
             
             
             <div className="today-img">
-                <div className="today-img__img">
-
-                    <video
-                    src={ todayTotal - yesterdayTotal>= 0 ?Clapping : Cheerup}
-                    autoPlay
-                    muted
-                    onEnded={() => {
-                        // 비디오가 끝났을 때의 추가 동작이 필요하다면 여기에 작성
-                    }}
-                    style={{
-                        width: '180px',
-                        height: '180px',
-                        objectFit: 'cover', // 비디오가 div를 가득 채우도록 설정
-                    }}
-                    />
-                </div>
+                <div className="today-img__img" id={todayTotal-yesterdayTotal >= 0 ? "clapping" : "cheer-up"}></div>
             </div>
             <div className="today-cmp">
                 <div className="today-cmp__date-div"> 
