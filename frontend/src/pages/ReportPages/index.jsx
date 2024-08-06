@@ -9,6 +9,7 @@ import TodaySales from "../../component/contents/TodaySales";
 import usePageInfo from "../../hooks/usePageInfo";
 import useSalesData from "../../hooks/useSalesData";
 import {motion} from "framer-motion"
+import DropDownMenu from "../../component/common/DropDownMenu";
 
 
 function ReportPage(props){
@@ -18,7 +19,7 @@ function ReportPage(props){
     const [pageOpen, setPageOpen] = useState(false)
     const {isLoadingState,todayValue,predictTodayValue,predictDetailValue, predictLastValue,rankDetailValue,rankCompareValue,menuObject,lastDetailValue} = useSalesData();
     const [componentFade ,setComponentFade] = useState([true,false,false,false,false])
-    
+    const [leftSide,setLeftSide] = useState(false)
     const handleScroll = () => {
         const items = document.querySelectorAll('.report-item');
         items.forEach((item, index) => {
@@ -32,6 +33,9 @@ function ReportPage(props){
             }
         });
     };
+    const openLeftHeader = ()=>{
+        setLeftSide(!leftSide)
+    }
     useEffect(()=>{
         window.scrollTo(0,0)
         
@@ -53,11 +57,18 @@ function ReportPage(props){
         )
     }
     else{
-        
         console.log({isLoadingState,todayValue,predictTodayValue,predictDetailValue,predictLastValue,rankDetailValue,lastDetailValue,rankCompareValue,menuObject})
          return(
             <div className="report-page">
-                <Header page={page}></Header>
+                <Header leftSide={openLeftHeader} page={page}></Header>
+                <motion.div
+                    initial={{ x: '-100%', opacity: 0 }}
+                    animate={{ x: leftSide ? 0 : '-100%', opacity: leftSide ? 1 : 0 }}
+                    exit={{ x: '-100%', opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <DropDownMenu></DropDownMenu>
+                </motion.div>
                 
                 <motion.div
                     className="report-item"

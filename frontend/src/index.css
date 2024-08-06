@@ -1005,3 +1005,62 @@ body {
     color: red;
     font-size: 13px;
   }
+
+  .side-nav{
+    position: fixed;
+    left: 20px;
+    padding:20px;
+    width: 260px;
+    border-radius: 25px;
+    border: 1px solid #E4E4E4;
+    background-color: white;
+  }
+  .side-nav__top{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    
+  }
+  .side-nav__title{
+    font-weight: 600;
+    display: flex;
+    width: 230px;
+    justify-content: left;
+    text-align: left;
+    align-items: center;
+  }
+  .side-nav__close{
+    width: 25px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .side-nav__list{
+    min-height: 330px;
+  }
+  .side-nav__content{
+    margin-block: 8px;
+    padding-inline: 3px;
+    color: #717171;
+  }
+  .side-nav__content#pick{
+    color: black;
+    background-color: #F3F4F6;
+    border-radius: 4px;
+    font-weight: 600;
+
+  }
+
+  .side-nav__bottom{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .side-nav__bottom-name{
+    
+    font-size: 15px;
+    font-weight: 00;
+    line-height: 18.72px;
+    text-align: left;
+
+  }

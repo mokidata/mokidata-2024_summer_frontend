@@ -6,7 +6,7 @@ function Header(props){
     
     return (
         <div className="header-class">
-            <button className="header-button" id="Navbar">
+            <button className="header-button" id="Navbar" onClick={props.leftSide}>
             </button>
             <div className="header-desc">{pageinfo}</div>
             <button className="header-button" id="Calendar">
