@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BottomNavbar from "../../component/common/BottomNavbar";
 import Header from "../../component/common/Header";
 import BestMenu from "../../component/contents/BestMenu";
@@ -33,6 +33,15 @@ function ReportPage(props){
             }
         });
     };
+    const scrollToContent=(index)=>{
+        console.log('scroll')
+        const items = document.querySelectorAll('.report-item');
+        if (index >= 0 && index < items.length) { // 유효한 인덱스인지 확인
+            items[index].scrollIntoView({ behavior: 'smooth', block: 'start' }); // 해당 요소로 부드럽게 스크롤
+        } else {
+            console.error('유효하지 않은 인덱스입니다.'); // 유효하지 않은 인덱스일 경우 에러 메시지 출력
+        }
+    }
     const openLeftHeader = ()=>{
         setLeftSide(!leftSide)
     }
@@ -62,12 +71,13 @@ function ReportPage(props){
             <div className="report-page">
                 <Header leftSide={openLeftHeader} page={page}></Header>
                 <motion.div
+                    className="side-nav__div"
                     initial={{ x: '-100%', opacity: 0 }}
                     animate={{ x: leftSide ? 0 : '-100%', opacity: leftSide ? 1 : 0 }}
                     exit={{ x: '-100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <DropDownMenu></DropDownMenu>
+                    <DropDownMenu open={openLeftHeader} scroll={scrollToContent}></DropDownMenu>
                 </motion.div>
                 
                 <motion.div
@@ -77,6 +87,7 @@ function ReportPage(props){
                     viewport={{once:true}}
                     animate={{ opacity: componentFade[0] ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
+                    
                 >
                     <TodaySales page={page} value={todayValue}></TodaySales> 
                 </motion.div>
@@ -87,6 +98,7 @@ function ReportPage(props){
                     viewport={{once:true}}
                     animate={{ opacity: componentFade[1] ? 1 : 0 }}
                     transition={{ duration: componentFade[1] ?  0.7 : 0 }}
+                    
                 >
                     <CompPredictSales page={page} isVisible={componentFade[1]} value={predictLastValue} todayValue={todayValue} menuObject={menuObject}></CompPredictSales>
                 </motion.div>
@@ -97,6 +109,7 @@ function ReportPage(props){
                     viewport={{once:true}}
                     animate={{ opacity: componentFade[2] ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
+                    
                 >
                     <PredictSales page={page} isVisible={componentFade[2]} value={predictDetailValue} menuObject={menuObject} rankCompareValue={rankCompareValue}></PredictSales>
                 </motion.div>
@@ -107,6 +120,7 @@ function ReportPage(props){
                     viewport={{once:true}}
                     animate={{ opacity: componentFade[3] ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
+                    
                 >
                     <BestMenu page={page} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue}></BestMenu>
                 </motion.div>
