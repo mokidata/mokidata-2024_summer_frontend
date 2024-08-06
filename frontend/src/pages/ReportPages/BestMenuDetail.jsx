@@ -32,7 +32,7 @@ function BestMenuDetail(props){
 
     return(
         <div className="report-page">
-            <Header page={state.page}></Header>
+            <Header page={state.page} currentDate={state.currentDate}></Header>
             <div className="report-component" id="best-rank">
                 <div className="best-rank__goback">
                     &lt; {

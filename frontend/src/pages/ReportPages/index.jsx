@@ -10,6 +10,7 @@ import usePageInfo from "../../hooks/usePageInfo";
 import useSalesData from "../../hooks/useSalesData";
 import {motion} from "framer-motion"
 import DropDownMenu from "../../component/common/DropDownMenu";
+import { formatDate } from "../../component/common/DateConverter";
 
 
 function ReportPage(props){
@@ -20,6 +21,8 @@ function ReportPage(props){
     const {isLoadingState,todayValue,predictTodayValue,predictDetailValue, predictLastValue,rankDetailValue,rankCompareValue,menuObject,lastDetailValue} = useSalesData();
     const [componentFade ,setComponentFade] = useState([true,false,false,false,false])
     const [leftSide,setLeftSide] = useState(false)
+    const [currentDate,setCurrentDate] = useState("")
+    const date = new Date()
     const handleScroll = () => {
         const items = document.querySelectorAll('.report-item');
         items.forEach((item, index) => {
@@ -46,6 +49,10 @@ function ReportPage(props){
         setLeftSide(!leftSide)
     }
     useEffect(()=>{
+        setCurrentDate(formatDate(date))
+
+    },[date])
+    useEffect(()=>{
         window.scrollTo(0,0)
         
         setComponentFade([true,false,false,false,false])
@@ -69,7 +76,7 @@ function ReportPage(props){
         console.log({isLoadingState,todayValue,predictTodayValue,predictDetailValue,predictLastValue,rankDetailValue,lastDetailValue,rankCompareValue,menuObject})
          return(
             <div className="report-page">
-                <Header leftSide={openLeftHeader} page={page}></Header>
+                <Header leftSide={openLeftHeader} currentDate={currentDate} page={page}></Header>
                 <motion.div
                     className="side-nav__div"
                     initial={{ x: '-100%', opacity: 0 }}
@@ -111,7 +118,7 @@ function ReportPage(props){
                     transition={{ duration: 0.7 }}
                     
                 >
-                    <PredictSales page={page} isVisible={componentFade[2]} value={predictDetailValue} menuObject={menuObject} rankCompareValue={rankCompareValue}></PredictSales>
+                    <PredictSales currentDate={currentDate} page={page} isVisible={componentFade[2]} value={predictDetailValue} menuObject={menuObject} rankCompareValue={rankCompareValue}></PredictSales>
                 </motion.div>
                 <motion.div
                     className="report-item"
@@ -122,7 +129,7 @@ function ReportPage(props){
                     transition={{ duration: 0.7 }}
                     
                 >
-                    <BestMenu page={page} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue}></BestMenu>
+                    <BestMenu page={page} currentDate={currentDate} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue}></BestMenu>
                 </motion.div>
                 <motion.div
                     className="report-item"

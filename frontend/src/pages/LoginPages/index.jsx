@@ -83,11 +83,11 @@ function Login() {
                     />
                 </div>
             </div>
-            <div className="button-div" onClick={(event) => {
+            <div className="button-div" id="login" onClick={(event) => {
                 handleLogin(event, inputValue); // 함수 참조로 호출
             
             }}>
-                <Button color="black" txt="로그인"/>
+                <Button color="black" txt="로그인" shape="rect"/>
             </div>
             <div className="login-msg">
                 {passed ? "" : "아이디 또는 비밀번호를 잘못 입력했습니다."}

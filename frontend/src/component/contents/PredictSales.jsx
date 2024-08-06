@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Chart from "../common/Chart";
 import GetInteger from "../common/GetInteger";
-import DateConVerter, { formatMonth, formatWeek } from "../common/DateConverter";
+import DateConVerter, { formatDateNum, formatMonth, formatWeek } from "../common/DateConverter";
 
 function PredictSales (props){
     console.log(props)
@@ -15,7 +15,16 @@ function PredictSales (props){
       compareValue[dates].forEach(element => {
         profit += element.count * element.price
       });
-      const obj = {column: `${formatWeek(dates)} ` ,value:GetInteger(profit / 10000),highlight:false, valueHighlight: false}
+      const obj = {
+        
+        column:  
+        props.page === 'daily' ? `${formatDateNum(dates)} ` :
+        props.page === 'weekly' ? `${formatWeek(dates)} `:
+        props.page === 'monthly' ? `${formatMonth(dates)} `: ""
+      ,value:GetInteger(profit / 10000)
+      ,highlight:false
+      , valueHighlight: false
+    }
       data.push(obj)
     }
     profit = 0
@@ -26,7 +35,11 @@ function PredictSales (props){
         profit += element.predictData[dates] * menuObject[element.name]['price']
       }
     })
-    const obj = {column : "예측값", value : GetInteger(profit/ 10000 ) , highlight: true , valueHighlight: false}
+    const obj = {column :
+      props.page === 'daily' ? `${formatDateNum(props.currentDate)} ` :
+        props.page === 'weekly' ? `${formatWeek(props.currentDate)} `:
+        props.page === 'monthly' ? `${formatMonth(props.currentDate)} `: ""
+      , value : GetInteger(profit/ 10000 ) , highlight: true , valueHighlight: false}
     data.push(obj)
 
    

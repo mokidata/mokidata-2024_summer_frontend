@@ -5,6 +5,13 @@ function getWeekOfMonth(date) {
     return weekNumber;
 }
 
+export function formatYear(dateString){
+    const date = new Date(dateString);
+    const year = 1900+ date.getYear(); 
+    return `${year}년`
+    
+}
+
 export function formatMonth(dateString){
     const date = new Date(dateString);
     const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.

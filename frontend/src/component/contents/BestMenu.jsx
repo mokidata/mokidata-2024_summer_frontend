@@ -28,7 +28,7 @@ function BestMenu(props){
     },[rankFirst])
 
     const navigateRankDetail= () => {
-        navigate("/bestmenu",{state:{rankDetail:props.rankDetailValue, lastDetail: props.lastDetailValue, page:props.page}})
+        navigate("/bestmenu",{state:{rankDetail:props.rankDetailValue, currentDate:props.currentDate, lastDetail: props.lastDetailValue, page:props.page}})
 
     }
 
@@ -83,7 +83,7 @@ function BestMenu(props){
                     </div>
                 </div>
             </div>
-            <div className="button-div" onClick={(event)=>{
+            <div className="button-div" id="report" onClick={(event)=>{
                 navigateRankDetail()
             }
                 
