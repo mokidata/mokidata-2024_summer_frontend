@@ -1006,17 +1006,19 @@ body {
     font-size: 13px;
   }
 
-  .side-nav{
+  .side-nav__div{
     position: fixed;
     left: 20px;
-    top:50%;
-    z-index: 1;
-    transform: 'translateY(-50%)';
+    
+  }
+  .side-nav{
     padding:20px;
     width: 260px;
     border-radius: 25px;
     border: 1px solid #E4E4E4;
     background-color: white;
+    z-index: 1;
+    
   }
   .side-nav__top{
     display: flex;
