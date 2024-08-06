@@ -90,7 +90,10 @@ function TodaySales (props){
                 
                 
             </div>
-            <Triangle diff={todayTotal - yesterdayTotal} unit="원" ></Triangle>
+            <div className="today-diff">
+                <Triangle diff={todayTotal - yesterdayTotal} unit="원" ></Triangle>
+            </div>
+            
             
                 
         </div>
