@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../component/common/Button";
 import Header from "../../component/common/Header";
 import { useEffect, useState } from "react";
@@ -7,12 +7,20 @@ import Price from "../../component/common/Price";
 
 function BiggestDiffDetail (props){
     const location = useLocation()
+    const navigate =useNavigate()
     const {state} = location
     const todayArray = state.todayValue[state.page]
     const lastArray = state.lastDetailValue[state.page]
     console.log(state)
     const [diffRank,setDiffRank] = useState([])
     const [diffType,setDiffType] = useState("sale")
+    const goBack = () => {
+
+        navigate(-1)
+    }
+    useEffect(()=>{
+        window.scroll(0,0)
+    })
     useEffect(()=>{
         if(Object.keys(state.todayValue[state.page]).length !== 0 ){
             
@@ -49,7 +57,7 @@ function BiggestDiffDetail (props){
         <div className="report-page">
             <Header page={state.page}></Header>
             <div className="report-component" id="best-rank">
-                <div className="best-rank__goback">
+                <div className="best-rank__goback" onClick={() => goBack()}>
                     &lt; {
                     props.page === 'daily'? '어제와':
                     props.page === 'weekly'? '지난 주와':

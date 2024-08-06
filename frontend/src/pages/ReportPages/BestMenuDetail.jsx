@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import Header from "../../component/common/Header";
 import Price from "../../component/common/Price";
 import Triangle from "../../component/common/Triangle";
@@ -6,9 +6,17 @@ import { useEffect, useState } from "react";
 
 function BestMenuDetail(props){
     const location = useLocation()
+    const navigate = useNavigate()
     const {state} = location
     const rankArray = state.rankDetail[state.page]
     const [lastRank,setLastRank] = useState({})
+    const goBack = () => {
+
+        navigate(-1)
+    }
+    useEffect(()=>{
+        window.scroll(0,0)
+    })
     useEffect(()=>{
         const obj = {}
         if(state.lastDetail[state.page].length !== 0)
@@ -34,7 +42,7 @@ function BestMenuDetail(props){
         <div className="report-page">
             <Header page={state.page} currentDate={state.currentDate}></Header>
             <div className="report-component" id="best-rank">
-                <div className="best-rank__goback">
+                <div className="best-rank__goback" onClick={goBack}>
                     &lt; {
                     state.page === 'daily'? '오늘':
                     state.page === 'weekly'? '이번 주':
