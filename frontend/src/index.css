@@ -1009,6 +1009,9 @@ body {
   .side-nav{
     position: fixed;
     left: 20px;
+    top:50%;
+    z-index: 1;
+    transform: 'translateY(-50%)';
     padding:20px;
     width: 260px;
     border-radius: 25px;
