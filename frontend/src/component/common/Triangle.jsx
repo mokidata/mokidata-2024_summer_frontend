@@ -26,7 +26,8 @@ function Triangle(props){
             <span className="triangle-img" id={change}>
             </span>
             <span className="triangle-quantity" id={change} >
-                <Price value={diff} unit={props.unit}></Price>
+                {diff === 0 ? "" : <Price value={diff} unit={props.unit}></Price>}
+                
             </span>
         </div>
     );
