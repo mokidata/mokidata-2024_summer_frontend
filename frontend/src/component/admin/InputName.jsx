@@ -9,7 +9,7 @@ function InputName(props){
                 {props.storeName}
 
             </div>
-            <button className="input-name__button">
+            <button className="input-name__button" onClick={props.openModal}>
                 입력
             </button>
 

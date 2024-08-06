@@ -9,7 +9,7 @@ function MenuSet(props){
                 <div className="menu-set__txt">
                     메뉴 등록
                 </div>
-                <div className="menu-set__btn-div">
+                <div className="menu-set__btn-div" onClick={props.openModal}>
                     <Button txt="&nbsp;&nbsp;등록+&nbsp;&nbsp;" color="green" shape="rect" fontSize='12px'></Button>
                 </div>
                 
@@ -17,10 +17,15 @@ function MenuSet(props){
             </div>
             <div className="menu-set__menulist">
                 {
+                    props.menuList.length === 0 ? 
+                    <div className="menu-set__empty">
+                        empty
+                    </div>
+                    :
                     props.menuList.map((element,index) => (
 
                         <div className="menu-tag">
-                            # {element}
+                            # {element.name}
                         </div>
                     ))
                 }

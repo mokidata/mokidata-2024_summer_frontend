@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Button from "../../component/common/Button";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { mokiApi } from "../../app/api/loginApi";
 
 function AdminLogin(){
     const navigate = useNavigate()
@@ -10,31 +12,34 @@ function AdminLogin(){
         setInputValue({ ...inputValue, [name]: value });
     };
 
-    const handleLoginSuccess = () => {
+    const handleLoginSuccess = async () => {
+        
+
+        navigate("./main")
         console.log("")
     };
     const handleLogin = async (event,inputValue) => {
         
-        navigate("./main",{relative:true})
-        // try {
-        //     const response = await mokiApi.post("/api/auth/login", {
-        //         id: inputValue.id,
-        //         password: inputValue.pswd
-        //     });
-        //     mokiApi.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
-        //     console.log(mokiApi.defaults.headers.common);
-        //     console.log(response);
-        //     if(response.status == 200){
-        //         handleLoginSuccess();
-        //     }
-        //     else{
-        //         console.log("login error!")
-        //     }
+        
+        try {
+            const response = await mokiApi.post("/api/auth/login", {
+                id: inputValue.id,
+                password: inputValue.pswd
+            });
+            mokiApi.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+            console.log(mokiApi.defaults.headers.common);
+            if(response.status == 200){
+                handleLoginSuccess();
+            }
+            else{
+                console.log("login error!")
+            }
             
-        // } catch (error) {
-        //     console.error(error);
-        //     // setPassed(false); // 로그인 실패 시 상태 업데이트
-        // }
+        } catch (error) {
+            console.error(error);
+            // setPassed(false); // 로그인 실패 시 상태 업데이트
+        }
+        
     };
     return(
         <div className="login-page">
@@ -44,7 +49,7 @@ function AdminLogin(){
                 </div>
                 <div className="login-input" id='id'>
                     <input
-                        className="login-input-img"
+                        className="admin-input-img"
                         name="id"
                         value={inputValue.id}
                         onChange={handleInputChange}

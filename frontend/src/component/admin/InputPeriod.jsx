@@ -23,7 +23,7 @@ function InputPeriod (props){
                         종료일
                     </div>
                     <button className="period_btn">
-                        {props.startDate}
+                        {props.endDate}
                     </button>
 
 
