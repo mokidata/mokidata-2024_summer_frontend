@@ -611,11 +611,17 @@ body {
     line-height: 18.72px;
     text-align: left;
     color:#717171;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    /* display: flex;
+    justify-content: left;*/
+    align-items: center; 
     text-align: center;
-    height: 40px;
+    height: 20px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .best-rank__row__sales{
     font-size: 20px;
@@ -625,7 +631,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
+    height: 25px;
+    padding-bottom: 15px;
   }
   .best-rank__row#rank__profit{
     font-size: 20px;
@@ -674,6 +681,11 @@ body {
     padding-right: 1.5vw;
     
     padding-bottom:40px;
+  }
+  .button-div#admin-login{
+    margin-block: 30px;
+    height: 36px;
+    width: 100%;
   }
 
   .input-name{
@@ -1029,10 +1041,14 @@ body {
     font-size: 13px;
   }
 
-  .side-nav__div{
+  .side-nav__dropdown{
     position: fixed;
     left: 20px;
     
+  }
+  .side-nav__calendar{
+    position: fixed;
+    right: 20px;
   }
   .side-nav{
     padding:20px;
@@ -1067,7 +1083,7 @@ body {
     min-height: 330px;
   }
   .side-nav__content{
-    margin-block: 8px;
+    margin-block: 12px;
     padding-inline: 3px;
     color: #717171;
   }

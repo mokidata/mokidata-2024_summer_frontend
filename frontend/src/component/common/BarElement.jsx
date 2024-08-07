@@ -26,7 +26,7 @@ function BarElement(props){
     useEffect(()=>{
         setBarValue(70)
         animateBarIncrease()
-    },[])
+    },[props.max,props.min])
 
     useEffect(()=>{
         setBarValue(70)
