@@ -24,14 +24,13 @@ function BarElement(props){
         return () => clearInterval(timer);
     }
     useEffect(()=>{
-        setBarValue(70)
-        animateBarIncrease()
-    },[props.max,props.min])
-
-    useEffect(()=>{
-        setBarValue(70)
-        animateBarIncrease()
-    },[props.isVisible])
+        if(props.isVisible)
+        {
+            setBarValue(70)
+            animateBarIncrease()
+        }
+        
+    },[props.max,props.min,props.isVisible])
     return(
         <div className="chart__element" id="bar"  style={{
             height: `${barValue}px`,
