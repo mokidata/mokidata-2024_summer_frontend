@@ -11,18 +11,22 @@ import useSalesData from "../../hooks/useSalesData";
 import {motion} from "framer-motion"
 import DropDownMenu from "../../component/common/DropDownMenu";
 import { formatDate } from "../../component/common/DateConverter";
+import { useLocation } from "react-router-dom";
+import CalendarContent from "../../component/common/CalendarContent";
 
 
 function ReportPage(props){
     
     console.log("!!!report page!!!")
+    const location = useLocation()
+    const state = location.state
     const [page] = usePageInfo(props.page)
     const [pageOpen, setPageOpen] = useState(false)
     const {isLoadingState,todayValue,predictTodayValue,predictDetailValue, predictLastValue,rankDetailValue,rankCompareValue,menuObject,lastDetailValue} = useSalesData();
     const [componentFade ,setComponentFade] = useState([true,false,false,false,false])
     const [leftSide,setLeftSide] = useState(false)
+    const [rightSide,setRightSide] = useState(false)
     const [currentDate,setCurrentDate] = useState("")
-    const date = new Date()
     const handleScroll = () => {
         const items = document.querySelectorAll('.report-item');
         items.forEach((item, index) => {
@@ -48,13 +52,14 @@ function ReportPage(props){
     const openLeftHeader = ()=>{
         setLeftSide(!leftSide)
     }
-    useEffect(()=>{
-        setCurrentDate(formatDate(date))
-
-    },[date])
+  
     useEffect(()=>{
         window.scrollTo(0,0)
-        
+        let date = formatDate(new Date()) 
+        if(state && state.currentDate !== undefined){
+            date = state.currentDate
+        }
+        setCurrentDate(date)
         setComponentFade([true,false,false,false,false])
         
     },[props.page])
@@ -78,7 +83,7 @@ function ReportPage(props){
             <div className="report-page">
                 <Header leftSide={openLeftHeader} currentDate={currentDate} page={page}></Header>
                 <motion.div
-                    className="side-nav__div"
+                    className="side-nav__dropdown"
                     initial={{ x: '-100%', opacity: 0 }}
                     animate={{ x: leftSide ? 0 : '-100%', opacity: leftSide ? 1 : 0 }}
                     exit={{ x: '-100%', opacity: 0 }}
@@ -86,6 +91,15 @@ function ReportPage(props){
                 >
                     <DropDownMenu open={openLeftHeader} scroll={scrollToContent}></DropDownMenu>
                 </motion.div>
+                {/* <motion.div
+                    className="side-nav__dropdown"
+                    initial={{ x: '-100%', opacity: 0 }}
+                    animate={{ x: leftSide ? 0 : '-100%', opacity: leftSide ? 1 : 0 }}
+                    exit={{ x: '-100%', opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <CalendarContent currentDate={currentDate} open={openLeftHeader} scroll={scrollToContent}></CalendarContent>
+                </motion.div> */}
                 
                 <motion.div
                     className="report-item"
@@ -141,7 +155,7 @@ function ReportPage(props){
                 >
                     <BiggestDiffMenu page={page} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}></BiggestDiffMenu>
                 </motion.div>
-                <BottomNavbar></BottomNavbar>
+                <BottomNavbar page={page} currentDate={currentDate}></BottomNavbar>
             </div>
             
         );

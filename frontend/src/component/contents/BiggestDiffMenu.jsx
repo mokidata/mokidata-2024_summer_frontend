@@ -155,7 +155,7 @@ function BiggestDiffMenu(props){
             <div className="notice" style={{textAlign:"left"}}>
                 ❕판매기록이 없었던 제품은 제외됩니다.
             </div>
-            <div className="button-div" onClick={(event)=>{
+            <div className="button-div" id="report" onClick={(event)=>{
                 BiggestDiffDetailNavigate()
 
             }}>

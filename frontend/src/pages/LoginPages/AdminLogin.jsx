@@ -68,7 +68,7 @@ function AdminLogin(){
                     />
                 </div>
             </div>
-            <div className="button-div"  onClick={(event) => {
+            <div className="button-div" id="admin-login" onClick={(event) => {
                 handleLogin(event, inputValue); // 함수 참조로 호출
             
             }}>
