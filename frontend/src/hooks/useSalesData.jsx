@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 function useSalesData() {
     console.log("!!!!use Sales Data!!!");
+    const [currentDate,setCurrentDate] = useState("")
     const [todayValue, setTodayValue] = useState({ daily: {}, weekly: {}, monthly: {} });
     const [predictTodayValue, setPredictTodayValue] = useState({ daily: {}, weekly: {}, monthly: {} });
     const [predictDetailValue, setPredictDetailValue] = useState({ daily: {}, weekly: {}, monthly: {} });
@@ -20,6 +21,7 @@ function useSalesData() {
     useEffect(() => {
         if (!isLoading) {
             console.log(totalData);
+            setCurrentDate(totalData['date'])
             setTodayValue(totalData['today']);
             setPredictTodayValue(totalData['predictToday']);
             setPredictDetailValue(totalData['predictDetail']);
@@ -37,11 +39,14 @@ function useSalesData() {
             setLastDetailValue(totalData['lastDetail'])
             setIsLoadingState(false);
         }
+        else{
+            setIsLoadingState(true)
+        }
     }, [isLoading, totalData]); // totalData를 의존성 배열에 추가
 
 
    
-    return { isLoadingState, todayValue, predictTodayValue, predictDetailValue, predictLastValue ,rankDetailValue, rankCompareValue, menuObject , lastDetailValue };
+    return { currentDate,isLoadingState, todayValue, predictTodayValue, predictDetailValue, predictLastValue ,rankDetailValue, rankCompareValue, menuObject , lastDetailValue };
 }
 
 export default useSalesData;

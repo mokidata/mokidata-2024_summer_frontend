@@ -10,13 +10,13 @@ function Header(props){
             </button>
             <div className="header-desc">
                 {
-                    props.page === 'daily' ? `${formatMonth(props.currentDate)} ${formatDateNum(props.currentDate)}`:
-                    props.page === 'weekly'? `${formatMonth(props.currentDate)} ${formatWeek(props.currentDate)}`:
+                    props.page === 'daily' ? `${formatYear(props.currentDate)} ${formatMonth(props.currentDate)} ${formatDateNum(props.currentDate)}`:
+                    props.page === 'weekly'? `${formatYear(props.currentDate)} ${formatMonth(props.currentDate)} ${formatWeek(props.currentDate)}`:
                     props.page === 'monthly'? `${formatYear(props.currentDate)} ${formatMonth(props.currentDate)} `:
                     ""
                 }
             </div>
-            <button className="header-button" id="Calendar">
+            <button className="header-button" id="Calendar" onClick={props.rightSide}>
             </button>
         </div>
     );

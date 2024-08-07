@@ -12,19 +12,19 @@ const initialState = {
 
 export const totalThunks = createAsyncThunk(
   'saleSlice/fetchData',
-  async (_,thunkAPI) => {
-    let data = {"today":{},"predictToday":{},"predictLast":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
+  async (initialFormatDate,thunkAPI) => {
+    let data = {"date":initialFormatDate,"today":{},"predictToday":{},"predictLast":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
     //오늘 날짜 받기
-    const todayDate = new Date();
+    // const todayDate = new Date();
     
     //날짜를 2024-07-28 형태로 변경하는 함수 
     
-    const today_date = formatDate(todayDate)
+    // const initialFormatDate = formatDate(todayDate)
     
     //오늘 날짜를 초기에 받고 배열 첫 element로 세팅
-    const yesterday = new Date()
-    const lastWeek = new Date()
-    const lastMonth = new Date()
+    const yesterday = new Date(initialFormatDate)
+    const lastWeek = new Date(initialFormatDate)
+    const lastMonth = new Date(initialFormatDate)
     yesterday.setDate(yesterday.getDate()-1)
     lastWeek.setDate(lastWeek.getDate()-7)
     lastMonth.setDate(lastMonth.getDate()-30)
@@ -52,7 +52,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/date/daily`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       data.today.daily = response.data
@@ -65,7 +65,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/date/weekly`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       data.today.weekly = response.data
@@ -78,7 +78,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/date/monthly`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       data.today.monthly = response.data
@@ -91,7 +91,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/predict/daily`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       data.predictToday.daily = response.data
@@ -103,7 +103,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/predict/weekly`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       data.predictToday.weekly = response.data
@@ -115,7 +115,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/predict/monthly`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       data.predictToday.monthly = response.data
@@ -169,7 +169,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/predict/daily-detail`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       data.predictDetail.daily = response.data
@@ -181,7 +181,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/predict/weekly-detail`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       data.predictDetail.weekly= response.data
@@ -193,7 +193,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/predict/monthly-detail`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       data.predictDetail.monthly = response.data
@@ -205,7 +205,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/sale/daily-detail`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       if(response.status == 200 && response.data.saleGetResList !== undefined){
@@ -220,7 +220,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/sale/weekly-detail`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       if(response.status == 200 && response.data.saleGetResList !== undefined){
@@ -235,7 +235,7 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/sale/monthly-detail`, {
         params: {
-          localDate: today_date,
+          localDate: initialFormatDate,
         },
       })
       if(response.status == 200 && response.data.saleGetResList !== undefined){
@@ -394,7 +394,7 @@ export const saleSlice = createSlice({
         console.log('loading')
       })
       .addCase(totalThunks.fulfilled,(state,action) => {
-       
+        
         state.totalData = action.payload
         console.log(state.totalData) 
         state.isLoading = false;

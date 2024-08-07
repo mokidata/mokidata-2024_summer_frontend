@@ -13,7 +13,7 @@ function Price (props){
         try {
             target = props.value.toString();
         } catch (error) {
-            console.error('Error converting props.value to string:', error);
+            console.log('Error converting props.value to string:');
             target = '';
         }
         const altered = Number(target.replace(/,/g, ''));

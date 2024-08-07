@@ -13,20 +13,29 @@ import DropDownMenu from "../../component/common/DropDownMenu";
 import { formatDate } from "../../component/common/DateConverter";
 import { useLocation } from "react-router-dom";
 import CalendarContent from "../../component/common/CalendarContent";
-
+import { useDispatch } from "react-redux";
+import { totalThunks } from "../../services/salesApiSlice";
 
 function ReportPage(props){
     
     console.log("!!!report page!!!")
-    const location = useLocation()
-    const state = location.state
+    const dispatch = useDispatch()
     const [page] = usePageInfo(props.page)
-    const [pageOpen, setPageOpen] = useState(false)
-    const {isLoadingState,todayValue,predictTodayValue,predictDetailValue, predictLastValue,rankDetailValue,rankCompareValue,menuObject,lastDetailValue} = useSalesData();
+    const {
+        currentDate,
+        isLoadingState,
+        todayValue,
+        predictTodayValue,
+        predictDetailValue,
+        predictLastValue,
+        rankDetailValue,
+        rankCompareValue,
+        menuObject,
+        lastDetailValue} = useSalesData();
     const [componentFade ,setComponentFade] = useState([true,false,false,false,false])
     const [leftSide,setLeftSide] = useState(false)
     const [rightSide,setRightSide] = useState(false)
-    const [currentDate,setCurrentDate] = useState("")
+    const todayDate = formatDate(new Date())
     const handleScroll = () => {
         const items = document.querySelectorAll('.report-item');
         items.forEach((item, index) => {
@@ -49,17 +58,21 @@ function ReportPage(props){
             console.error('유효하지 않은 인덱스입니다.'); // 유효하지 않은 인덱스일 경우 에러 메시지 출력
         }
     }
-    const openLeftHeader = ()=>{
+    const openLeftSide = ()=>{
+        if(rightSide){
+            setRightSide(false)
+        }
         setLeftSide(!leftSide)
     }
-  
+    const openRightSide = ()=>{
+        if(leftSide){
+            setLeftSide(false)
+        }
+        setRightSide(!rightSide)
+    }
+
     useEffect(()=>{
         window.scrollTo(0,0)
-        let date = formatDate(new Date()) 
-        if(state && state.currentDate !== undefined){
-            date = state.currentDate
-        }
-        setCurrentDate(date)
         setComponentFade([true,false,false,false,false])
         
     },[props.page])
@@ -81,7 +94,7 @@ function ReportPage(props){
         console.log({isLoadingState,todayValue,predictTodayValue,predictDetailValue,predictLastValue,rankDetailValue,lastDetailValue,rankCompareValue,menuObject})
          return(
             <div className="report-page">
-                <Header leftSide={openLeftHeader} currentDate={currentDate} page={page}></Header>
+                <Header leftSide={openLeftSide} rightSide={openRightSide} currentDate={currentDate} page={page}></Header>
                 <motion.div
                     className="side-nav__dropdown"
                     initial={{ x: '-100%', opacity: 0 }}
@@ -89,17 +102,17 @@ function ReportPage(props){
                     exit={{ x: '-100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <DropDownMenu open={openLeftHeader} scroll={scrollToContent}></DropDownMenu>
+                    <DropDownMenu open={openLeftSide} scroll={scrollToContent}></DropDownMenu>
                 </motion.div>
-                {/* <motion.div
-                    className="side-nav__dropdown"
-                    initial={{ x: '-100%', opacity: 0 }}
-                    animate={{ x: leftSide ? 0 : '-100%', opacity: leftSide ? 1 : 0 }}
-                    exit={{ x: '-100%', opacity: 0 }}
+                <motion.div
+                    className="side-nav__calendar"
+                    initial={{ x: '+100%', opacity: 0 }}
+                    animate={{ x: rightSide ? 0 :'+100%' , opacity: rightSide ? 1 : 0 }}
+                    exit={{ x: '+100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <CalendarContent currentDate={currentDate} open={openLeftHeader} scroll={scrollToContent}></CalendarContent>
-                </motion.div> */}
+                    <CalendarContent page={page} currentDate={todayDate} open={openRightSide}></CalendarContent>
+                </motion.div>
                 
                 <motion.div
                     className="report-item"

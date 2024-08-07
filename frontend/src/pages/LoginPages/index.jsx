@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom"
 import { mokiApi } from "../../app/api/loginApi";
 import { totalThunks } from "../../services/salesApiSlice";
 import axios from "axios";
+import { formatDate } from "../../component/common/DateConverter";
 
 function Login() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Login() {
     };
     const fetchData = () => {
         console.log("dispatch!")
-        dispatch(totalThunks());
+        dispatch(totalThunks(formatDate(new Date())));
     }
    
     const handleLoginSuccess = () => {

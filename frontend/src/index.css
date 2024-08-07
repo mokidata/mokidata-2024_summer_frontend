@@ -1049,10 +1049,13 @@ body {
   .side-nav__calendar{
     position: fixed;
     right: 20px;
+
   }
   .side-nav{
     padding:20px;
     width: 260px;
+    max-height: 480px;
+    overflow-y: scroll;
     border-radius: 25px;
     border: 1px solid #E4E4E4;
     background-color: white;
@@ -1087,11 +1090,18 @@ body {
     padding-inline: 3px;
     color: #717171;
   }
-  .side-nav__content#pick{
+  .side-nav__content#calendar{
+    color: black;
+    font-weight: 600;
+  }
+  .side-pick{
     color: black;
     background-color: #F3F4F6;
     border-radius: 4px;
     font-weight: 600;
+  }
+  .side_detail-date{
+    text-align: center;
 
   }
 
