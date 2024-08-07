@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react"
 import Button from "../common/Button"
 import { mokiApi } from "../../app/api/loginApi"
+import { BASE_URL } from "../Url"
 
 function InputMenu(props){
     const [menuName,setMenuName] = useState(props.pick.name)
     const [menuPrice,setMenuPrice] = useState(props.pick.price)
-    const [menuMax,setMenuMax] = useState(0)
-    const [menuMin,setMenuMin] = useState(0)
+    const [menuMax,setMenuMax] = useState(props.pick.minCount)
+    const [menuMin,setMenuMin] = useState(props.pick.maxCount)
+    const [menuImg,setMenuImg] = useState(props.pick.img)
     const [imageFile,setImageFile] = useState(null) 
     const inputRef = useRef(null);
-    const [selectedImage, setSelectedImage] = useState(null);
+    
     const onUploadImage = (e) => {
         if (!e.target.files || e.target.files.length === 0) {
           return;
@@ -18,12 +20,12 @@ function InputMenu(props){
         const file = e.target.files[0];
         setImageFile(file)
         const reader = new FileReader();
+        // 파일을 Data URL로 변환
         
         reader.onloadend = () => {
-          setSelectedImage(reader.result); // 이미지 미리보기 설정
+            setMenuImg(reader.result)
         };
-        
-        reader.readAsDataURL(file); // 파일을 Data URL로 변환
+        reader.readAsDataURL(file); 
     };
 
     const onUploadImageButtonClick = () => {
@@ -31,7 +33,6 @@ function InputMenu(props){
           inputRef.current.click(); // 파일 입력 클릭
         }
     };
-    
     const handleInputChange = (event) => {
         const value = event.target.value;
         console.log(event.target.name)
@@ -47,13 +48,10 @@ function InputMenu(props){
                 break
             case 'min':
                 setMenuMin(value)
-
         };
     }
 
     const postNewMenu = async () => {
-        
-        
         let formData = new FormData()
         formData.append("menuList[0].menuName",menuName )
         formData.append("menuList[0].price",menuPrice)
@@ -73,8 +71,6 @@ function InputMenu(props){
                 console.log(error)
             }
         );
-
-        
     }
 
 
@@ -85,9 +81,23 @@ function InputMenu(props){
             </div>
             <div className="modal-input__info">
                 <div className="modal-input__pic-div">
-                    <div className="modal-input__pic-circle">
+                    
+                        {menuImg === ""?
+                            <div className="modal-input__pic-circle">
+                                
+                                <div className="modal-image__empty">
+                                    NO IMAGE
+                                </div>
+                               
+                            </div> 
+                            :
+                            <div className="modal-input__pic-circle" style={{backgroundColor:"transparent",
+                            backgroundImage:  `url(${menuImg})` , backgroundPosition:'center',backgroundSize:'cover'}}>
+                    
+                            </div> 
+                        }
 
-                    </div>
+                    
                     <button className="modal-input__pic-btn" onClick={onUploadImageButtonClick}>
                         사진 등록
                     </button>
