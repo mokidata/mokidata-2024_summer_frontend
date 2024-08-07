@@ -4,6 +4,7 @@ import Header from "../../component/common/Header";
 import { useEffect, useState } from "react";
 import GetInteger from "../../component/common/GetInteger";
 import Price from "../../component/common/Price";
+import { motion } from "framer-motion";
 
 function BiggestDiffDetail (props){
     const location = useLocation()
@@ -56,7 +57,11 @@ function BiggestDiffDetail (props){
     return(
         <div className="report-page">
             <Header page={state.page}></Header>
-            <div className="report-component" id="best-rank">
+            <motion.div 
+            initial={{opacity:0}}
+            animate={{opacity:1}}
+            transition={{ duration: 0.5 }}
+            className="report-component" id="best-rank">
                 <div className="best-rank__goback" onClick={() => goBack()}>
                     &lt; {
                     props.page === 'daily'? '어제와':
@@ -128,7 +133,7 @@ function BiggestDiffDetail (props){
                                 <div className="best-rank__row" id="rank__profit">
                                     {diffType === "sale" ? 
                                     `${element.todaySales}개`:
-                                    <Price value = {element.todayProfit} unit="원"></Price>
+                                    <Price value = {element.todayProfit} unit="원"></Price>                   
                                      
                                     }
                                     
@@ -144,7 +149,7 @@ function BiggestDiffDetail (props){
                    
                 </div>
 
-            </div>
+            </motion.div>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import Header from "../../component/common/Header";
 import Price from "../../component/common/Price";
 import Triangle from "../../component/common/Triangle";
 import { useEffect, useState } from "react";
-
+import {motion} from 'framer-motion'
 function BestMenuDetail(props){
     const location = useLocation()
     const navigate = useNavigate()
@@ -41,7 +41,13 @@ function BestMenuDetail(props){
     return(
         <div className="report-page">
             <Header page={state.page} currentDate={state.currentDate}></Header>
-            <div className="report-component" id="best-rank">
+            
+            <motion.div 
+            initial={{opacity:0}}
+            animate={{opacity:1}}
+            transition={{ duration: 0.5 }}
+            className="report-component" 
+            id="best-rank">
                 <div className="best-rank__goback" onClick={goBack}>
                     &lt; {
                     state.page === 'daily'? '오늘':
@@ -97,7 +103,7 @@ function BestMenuDetail(props){
 
                 </div>
 
-            </div>
+            </motion.div>
             
 
         </div>
