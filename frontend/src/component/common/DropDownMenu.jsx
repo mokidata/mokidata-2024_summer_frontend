@@ -7,7 +7,7 @@ function DropDownMenu (props){
                 <div className="side-nav__title">
                     &lt; 로그아웃
                 </div>
-                <div className="side-nav__close">
+                <div className="side-nav__close" onClick={() => props.open()}>
                     X
                 </div>
 
