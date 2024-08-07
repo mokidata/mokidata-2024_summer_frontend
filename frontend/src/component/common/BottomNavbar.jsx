@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 const BottomNavbar = (props) => {
     const links = ['월별', '주별', '일별'];
+    const linksCode =['monthly','weekly','daily']
     const navigate = useNavigate()
     function changeDateType(link){
         let dateType = ""
@@ -19,7 +20,7 @@ const BottomNavbar = (props) => {
                 dateType = props.page
         }
         if(props.page !== dateType){
-            navigate(`/${dateType}`)
+            navigate(`/${dateType}`,{state:{currentDate: props.currentDate}})
         }
 
         
@@ -28,10 +29,11 @@ const BottomNavbar = (props) => {
     return (
         <div className="bottom-nav">
            {
-                links.map((link)=>(
-                    <button className="botton-nav__button" key={link} onClick={(event => {
+                links.map((link,index)=>(
+                    <button className="botton-nav__button" key={linksCode[index]} onClick={(event => {
                         changeDateType(link)
-                    })}>
+                    })} 
+                    style={linksCode[index] === props.page ? {textDecoration:"underline"} : {}}>
                         {link}
                     </button>
                 ))

@@ -1,6 +1,6 @@
 import React, { useEffect, useState ,useMemo} from "react";
 import usePageInfo from "../../hooks/usePageInfo";
-import { formatDate, formatMonth, formatWeek, formatYear } from "./DateConverter";
+import { formatDate, formatDateNum, formatMonth, formatWeek, formatYear } from "./DateConverter";
 
 function Header(props){
     
@@ -10,7 +10,7 @@ function Header(props){
             </button>
             <div className="header-desc">
                 {
-                    props.page === 'daily' ? `${formatMonth(props.currentDate)} ${formatDate(props.currentDate)}`:
+                    props.page === 'daily' ? `${formatMonth(props.currentDate)} ${formatDateNum(props.currentDate)}`:
                     props.page === 'weekly'? `${formatMonth(props.currentDate)} ${formatWeek(props.currentDate)}`:
                     props.page === 'monthly'? `${formatYear(props.currentDate)} ${formatMonth(props.currentDate)} `:
                     ""
