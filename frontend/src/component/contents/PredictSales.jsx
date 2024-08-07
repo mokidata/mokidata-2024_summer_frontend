@@ -11,21 +11,24 @@ function PredictSales (props){
     let data= []
     var profit = 0
     for (const dates of Object.keys(compareValue).reverse()){
-      profit = 0
-      compareValue[dates].forEach(element => {
-        profit += element.count * element.price
-      });
-      const obj = {
-        
-        column:  
-        props.page === 'daily' ? `${formatDateNum(dates)} ` :
-        props.page === 'weekly' ? `${formatWeek(dates)} `:
-        props.page === 'monthly' ? `${formatMonth(dates)} `: ""
-      ,value:GetInteger(profit / 10000)
-      ,highlight:false
-      , valueHighlight: false
-    }
-      data.push(obj)
+      if (compareValue[dates].length !== 0){
+        profit = 0
+        compareValue[dates].forEach(element => {
+          profit += element.count * element.price
+        });
+        const obj = {
+          
+          column:  
+          props.page === 'daily' ? `${formatDateNum(dates)} ` :
+          props.page === 'weekly' ? `${formatWeek(dates)} `:
+          props.page === 'monthly' ? `${formatMonth(dates)} `: ""
+        ,value:GetInteger(profit / 10000)
+        ,highlight:false
+        , valueHighlight: false
+        }
+        data.push(obj)
+      }
+      
     }
     profit = 0
     predictValue.forEach(element=>{
