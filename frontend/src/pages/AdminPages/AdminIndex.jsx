@@ -11,14 +11,17 @@ import Button from "../../component/common/Button";
 import Loading from "../../component/admin/Loading";
 
 function AdminIndex(){
+    const [userName,setUserName] = useState("")
     const [nameModal,setNameModal] = useState(false)
     const [periodModal,setPeriodModal] = useState(false)
     const [menuModal,setMenuModal] = useState(false)
-    const [storeName, setStoreName] = useState("매장명 입력")
     const [period,setPeriod] = useState({"startDate" : "","endDate":""});
     const [menuList,setMenuList] = useState([])
     const [isEmpty,setIsEmpty] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const location = useLocation()
+    const state = location.state
+    
     // const [menuList,setMenuList] = useState([{
     //     "name": "아이스 아메리카노",
     //     "img": "string",
@@ -93,6 +96,10 @@ function AdminIndex(){
     
 
     useState(()=>{
+        console.log(state)
+        if(state !== undefined){
+            setUserName(state.name)
+        }
         getMenuList()
         const today = new Date()
         const formatToday = formatDate(today)
@@ -106,15 +113,21 @@ function AdminIndex(){
     }
     return(
         <div className="admin-page" >
-            {nameModal && <NameModal openModal={openNameModal}> </NameModal>}
+            {nameModal && <NameModal setUserName={setUserName} userName={userName} openModal={openNameModal}> </NameModal>}
             {menuModal && <MenuModal menuList={menuList} openModal={openMenuModal}> </MenuModal>}
-            <InputName openModal={openNameModal} storeName={storeName}></InputName>
+            <InputName openModal={openNameModal} userName={userName}></InputName>
             <InputPeriod openModal={openPeriodModal} startDate={period.startDate} endDate={period.endDate} ></InputPeriod>
-            <MenuSet openModal={openMenuModal} menuList={menuList}></MenuSet>
-            <div className="remove-btn"> 데이터 초기화 </div>
-            <div className="modal-btn" onClick={() => {postAction()}}>
-                <Button txt="데이터 생성하기" color={isEmpty? "grey" :"black"} shape="rect" ></Button>
+            <div className="menu-info__div">
+                <MenuSet openModal={openMenuModal} menuList={menuList}></MenuSet>
+                <div className="admin-btn__div">
+                    <div className="remove-btn"> 데이터 초기화 </div>
+                    <div className="modal-btn" onClick={() => {postAction()}}>
+                        <Button txt="데이터 생성하기" color={isEmpty? "grey" :"black"} shape="rect" fontSize="12px"></Button>
+                    </div>
+                </div>
             </div>
+            
+            
         </div>
     );
         

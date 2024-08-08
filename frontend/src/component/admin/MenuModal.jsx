@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../common/Button";
 import InputMenu from "./InputMenu";
+import { BASE_URL } from "../Url";
 
 function MenuModal(props){
     
@@ -28,6 +29,8 @@ function MenuModal(props){
         }
         props.menuList.forEach((element,index) => {
             emptyArray[index] = element
+            console.log(element)
+            console.log(`${element.img}`)
         });
         setMenuUpdateList(emptyArray)
     },[])

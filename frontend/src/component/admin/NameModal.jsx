@@ -1,13 +1,31 @@
+import { mokiApi } from "../../app/api/loginApi";
 import Button from "../common/Button";
 import { useState } from "react";
 
 function NameModal(props){
 
-    const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState(props.userName);
     const handleInputChange = (event) => {
         const value = event.target.value;
         setInputValue(value);
     };
+
+    const patchUserName = async () => {
+        
+        const request = await mokiApi.patch(`/api/auth`,{"name":inputValue}).then(
+            
+            (response) => { 
+                if (response.status == 200){
+                    props.openModal()
+                    props.setUserName(inputValue)
+                    console.log(response.status)
+                }
+                
+            }
+        ).catch(
+            (error) => console.log(error)
+        )
+    }
 
 
 
@@ -30,12 +48,12 @@ function NameModal(props){
                         />
                     </div>
                 </div>
-                <div className="modal-btn">
-                    <div className="modal-btn__div" onClick={props.openModal}>
+                <div className="modal-btn__div">
+                    <div className="modal-btn" onClick={props.openModal}>
                         <Button id="modal-btn" txt="취소" color="grey" shape="rect" fontColor="white"></Button> 
                     </div>
-                    <div className="modal-btn__div" onClick={props.openModal}>
-                        <Button id="modal-btn" txt="성공" color="blue" shape="rect" > </Button>
+                    <div className="modal-btn" onClick={() => patchUserName()}>
+                        <Button id="modal-btn" txt="확인" color="blue" shape="rect" > </Button>
                     </div>
                 </div>
                 

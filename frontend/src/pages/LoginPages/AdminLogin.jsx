@@ -12,10 +12,8 @@ function AdminLogin(){
         setInputValue({ ...inputValue, [name]: value });
     };
 
-    const handleLoginSuccess = async () => {
-        
-
-        navigate("./main")
+    const handleLoginSuccess = (name) => {
+        navigate("./main",{state:{"name":name}})
         console.log("")
     };
     const handleLogin = async (event,inputValue) => {
@@ -29,7 +27,8 @@ function AdminLogin(){
             mokiApi.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
             console.log(mokiApi.defaults.headers.common);
             if(response.status == 200){
-                handleLoginSuccess();
+                const name = response.data.name
+                handleLoginSuccess(name);
             }
             else{
                 console.log("login error!")
@@ -69,7 +68,7 @@ function AdminLogin(){
                 </div>
             </div>
             <div className="button-div" id="admin-login" onClick={(event) => {
-                handleLogin(event, inputValue); // 함수 참조로 호출
+                handleLogin(event, inputValue); 
             
             }}>
                 <Button color="blue" txt="로그인"/>

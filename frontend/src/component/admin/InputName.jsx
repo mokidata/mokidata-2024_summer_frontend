@@ -6,7 +6,7 @@ function InputName(props){
     return(
         <div className="input-name">
             <div className="input-name__name">
-                {props.storeName}
+                {props.userName}
 
             </div>
             <button className="input-name__button" onClick={props.openModal}>
