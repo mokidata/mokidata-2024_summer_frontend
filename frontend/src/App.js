@@ -10,8 +10,17 @@ import { PersistGate } from 'redux-persist/integration/react';
 import BiggestDiffDetail from './pages/ReportPages/BiggestDiffDetail';
 import AdminLogin from './pages/LoginPages/AdminLogin';
 import AdminIndex from './pages/AdminPages/AdminIndex';
+import { useEffect } from 'react';
 
 function App() {
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  useEffect(() => {
+    setScreenSize();
+  });
+
   return (
     <BrowserRouter>
       <Provider store={store}>
