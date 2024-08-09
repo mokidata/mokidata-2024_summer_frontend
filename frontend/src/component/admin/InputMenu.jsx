@@ -4,13 +4,29 @@ import { mokiApi } from "../../app/api/loginApi"
 import { BASE_URL } from "../Url"
 
 function InputMenu(props){
-    const [menuName,setMenuName] = useState(props.pick.name)
+    const fileToImage = (file) => {
+        const reader = new FileReader();
+        // 파일을 Data URL로 변환
+        
+        reader.onloadend = () => {
+            console.log()
+            setMenuImg(reader.result)
+        };
+        reader.readAsDataURL(file); 
+    }
+    const [menuName,setMenuName] = useState(props.pick.name === "NO DATA" ? "" : props.pick.name)
     const [menuPrice,setMenuPrice] = useState(props.pick.price)
-    const [menuMax,setMenuMax] = useState(props.pick.minCount)
-    const [menuMin,setMenuMin] = useState(props.pick.maxCount)
-    const [menuImg,setMenuImg] = useState(props.pick.img)
+    const [menuMax,setMenuMax] = useState(props.pick.maxCount)
+    const [menuMin,setMenuMin] = useState(props.pick.minCount)
+    const [menuImg,setMenuImg] = useState(
+        props.pick.img === null ? "" :
+        props.pick.img instanceof File ? () => {
+            fileToImage(props.pick.img)
+        }:
+        `${BASE_URL}${props.pick.img}`)
     const [imageFile,setImageFile] = useState(null) 
     const inputRef = useRef(null);
+    console.log(props)
     
     const onUploadImage = (e) => {
         if (!e.target.files || e.target.files.length === 0) {
@@ -19,13 +35,8 @@ function InputMenu(props){
         
         const file = e.target.files[0];
         setImageFile(file)
-        const reader = new FileReader();
-        // 파일을 Data URL로 변환
+        fileToImage(file)
         
-        reader.onloadend = () => {
-            setMenuImg(reader.result)
-        };
-        reader.readAsDataURL(file); 
     };
 
     const onUploadImageButtonClick = () => {
@@ -33,6 +44,7 @@ function InputMenu(props){
           inputRef.current.click(); // 파일 입력 클릭
         }
     };
+
     const handleInputChange = (event) => {
         const value = event.target.value;
         console.log(event.target.name)
@@ -51,27 +63,23 @@ function InputMenu(props){
         };
     }
 
-    const postNewMenu = async () => {
-        let formData = new FormData()
-        formData.append("menuList[0].menuName",menuName )
-        formData.append("menuList[0].price",menuPrice)
-        formData.append("menuList[0].image",imageFile)
-        formData.append("menuList[0].maxCount",menuMax)
-        formData.append("menuList[0].minCount",menuMin)
-        
-        const response = await mokiApi.post(`/api/menu`,formData,{
-            headers:{'Content-Type' : 'multipart/form-data'}
-        }).then(
-            (response) => {
-                console.log(response)
-                props.close(-1)
-            }
-        ).catch(
-            (error) => {
-                console.log(error)
-            }
-        );
+    const updateNewMenu = () => {
+        const data = {}
+        data['name'] = menuName
+        data['price'] = menuPrice
+        if(props.pick.img === menuImg)
+        {
+            data['img'] = null
+        }
+        else{
+            data['img'] = imageFile
+        }
+        data['maxCount'] = menuMax
+        data['minCount'] = menuMin
+        return data
     }
+
+    
 
 
     return(
@@ -152,8 +160,8 @@ function InputMenu(props){
                         <input
                             className="admin-input-img"
                             id="modal-input"
-                            name="max"
-                            value={menuMax}
+                            name="min"
+                            value={menuMin}
                             onChange={handleInputChange}
                         /><div className="modal-input__unit"> 개</div>
 
@@ -167,8 +175,8 @@ function InputMenu(props){
                         <input
                             className="admin-input-img"
                             id="modal-input"
-                            name="min"
-                            value={menuMin}
+                            name="max"
+                            value={menuMax}
                             onChange={handleInputChange}
                         />
                         <div className="modal-input__unit"> 개</div>
@@ -176,11 +184,14 @@ function InputMenu(props){
                     </div>
                 </div>
             </div>
-            <div className="modal-btn">
-                <div className="modal-btn__div" onClick={() => props.close(-1)}>
+            <div className="modal-btn__div">
+                <div className="modal-btn" onClick={() => props.close(-1)}>
                     <Button id="modal-btn" txt="취소" color="grey" shape="rect" fontColor="white"></Button> 
                 </div>
-                <div className="modal-btn__div" onClick={() => postNewMenu()}>
+                <div className="modal-btn" onClick={() => {
+                    props.close(-1)
+                    props.update(updateNewMenu(),props.index)
+                }}>
                     <Button id="modal-btn" txt="확인" color="blue" shape="rect" > </Button>
                 </div>
             </div>

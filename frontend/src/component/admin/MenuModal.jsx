@@ -1,14 +1,68 @@
 import { useEffect, useState } from "react";
 import Button from "../common/Button";
 import InputMenu from "./InputMenu";
-import { BASE_URL } from "../Url";
-
+import { mokiApi } from "../../app/api/loginApi";
 function MenuModal(props){
-    
-    console.log(props)
     const [menuUpdateList, setMenuUpdateList] = useState([])
     const [menuInput, setMenuInput] = useState(false)
     const [pickedIndex, setPickedIndex] = useState(0)
+    const [imgUpdateList,setImgUpdateList] = useState([])
+    const [updateIndexList,setUpdateIndexList] = useState([])
+    const [inputState,setInputState] = useState("add")
+    const menuLength = props.menuList.length
+
+    const updateMenu = (data,index) => {
+        //신메뉴 추가, 수정일 때 -> 메뉴리스트에 업데이트만
+        if(index >= menuLength){
+            setMenuUpdateList((preV) => {
+                let copy = [...preV]
+                const replaceIndex = copy.findIndex(element => element.name ==="NO DATA")
+                copy[replaceIndex] = data
+                return copy
+            })
+            
+        }
+        //기존 메뉴 업데이트일 때 -> 메뉴리스트 업데이트 & 업데이트한 메뉴 인덱스 추가 -> 인덱스 해당 되는 것만 업데이트 보낼거임
+        else{
+            //이미지 수정 없을 때
+            if(data.img === null){
+                setUpdateIndexList((preV) => {
+                    console.log(updateIndexList.find((element) => element === index))
+                    if (updateIndexList.find((element) => element === index) === undefined){
+                        return [...preV,index]
+                    }
+                    else{
+                        return [...preV]
+                    }
+                })
+                setMenuUpdateList((preV) => {
+                    let copy = [...preV]
+                    copy[index] = data
+                    copy[index]['img'] = preV[index]['img'] //이미지는 원래값 쓰기
+                    return copy
+                })
+            }
+            //이미지 수정 있을 때
+            else{
+                setImgUpdateList((preV) => {
+                    if (imgUpdateList.find((element) => element === index) === undefined){
+                        return [...preV,index]
+                    }
+                    else{
+                        return [...preV]
+                    }
+                })
+                setMenuUpdateList((preV) => {
+                    let copy = [...preV]
+                    copy[index] = data
+                    return copy
+                })
+
+            }
+        }
+        props.getAlert("green","입력한 메뉴가 정상적으로 등록되었습니다.")
+           
+    }
     const OpenMenuInput= (index) =>{
         if(index === -1){
             setMenuInput(false)
@@ -17,30 +71,96 @@ function MenuModal(props){
             setPickedIndex(index)
             setMenuInput(true);
         }
-        console.log(menuInput)
+    }
+
+    const putMenu = async () => {
+        //이미지 변화 없는 메뉴들 & 이미지 변화 있는 메뉴 인덱스 리스트 합쳐서 보내기
+        const mergedList = [...new Set([...updateIndexList, ...imgUpdateList])]
+        console.log(mergedList)
+        if(mergedList.length !== 0){
+            
+            for(let i = 0 ;i<mergedList.length; i++){
+                let formData = new FormData()
+                formData.append(`menuList[0].menuName`,menuUpdateList[mergedList[i]].name )
+                formData.append(`menuList[0].price`,menuUpdateList[mergedList[i]].price)
+                formData.append(`menuList[0].image`,menuUpdateList[mergedList[i]].img)
+                formData.append(`menuList[0].maxCount`,menuUpdateList[mergedList[i]].maxCount)
+                formData.append(`menuList[0].minCount`,menuUpdateList[mergedList[i]].minCount)
+                const response = await mokiApi.put(`/api/menu`,formData,{
+                    headers:{'Content-Type' : 'multipart/form-data'}
+                }).then(
+                    (response) => {
+                        console.log(response)
+                        props.close(-1)
+                    }
+                ).catch(
+                    (error) => {
+                        console.log(error)
+                    }
+                );
+            }
+            
+        }        
+    }
+
+    const postNewMenu = async() => {
+        const pushIndex = menuUpdateList.findIndex((element) => element.name === "NO DATA")
+        console.log(pushIndex)
         
+        for (let i =menuLength; i<pushIndex;i++){
+            let formData = new FormData()
+            console.log(menuUpdateList)
+            formData.append(`menuList[0].menuName`,menuUpdateList[i].name )
+            formData.append(`menuList[0].price`,menuUpdateList[i].price)
+            formData.append(`menuList[0].image`,menuUpdateList[i].img)
+            formData.append(`menuList[0].maxCount`,menuUpdateList[i].maxCount)
+            formData.append(`menuList[0].minCount`,menuUpdateList[i].minCount)
+            const response = await mokiApi.post(`/api/menu`,formData,{
+                headers:{'Content-Type' : 'multipart/form-data'}
+            }).then(
+                (response) => {
+                    console.log(response)
+                    props.close(-1)
+                }
+            ).catch(
+                (error) => {
+                    console.log(error)
+                }
+            );
+
+        }
+        
+
     }
 
     
+    
     useEffect(()=>{
+        console.log(updateIndexList)
+        console.log(imgUpdateList)
+        console.log(menuUpdateList)
+    },[updateIndexList,imgUpdateList])
+
+    
+    useEffect(()=>{
+        console.log(props.menuList)
         const emptyArray = []
         for (let i = 0 ; i<50;i++){
-            emptyArray.push({"name":"","img":"","price":0}) 
+            emptyArray.push({"name":"NO DATA","img":null,"price":0})
         }
+
         props.menuList.forEach((element,index) => {
             emptyArray[index] = element
-            console.log(element)
-            console.log(`${element.img}`)
         });
         setMenuUpdateList(emptyArray)
-    },[])
+    },[props.menuList]) 
     
 
     return(
         <div className="modal-background">
                 {
                     menuInput ?
-                      <InputMenu pick={menuUpdateList[pickedIndex]} close={OpenMenuInput}></InputMenu>
+                      <InputMenu getAlert={props.getAlert} index={pickedIndex} pick={menuUpdateList[pickedIndex]} inputState={inputState} update={updateMenu} close={OpenMenuInput}></InputMenu>
                     :
                     <div className="modal" id="modal-menu">
                         <div className="modal-title__div">
@@ -57,29 +177,47 @@ function MenuModal(props){
                                     <div className="modal-menu__row-num">
                                         {index+1}.
                                     </div>
-                                    <div className="modal-menu__row-name">
-                                        {element.name}
-                                    </div>
-                                    <div className="modal-menu__row-button" id={index+1} onClick={() => OpenMenuInput(index)}>
+                                    <div className="modal-menu__row-value">
+                                        <div className="modal-menu__row-name">
+                                            {element.name}
+                                        </div>
                                         {
-                                            element.name === "" ?
-                                            <Button txt="정보 등록" color="green" fontSize={12} ></Button>
+                                            element.name === "NO DATA" ?
+                                            <div className="modal-menu__row-button" id={index+1} onClick={() => {
+                                                OpenMenuInput(index)
+                                                setInputState("add")
+                                                }}>
+                                                <Button txt="정보 등록" color="green" fontSize={12} ></Button>
+                                            </div>
                                             :
-                                            <Button txt="정보 수정" color="blue" fontSize={12}></Button>
+                                            <div className="modal-menu__row-button" id={index+1} onClick={() => {
+                                                OpenMenuInput(index)
+                                                setInputState("modify")
+                                                }}>
+                                                <Button txt="정보 수정" color="blue" fontSize={12}></Button>
+                                            </div>
+
 
                                         }
-                                        
                                     </div>
+                                    
 
                                 </div>
                             ))}
                         </div>
-                        <div className="modal-btn">
-                            <div className="modal-btn__div" onClick={props.openModal}>
+                        <div className="modal-btn__div">
+                            <div className="modal-btn" onClick={props.openModal}>
                                 <Button id="modal-btn" txt="취소" color="grey" shape="rect" fontColor="white"></Button> 
                             </div>
-                            <div className="modal-btn__div" onClick={props.openModal}>
-                                <Button id="modal-btn" txt="성공" color="blue" shape="rect" > </Button>
+                            <div className="modal-btn" onClick={() =>{
+                                props.openModal()
+                                postNewMenu()
+                                putMenu()
+                                props.getAlert("green","입력한 메뉴가 정상적으로 등록되었습니다.")
+                                }
+                                
+                            }>
+                                <Button id="modal-btn" txt="확인" color="blue" shape="rect" > </Button>
                             </div>
                         </div>
 

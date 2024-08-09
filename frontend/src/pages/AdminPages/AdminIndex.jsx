@@ -9,16 +9,22 @@ import { useLocation } from "react-router-dom";
 import { mokiApi } from "../../app/api/loginApi";
 import Button from "../../component/common/Button";
 import Loading from "../../component/admin/Loading";
+import WarningModal from "../../component/admin/WarningModal";
+import Alert from "../../component/admin/Alert";
 
 function AdminIndex(){
     const [userName,setUserName] = useState("")
     const [nameModal,setNameModal] = useState(false)
     const [periodModal,setPeriodModal] = useState(false)
     const [menuModal,setMenuModal] = useState(false)
+    const [warningModal, setWarningModal] = useState(false)
+    const [isAlert,setIsAlert] = useState(false)
     const [period,setPeriod] = useState({"startDate" : "","endDate":""});
     const [menuList,setMenuList] = useState([])
     const [isEmpty,setIsEmpty] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [alertColor,setAlertColor] = useState("")
+    const [alertMsg,setAlertMsg] = useState("")
     const location = useLocation()
     const state = location.state
     
@@ -54,6 +60,19 @@ function AdminIndex(){
     const openMenuModal = () => {
         setMenuModal(!menuModal)
     }
+    const openWarningModal = () =>{
+        setWarningModal(!warningModal)
+    }
+
+
+    const getAlert = (color,msg) => {
+        setAlertColor(color)
+        setAlertMsg(msg)
+        setIsAlert(!isAlert); // Alert를 보여줌
+        setTimeout(() => {
+            setIsAlert(false); // 3초 후 Alert를 숨김
+        }, 3000);
+    }
     const getMenuList = async () =>{
         console.log("getMenuList")
         let data = []
@@ -69,17 +88,37 @@ function AdminIndex(){
             (response)=>{
                 console.log(response)
                 setIsLoading(false)
+                getAlert("green","데이터 생성 완료")
+
             }
         ).catch(
-            (error) => {console.log(error)}
+            (error) => {
+                console.log(error)
+                setIsLoading(false)
+                getAlert("red","데이터 생성 실패")
+                
+            }
+
         )
+        
     }
     const postAction = () =>{
         console.log("postAction")
         setIsLoading(true)
         postRandom()
     }
-    
+    const deleteAllMenu = async () => {
+        const tempArr = []
+        for (let menu of menuList){
+            tempArr.push(menu.name)
+        }
+        console.log(tempArr)
+        const queryString = tempArr.map(menu => `menu=${encodeURIComponent(menu)}`).join('&');
+
+        const response = await mokiApi.delete(`/api/menu?${queryString}`)
+        .then((response)=> console.log(response.status))
+        .catch((error) => console.log(error))
+    }
     useState(()=>{
         if(menuList.length !== 0){
             setIsEmpty(true)
@@ -90,6 +129,8 @@ function AdminIndex(){
         setMenuModal(false)
         setNameModal(false)
         setPeriodModal(false)
+        setWarningModal(false)
+        setIsAlert(false)
         getMenuList()
 
     },[])
@@ -113,15 +154,17 @@ function AdminIndex(){
     }
     return(
         <div className="admin-page" >
+            {isAlert && <Alert color={alertColor} txt={alertMsg}></Alert>}
+            {warningModal && <WarningModal openModal={openWarningModal} deleteMenu={deleteAllMenu}> </WarningModal>}
             {nameModal && <NameModal setUserName={setUserName} userName={userName} openModal={openNameModal}> </NameModal>}
-            {menuModal && <MenuModal menuList={menuList} openModal={openMenuModal}> </MenuModal>}
+            {menuModal && <MenuModal getAlert={getAlert} menuList={menuList} openModal={openMenuModal}> </MenuModal>}
             <InputName openModal={openNameModal} userName={userName}></InputName>
             <InputPeriod openModal={openPeriodModal} startDate={period.startDate} endDate={period.endDate} ></InputPeriod>
             <div className="menu-info__div">
                 <MenuSet openModal={openMenuModal} menuList={menuList}></MenuSet>
                 <div className="admin-btn__div">
-                    <div className="remove-btn"> 데이터 초기화 </div>
-                    <div className="modal-btn" onClick={() => {postAction()}}>
+                    <div className="remove-btn" onClick={() => {getAlert()}} > 데이터 초기화 </div>
+                    <div className="modal-btn__div" onClick={() => {postAction()}}>
                         <Button txt="데이터 생성하기" color={isEmpty? "grey" :"black"} shape="rect" fontSize="12px"></Button>
                     </div>
                 </div>
