@@ -35,6 +35,7 @@ function Login() {
                 id: inputValue.id,
                 password: inputValue.pswd
             });
+            sessionStorage.setItem("accessToken",response.data.token)
             mokiApi.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
             console.log(mokiApi.defaults.headers.common);
             console.log(response);

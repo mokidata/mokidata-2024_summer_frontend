@@ -14,14 +14,13 @@ export const totalThunks = createAsyncThunk(
   'saleSlice/fetchData',
   async (initialFormatDate,thunkAPI) => {
     let data = {"date":initialFormatDate,"today":{},"predictToday":{},"predictLast":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
-    //오늘 날짜 받기
-    // const todayDate = new Date();
     
-    //날짜를 2024-07-28 형태로 변경하는 함수 
-    
-    // const initialFormatDate = formatDate(todayDate)
-    
-    //오늘 날짜를 초기에 받고 배열 첫 element로 세팅
+    //토큰 가져다 쓰기
+    const token = sessionStorage.getItem('accessToken');
+    if (token) {
+        mokiApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+    //비교를 위한 어제, 일주일 전 , 한달 전 데이터 가져오기
     const yesterday = new Date(initialFormatDate)
     const lastWeek = new Date(initialFormatDate)
     const lastMonth = new Date(initialFormatDate)
