@@ -4,19 +4,34 @@ import Price from "../../component/common/Price";
 import Triangle from "../../component/common/Triangle";
 import { useEffect, useState } from "react";
 import {motion} from 'framer-motion'
+import TopButton from "../../component/common/TopButton";
 function BestMenuDetail(props){
     const location = useLocation()
     const navigate = useNavigate()
     const {state} = location
     const rankArray = state.rankDetail[state.page]
     const [lastRank,setLastRank] = useState({})
+    const [topVisible,setTopVisible] = useState(false)
+    const handleScroll = () => {
+        if (window.scrollY > 500) {
+            setTopVisible(true);
+        } else {
+            setTopVisible(false);
+        }
+    };
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
     const goBack = () => {
 
         navigate(-1)
     }
     useEffect(()=>{
         window.scroll(0,0)
-    })
+    },[state])
     useEffect(()=>{
         const obj = {}
         if(state.lastDetail[state.page].length !== 0)
@@ -102,6 +117,18 @@ function BestMenuDetail(props){
                     
 
                 </div>
+
+            </motion.div>
+            <motion.div className="top-button__div"
+                    initial={{opacity:0}}
+                    animate={{opacity: 
+                        topVisible?
+                        1:0
+                    }}
+                    transition={{duration:0.3}}
+                    
+                >
+                    <TopButton></TopButton>
 
             </motion.div>
             

@@ -15,6 +15,8 @@ import { useLocation } from "react-router-dom";
 import CalendarContent from "../../component/common/CalendarContent";
 import { useDispatch } from "react-redux";
 import { totalThunks } from "../../services/salesApiSlice";
+import TopButton from "../../component/common/TopButton";
+import LoadingScreen from "../../component/common/LoadingScreen";
 
 function ReportPage(props){
     
@@ -36,6 +38,21 @@ function ReportPage(props){
     const [leftSide,setLeftSide] = useState(false)
     const [rightSide,setRightSide] = useState(false)
     const todayDate = formatDate(new Date())
+    const [topVisible,setTopVisible] = useState(false)
+    const handleScrollTop = () => {
+        if (window.scrollY > 500) {
+            setTopVisible(true);
+        } else {
+            setTopVisible(false);
+        }
+    };
+    useEffect(() => {
+        window.addEventListener('scroll', handleScrollTop);
+        return () => {
+            window.removeEventListener('scroll', handleScrollTop);
+        };
+    }, []);
+
     const handleScroll = () => {
         const items = document.querySelectorAll('.report-item');
         items.forEach((item, index) => {
@@ -53,7 +70,14 @@ function ReportPage(props){
         console.log('scroll')
         const items = document.querySelectorAll('.report-item');
         if (index >= 0 && index < items.length) { // 유효한 인덱스인지 확인
-            items[index].scrollIntoView({ behavior: 'smooth', block: 'start' }); // 해당 요소로 부드럽게 스크롤
+            setLeftSide(false)
+            const elementPosition=items[index].getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - 66;
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+
         } else {
             console.error('유효하지 않은 인덱스입니다.'); // 유효하지 않은 인덱스일 경우 에러 메시지 출력
         }
@@ -76,18 +100,23 @@ function ReportPage(props){
         setComponentFade([true,false,false,false,false])
         
     },[props.page])
+
+    useEffect(()=>{
+        window.scrollTo(0,0)
+        setComponentFade([true,false,false,false,false])
+
+    },[])
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [componentFade]);
 
+
     //페이지 옮길 때 스크롤 맨 위로 올림
 
     if(isLoadingState){
         return (
-            <div>
-                loading...
-            </div>
+            <LoadingScreen txt={<span>매출 데이터를 <br /> 가져오고 있어요!</span>}></LoadingScreen>
         )
     }
     else{
@@ -166,8 +195,23 @@ function ReportPage(props){
                     animate={{ opacity: componentFade[4] ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <BiggestDiffMenu page={page} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}></BiggestDiffMenu>
+                    <BiggestDiffMenu page={page} currentDate={currentDate} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}></BiggestDiffMenu>
                 </motion.div>
+                <motion.div className="top-button__div"
+                    initial={{opacity:0}}
+                    animate={{opacity: 
+                        topVisible?1:0
+                    }}
+                    transition={{duration:0.3}}
+                    
+                >
+                    <TopButton></TopButton>
+
+                </motion.div>
+                
+                
+                
+                
                 <BottomNavbar page={page} currentDate={currentDate}></BottomNavbar>
             </div>
             

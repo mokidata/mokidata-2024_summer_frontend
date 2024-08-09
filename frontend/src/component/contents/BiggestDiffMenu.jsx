@@ -12,6 +12,7 @@ function BiggestDiffMenu(props){
     const [bestMenu,setBestMenu] = useState({"name":"","percentage" : 0,"diff" : 0,"img":""})
     const [worstMenu,setWorstMenu] = useState({"name":"","percentage" : 0,"diff" : 0,"img":""})
     let result = {};
+    
     useEffect(()=>{
         if(props.todayValue[props.page].length !== 0){
             result ={}
@@ -77,7 +78,7 @@ function BiggestDiffMenu(props){
     },[diffArray])
 
     function BiggestDiffDetailNavigate (){
-        navigate("/biggestdiff",{state:{todayValue:props.todayValue, lastDetailValue:props.lastDetailValue , page:props.page}})
+        navigate("/biggestdiff",{state:{todayValue:props.todayValue, lastDetailValue:props.lastDetailValue , page:props.page, currentDate:props.currentDate}})
     }
     
     /*

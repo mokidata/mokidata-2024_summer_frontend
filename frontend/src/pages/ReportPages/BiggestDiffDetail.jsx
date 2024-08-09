@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import GetInteger from "../../component/common/GetInteger";
 import Price from "../../component/common/Price";
 import { motion } from "framer-motion";
+import TopButton from "../../component/common/TopButton";
 
 function BiggestDiffDetail (props){
     const location = useLocation()
@@ -12,16 +13,31 @@ function BiggestDiffDetail (props){
     const {state} = location
     const todayArray = state.todayValue[state.page]
     const lastArray = state.lastDetailValue[state.page]
+    
     console.log(state)
     const [diffRank,setDiffRank] = useState([])
     const [diffType,setDiffType] = useState("sale")
+    const [topVisible,setTopVisible] = useState(false)
+    const handleScroll = () => {
+        if (window.scrollY > 500) {
+            setTopVisible(true);
+        } else {
+            setTopVisible(false);
+        }
+    };
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
     const goBack = () => {
 
         navigate(-1)
     }
     useEffect(()=>{
         window.scroll(0,0)
-    })
+    },[state])
     useEffect(()=>{
         if(Object.keys(state.todayValue[state.page]).length !== 0 ){
             
@@ -56,7 +72,7 @@ function BiggestDiffDetail (props){
 
     return(
         <div className="report-page">
-            <Header page={state.page}></Header>
+            <Header page={state.page} currentDate={state.currentDate} ></Header>
             <motion.div 
             initial={{opacity:0}}
             animate={{opacity:1}}
@@ -148,6 +164,18 @@ function BiggestDiffDetail (props){
                     }
                    
                 </div>
+
+            </motion.div>
+            <motion.div className="top-button__div"
+                    initial={{opacity:0}}
+                    animate={{opacity: 
+                        topVisible?
+                        1:0
+                    }}
+                    transition={{duration:0.3}}
+                    
+                >
+                    <TopButton></TopButton>
 
             </motion.div>
         </div>
