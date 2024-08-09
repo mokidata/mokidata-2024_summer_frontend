@@ -12,6 +12,7 @@ function MenuModal(props){
     const menuLength = props.menuList.length
 
     const updateMenu = (data,index) => {
+        console.log(data)
         //신메뉴 추가, 수정일 때 -> 메뉴리스트에 업데이트만
         if(index >= menuLength){
             setMenuUpdateList((preV) => {
@@ -24,43 +25,27 @@ function MenuModal(props){
         }
         //기존 메뉴 업데이트일 때 -> 메뉴리스트 업데이트 & 업데이트한 메뉴 인덱스 추가 -> 인덱스 해당 되는 것만 업데이트 보낼거임
         else{
-            //이미지 수정 없을 때
-            if(data.img === null){
-                setUpdateIndexList((preV) => {
-                    console.log(updateIndexList.find((element) => element === index))
-                    if (updateIndexList.find((element) => element === index) === undefined){
-                        return [...preV,index]
-                    }
-                    else{
-                        return [...preV]
-                    }
-                })
-                setMenuUpdateList((preV) => {
-                    let copy = [...preV]
-                    copy[index] = data
+            
+            setUpdateIndexList((preV) => {
+                console.log(updateIndexList.find((element) => element === index))
+                if (updateIndexList.find((element) => element === index) === undefined){
+                    return [...preV,index]
+                }
+                else{
+                    return [...preV]
+                }
+            })
+            setMenuUpdateList((preV) => {
+                let copy = [...preV]
+                copy[index] = data
+                if (data.img === undefined){ //이미지 파라미터가 없다면 이미지가 변하지 않은 것
                     copy[index]['img'] = preV[index]['img'] //이미지는 원래값 쓰기
-                    return copy
-                })
-            }
-            //이미지 수정 있을 때
-            else{
-                setImgUpdateList((preV) => {
-                    if (imgUpdateList.find((element) => element === index) === undefined){
-                        return [...preV,index]
-                    }
-                    else{
-                        return [...preV]
-                    }
-                })
-                setMenuUpdateList((preV) => {
-                    let copy = [...preV]
-                    copy[index] = data
-                    return copy
-                })
-
-            }
+                }
+                return copy
+            })
         }
         props.getAlert("green","입력한 메뉴가 정상적으로 등록되었습니다.")
+        console.log(menuUpdateList)
            
     }
     const OpenMenuInput= (index) =>{
@@ -75,27 +60,30 @@ function MenuModal(props){
 
     const putMenu = async () => {
         //이미지 변화 없는 메뉴들 & 이미지 변화 있는 메뉴 인덱스 리스트 합쳐서 보내기
-        const mergedList = [...new Set([...updateIndexList, ...imgUpdateList])]
-        console.log(mergedList)
-        if(mergedList.length !== 0){
-            
-            for(let i = 0 ;i<mergedList.length; i++){
+        console.log(updateIndexList)
+        if(updateIndexList.length !== 0){
+            for(let i = 0 ;i<updateIndexList.length; i++){
                 let formData = new FormData()
-                formData.append(`menuList[0].menuName`,menuUpdateList[mergedList[i]].name )
-                formData.append(`menuList[0].price`,menuUpdateList[mergedList[i]].price)
-                formData.append(`menuList[0].image`,menuUpdateList[mergedList[i]].img)
-                formData.append(`menuList[0].maxCount`,menuUpdateList[mergedList[i]].maxCount)
-                formData.append(`menuList[0].minCount`,menuUpdateList[mergedList[i]].minCount)
+                formData.append(`menuList[0].menuName`,menuUpdateList[updateIndexList[i]].name )
+                formData.append(`menuList[0].price`,menuUpdateList[updateIndexList[i]].price)
+                if (menuUpdateList[updateIndexList[0]].img instanceof File ){
+                    formData.append(`menuList[0].image`,menuUpdateList[updateIndexList[i]].img)
+                }
+                formData.append(`menuList[0].maxCount`,menuUpdateList[updateIndexList[i]].maxCount)
+                formData.append(`menuList[0].minCount`,menuUpdateList[updateIndexList[i]].minCount)
                 const response = await mokiApi.put(`/api/menu`,formData,{
                     headers:{'Content-Type' : 'multipart/form-data'}
                 }).then(
                     (response) => {
                         console.log(response)
-                        props.close(-1)
+                        
                     }
                 ).catch(
                     (error) => {
                         console.log(error)
+                        props.openModal()
+                        props.setIsLoading(false)
+                        props.getAlert("red",`데이터 저장 실패`)
                     }
                 );
             }
@@ -109,27 +97,35 @@ function MenuModal(props){
         
         for (let i =menuLength; i<pushIndex;i++){
             let formData = new FormData()
+            console.log(i)
             console.log(menuUpdateList)
             formData.append(`menuList[0].menuName`,menuUpdateList[i].name )
             formData.append(`menuList[0].price`,menuUpdateList[i].price)
-            formData.append(`menuList[0].image`,menuUpdateList[i].img)
+            if(menuUpdateList[i].img !== undefined){
+                formData.append(`menuList[0].image`,menuUpdateList[i].img)
+            }
             formData.append(`menuList[0].maxCount`,menuUpdateList[i].maxCount)
             formData.append(`menuList[0].minCount`,menuUpdateList[i].minCount)
+            for (const [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
             const response = await mokiApi.post(`/api/menu`,formData,{
                 headers:{'Content-Type' : 'multipart/form-data'}
             }).then(
                 (response) => {
                     console.log(response)
-                    props.close(-1)
                 }
             ).catch(
                 (error) => {
                     console.log(error)
+                    props.openModal()
+                    props.setIsLoading(false)
+                    props.getAlert("red","데이터 저장 실패")
                 }
             );
 
         }
-        
+        //isloading -> get이 호출되면서 loading이 false로 바뀜
 
     }
 

@@ -67,11 +67,7 @@ function InputMenu(props){
         const data = {}
         data['name'] = menuName
         data['price'] = menuPrice
-        if(props.pick.img === menuImg)
-        {
-            data['img'] = null
-        }
-        else{
+        if(imageFile instanceof File){
             data['img'] = imageFile
         }
         data['maxCount'] = menuMax

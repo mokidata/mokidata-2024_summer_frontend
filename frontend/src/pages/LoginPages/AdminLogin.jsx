@@ -17,13 +17,12 @@ function AdminLogin(){
         console.log("")
     };
     const handleLogin = async (event,inputValue) => {
-        
-        
         try {
             const response = await mokiApi.post("/api/auth/login", {
                 id: inputValue.id,
                 password: inputValue.pswd
             });
+            sessionStorage.setItem("accessToken",response.data.token)
             mokiApi.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
             console.log(mokiApi.defaults.headers.common);
             if(response.status == 200){

@@ -11,6 +11,7 @@ import Button from "../../component/common/Button";
 import Loading from "../../component/admin/Loading";
 import WarningModal from "../../component/admin/WarningModal";
 import Alert from "../../component/admin/Alert";
+import LoadingScreen from "../../component/common/LoadingScreen";
 
 function AdminIndex(){
     const [userName,setUserName] = useState("")
@@ -25,6 +26,7 @@ function AdminIndex(){
     const [isLoading, setIsLoading] = useState(false)
     const [alertColor,setAlertColor] = useState("")
     const [alertMsg,setAlertMsg] = useState("")
+    const [loadingMsg,setLoadingMsg] = useState("")
     const location = useLocation()
     const state = location.state
     
@@ -75,14 +77,27 @@ function AdminIndex(){
     }
     const getMenuList = async () =>{
         console.log("getMenuList")
+        setLoadingMsg("메뉴 정보를 가져오는 중입니다.")
+        setIsLoading(true)
         let data = []
-        const response = await mokiApi.get("/api/menu/list")
-        if (response.status == 200){
-            data = response.data
+        //토큰 가져다 쓰기
+        const token = sessionStorage.getItem('accessToken');
+        if (token) {
+            mokiApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         }
+        const response = await mokiApi.get("/api/menu/list").then(
+            (response) => {
+                data = response.data
+                console.log(response.status)
+            }
+        ).catch(
+            (error) => {console.log(error)}
+        )
         setMenuList(data)
+        setIsLoading(false)
     }
     const postRandom = async () =>{
+        setIsLoading(true) //로딩 페이지 띄우기
         let formData = {"startDate":period.startDate,"endDate":period.endDate}
         const response = await mokiApi.post(`/api/menu/random`,formData).then(
             (response)=>{
@@ -98,16 +113,11 @@ function AdminIndex(){
                 getAlert("red","데이터 생성 실패")
                 
             }
-
         )
-        
     }
-    const postAction = () =>{
-        console.log("postAction")
+
+    const deleteAllData = async () => {
         setIsLoading(true)
-        postRandom()
-    }
-    const deleteAllMenu = async () => {
         const tempArr = []
         for (let menu of menuList){
             tempArr.push(menu.name)
@@ -116,24 +126,48 @@ function AdminIndex(){
         const queryString = tempArr.map(menu => `menu=${encodeURIComponent(menu)}`).join('&');
 
         const response = await mokiApi.delete(`/api/menu?${queryString}`)
-        .then((response)=> console.log(response.status))
-        .catch((error) => console.log(error))
+        .then((response)=> {
+            console.log(response.status)
+        })
+        .catch((error) => {
+            console.log(error)
+            getAlert("red",' 메뉴 초기화 실패')
+            setIsLoading(false)
+        })
+        const userNamePatch = await mokiApi.patch(`api/auth`,{"name":""})
+        .then((response) => {
+            console.log(response.status)
+            setUserName("")
+        })
+        .catch((error) => {
+            console.log(error)
+            getAlert("red",' 매장명 초기화 실패')
+            setIsLoading(false)
+        })
+        getAlert("green","초기화 완료")
     }
+
     useState(()=>{
+        console.log("re-render")
+        setMenuModal(false)
+        setNameModal(false)
+        setPeriodModal(false)
+        setWarningModal(false)
+        setIsAlert(false)
         if(menuList.length !== 0){
             setIsEmpty(true)
         }
         else{
             setIsEmpty(false)
         }
-        setMenuModal(false)
-        setNameModal(false)
-        setPeriodModal(false)
-        setWarningModal(false)
-        setIsAlert(false)
-        getMenuList()
-
-    },[])
+    }, [])
+    useState(()=>{
+        //로딩상태에 들어가면 데이터 새로 불러들여옴
+        if(isLoading){
+            console.log("GET")
+            getMenuList()
+        }
+    },[isLoading])
     
 
     useState(()=>{
@@ -149,22 +183,22 @@ function AdminIndex(){
 
     if(isLoading){
         return(
-            <Loading></Loading>
+            <LoadingScreen txt={loadingMsg}></LoadingScreen>
         )
     }
     return(
         <div className="admin-page" >
             {isAlert && <Alert color={alertColor} txt={alertMsg}></Alert>}
-            {warningModal && <WarningModal openModal={openWarningModal} deleteMenu={deleteAllMenu}> </WarningModal>}
+            {warningModal && <WarningModal openModal={openWarningModal} deleteMenu={deleteAllData}> </WarningModal>}
             {nameModal && <NameModal setUserName={setUserName} userName={userName} openModal={openNameModal}> </NameModal>}
-            {menuModal && <MenuModal getAlert={getAlert} menuList={menuList} openModal={openMenuModal}> </MenuModal>}
+            {menuModal && <MenuModal getAlert={getAlert} setIsLoading={setIsLoading} menuList={menuList} openModal={openMenuModal}> </MenuModal>}
             <InputName openModal={openNameModal} userName={userName}></InputName>
             <InputPeriod openModal={openPeriodModal} startDate={period.startDate} endDate={period.endDate} ></InputPeriod>
             <div className="menu-info__div">
                 <MenuSet openModal={openMenuModal} menuList={menuList}></MenuSet>
                 <div className="admin-btn__div">
-                    <div className="remove-btn" onClick={() => {getAlert()}} > 데이터 초기화 </div>
-                    <div className="modal-btn__div" onClick={() => {postAction()}}>
+                    <div className="remove-btn" onClick={() => {openWarningModal()}} > 데이터 초기화 </div>
+                    <div className="modal-btn__div" onClick={() => {postRandom()}}>
                         <Button txt="데이터 생성하기" color={isEmpty? "grey" :"black"} shape="rect" fontSize="12px"></Button>
                     </div>
                 </div>
