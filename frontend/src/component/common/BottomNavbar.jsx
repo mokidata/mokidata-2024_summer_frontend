@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 const BottomNavbar = (props) => {
-    const links = ['월별', '주별', '일별'];
-    const linksCode =['monthly','weekly','daily']
+    const links = ['일별', '주별','월별' ];
+    const linksCode =['daily','weekly','monthly']
     const navigate = useNavigate()
     function changeDateType(link){
         let dateType = ""
