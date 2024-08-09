@@ -10,6 +10,14 @@ function PredictSales (props){
     const menuObject = props.menuObject
     let data= []
     var profit = 0
+    const getAverage = () => {
+      if (data.length === 0) return 0;
+      let sum = 0
+      for(let salesData of data){
+        sum += salesData.value
+      }
+      return GetInteger(sum/data.length) ;
+    }
     for (const dates of Object.keys(compareValue).reverse()){
       if (compareValue[dates].length !== 0){
         profit = 0
@@ -44,6 +52,8 @@ function PredictSales (props){
         props.page === 'monthly' ? `${formatMonth(props.currentDate)} `: ""
       , value : GetInteger(profit/ 10000 ) , highlight: true , valueHighlight: false}
     data.push(obj)
+    let avg = getAverage()
+    
 
    
     // const data = [
@@ -72,7 +82,12 @@ function PredictSales (props){
               } 매출 예상
             </div>
             <div className="predict__detail">
-                평균 매출은 한달에 270 만원 정도에요.
+                평균 매출은 
+                {
+                  props.page === 'daily'? ' 하루에' :
+                  props.page === 'weekly' ? ' 일주일에':
+                  props.page === 'monthly' ? ' 한달에' : ""
+                } {avg} 만원 정도에요.
             </div>
             <Chart isVisible={props.isVisible} data={data} type="bar" ></Chart>
             <div className="notice">

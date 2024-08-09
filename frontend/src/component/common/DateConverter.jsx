@@ -21,7 +21,7 @@ export function formatMonth(dateString){
 export function formatWeek(dateString){
     const date = new Date(dateString);
     const weekNumber = getWeekOfMonth(date);
-    return `${weekNumber}째 주`;
+    return `${weekNumber}주`;
 }
 
 export function formatDateNum(dateString){
