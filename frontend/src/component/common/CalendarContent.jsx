@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatDate, formatDateNum, formatMonth, formatWeek, formatYear } from "./DateConverter";
 import { useDispatch } from "react-redux";
 import { totalThunks } from "../../services/salesApiSlice";
@@ -22,7 +22,7 @@ function CalendarContent(props){
 
     const HandleDispatch=(date,page) =>{
         props.open()
-        setIsMonthSelect(!isMonthSelect)
+        // setIsMonthSelect(!isMonthSelect)
         console.log(date)
         dispatch(totalThunks(date))
     }
@@ -69,6 +69,10 @@ function CalendarContent(props){
         }
     })
 
+    useEffect(()=>{
+        setIsMonthSelect(false)
+    },[])
+
 
    
     return(
@@ -89,10 +93,12 @@ function CalendarContent(props){
                     <div className="side-nav__list">
                         <div className="side-nav__content side-pick" id="calendar" onClick={()=>{
                             setIsMonthSelect(false)
+                            
                         }}>
                             {currentMonth}
                         </div>
                         {
+                        
                             finalMap[currentMonth].map((date,index)=>(
                                 <div className="side-nav__content side_detail-date" id="calendar" onClick={()=>{
                                     props.open()
