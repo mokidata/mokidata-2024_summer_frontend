@@ -4,7 +4,7 @@ function BarElement(props){
 
     const [barValue,setBarValue] = useState(100);
     const animateBarIncrease = () => {
-        let start = barValue
+        let start = 70
         const end = (((props.value -props.min ) / (props.max -props.min)) * 50) + 100
         const duration = 2000
         const range = end - start;
@@ -24,6 +24,7 @@ function BarElement(props){
         return () => clearInterval(timer);
     }
     useEffect(()=>{
+        console.log(`${props.value} ${props.max} ${props.min} ${props.isVisible}`)
         if(props.isVisible)
         {
             setBarValue(70)
