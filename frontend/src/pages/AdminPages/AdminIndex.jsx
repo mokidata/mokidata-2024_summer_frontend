@@ -12,7 +12,7 @@ import Loading from "../../component/admin/Loading";
 import WarningModal from "../../component/admin/WarningModal";
 import Alert from "../../component/admin/Alert";
 import LoadingScreen from "../../component/common/LoadingScreen";
-
+import {motion} from "framer-motion"
 function AdminIndex(){
     const [userName,setUserName] = useState("")
     const [nameModal,setNameModal] = useState(false)
@@ -188,7 +188,13 @@ function AdminIndex(){
     }
     return(
         <div className="admin-page" >
-            {isAlert && <Alert color={alertColor} txt={alertMsg}></Alert>}
+            <motion.div className="alert__div"
+            initial={{opacity:0}}
+            animate={{opacity: isAlert?1:0}}
+            transition={{duration:0.5}}
+            >
+                <Alert isAlert={isAlert} color={alertColor} txt={alertMsg}></Alert>
+            </motion.div>
             {warningModal && <WarningModal openModal={openWarningModal} deleteMenu={deleteAllData}> </WarningModal>}
             {nameModal && <NameModal setUserName={setUserName} userName={userName} openModal={openNameModal}> </NameModal>}
             {menuModal && <MenuModal getAlert={getAlert} setIsLoading={setIsLoading} menuList={menuList} openModal={openMenuModal}> </MenuModal>}
