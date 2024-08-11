@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputName from "../../component/admin/InputName";
 import InputPeriod from "../../component/admin/InputPeriod";
 import MenuSet from "../../component/admin/MenuSet";
@@ -13,45 +13,48 @@ import WarningModal from "../../component/admin/WarningModal";
 import Alert from "../../component/admin/Alert";
 import LoadingScreen from "../../component/common/LoadingScreen";
 import {motion} from "framer-motion"
+import CalendarScreen from "../../component/contents/CalendarScreen";
+
 function AdminIndex(){
+    const [initial,setInitial] = useState(false)
     const [userName,setUserName] = useState("")
     const [nameModal,setNameModal] = useState(false)
     const [periodModal,setPeriodModal] = useState(false)
     const [menuModal,setMenuModal] = useState(false)
     const [warningModal, setWarningModal] = useState(false)
     const [isAlert,setIsAlert] = useState(false)
-    const [period,setPeriod] = useState({"startDate" : "","endDate":""});
+    const [startDate,setStartDate] = useState(
+        ()=>{
+            const date = new Date()
+            date.setMonth(date.getMonth() -2)
+            return formatDate(date)
+        }
+    )
+    const [endDate, setEndDate] = useState(formatDate(new Date()))
     const [menuList,setMenuList] = useState([])
     const [isEmpty,setIsEmpty] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [alertColor,setAlertColor] = useState("")
     const [alertMsg,setAlertMsg] = useState("")
     const [loadingMsg,setLoadingMsg] = useState("")
+    const [reload,setReload] = useState(false)
     const location = useLocation()
     const state = location.state
-    
-    // const [menuList,setMenuList] = useState([{
-    //     "name": "아이스 아메리카노",
-    //     "img": "string",
-    //     "price": 1000
-    //   },{
-    //     "name": "아이스 스윗솔티 라떼",
-    //     "img": "string",
-    //     "price": 2000
-    //   },{
-    //     "name": "아이스 바닐라라떼",
-    //     "img": "string",
-    //     "price": 3000
-    //   }
-    //   ,{
-    //     "name": "아이스티(ONLY ICE)",
-    //     "img": "string",
-    //     "price": 4000
-    //   },{
-    //     "name": "아이스 카페라떼",
-    //     "img": "string",
-    //     "price": 5000
-    //   }])
+    const [leftCalendar, setLeftCalendar] = useState(false)
+    const [rightCalendar, setRightCalendar] = useState(false)
+    const openLeftCalendar = () => {
+        if (rightCalendar){
+            setRightCalendar(false)
+        }
+        setLeftCalendar(!leftCalendar)
+    }
+    const openRightCalendar= () =>{
+        if(leftCalendar){
+            setLeftCalendar(false)
+        }
+        setRightCalendar(!rightCalendar)
+    }
+
     const openNameModal = () => {
         setNameModal(!nameModal)
     }
@@ -65,7 +68,7 @@ function AdminIndex(){
     const openWarningModal = () =>{
         setWarningModal(!warningModal)
     }
-
+    
 
     const getAlert = (color,msg) => {
         setAlertColor(color)
@@ -89,6 +92,13 @@ function AdminIndex(){
             (response) => {
                 data = response.data
                 console.log(response.status)
+                console.log(data.length)
+                if(data.length === 0){
+                    setIsEmpty(true)
+                }
+                else{
+                    setIsEmpty(false)
+                }
             }
         ).catch(
             (error) => {console.log(error)}
@@ -97,8 +107,9 @@ function AdminIndex(){
         setIsLoading(false)
     }
     const postRandom = async () =>{
+        console.log("post random")
         setIsLoading(true) //로딩 페이지 띄우기
-        let formData = {"startDate":period.startDate,"endDate":period.endDate}
+        let formData = {"startDate":startDate,"endDate":endDate}
         const response = await mokiApi.post(`/api/menu/random`,formData).then(
             (response)=>{
                 console.log(response)
@@ -147,39 +158,36 @@ function AdminIndex(){
         getAlert("green","초기화 완료")
     }
 
-    useState(()=>{
+    useEffect(()=>{
+        console.log(state)
+        if(state !== undefined){
+            setUserName(state.name)
+        }
+        if(!reload){
+            getMenuList()
+        }
+        const today = new Date()
+        const formatToday = formatDate(today)
         console.log("re-render")
         setMenuModal(false)
         setNameModal(false)
         setPeriodModal(false)
         setWarningModal(false)
         setIsAlert(false)
-        if(menuList.length !== 0){
-            setIsEmpty(true)
+        console.log(isLoading)
+        
+    }, [])
+
+    useEffect(()=>{
+        console.log(`reload ${reload}`)
+        if(reload){
+            setIsLoading(true)
         }
         else{
-            setIsEmpty(false)
-        }
-    }, [])
-    useState(()=>{
-        //로딩상태에 들어가면 데이터 새로 불러들여옴
-        if(isLoading){
-            console.log("GET")
             getMenuList()
         }
-    },[isLoading])
-    
+    },[reload])
 
-    useState(()=>{
-        console.log(state)
-        if(state !== undefined){
-            setUserName(state.name)
-        }
-        getMenuList()
-        const today = new Date()
-        const formatToday = formatDate(today)
-        setPeriod({"startDate" : "2024-06-25", "endDate" : formatToday })
-    })
 
     if(isLoading){
         return(
@@ -195,11 +203,11 @@ function AdminIndex(){
             >
                 <Alert isAlert={isAlert} color={alertColor} txt={alertMsg}></Alert>
             </motion.div>
-            {warningModal && <WarningModal openModal={openWarningModal} deleteMenu={deleteAllData}> </WarningModal>}
+            {warningModal && <WarningModal openModal={openWarningModal} setReload={setReload} deleteMenu={deleteAllData}> </WarningModal>}
             {nameModal && <NameModal setUserName={setUserName} userName={userName} openModal={openNameModal}> </NameModal>}
-            {menuModal && <MenuModal getAlert={getAlert} setIsLoading={setIsLoading} menuList={menuList} openModal={openMenuModal}> </MenuModal>}
+            {menuModal && <MenuModal getAlert={getAlert} setReload={setReload} menuList={menuList} openModal={openMenuModal}> </MenuModal>}
             <InputName openModal={openNameModal} userName={userName}></InputName>
-            <InputPeriod openModal={openPeriodModal} startDate={period.startDate} endDate={period.endDate} ></InputPeriod>
+            <InputPeriod openModal={openPeriodModal} setStartDate={setStartDate} setEndDate={setEndDate} leftCalendar={leftCalendar} rightCalendar={rightCalendar} openLeftCalendar={openLeftCalendar} openRightCalendar={openRightCalendar} startDate={startDate} endDate={endDate}></InputPeriod>
             <div className="menu-info__div">
                 <MenuSet openModal={openMenuModal} menuList={menuList}></MenuSet>
                 <div className="admin-btn__div">

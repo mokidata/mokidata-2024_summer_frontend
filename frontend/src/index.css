@@ -1255,5 +1255,20 @@ body {
   .loading-txt{
     margin-block:10px;
   }
+  
+  .react-calendar__tile--active {
+    background-color: #18e9a7;
+    color: #171717;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50%;
+  }
+  .react-calendar.custom{
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px 0px #0000001A;
 
-
+  }
+  .calendar__div{
+    display: flex;
+    justify-content: center;
+  }

@@ -3,6 +3,7 @@ import Button from "../common/Button";
 import InputMenu from "./InputMenu";
 import { mokiApi } from "../../app/api/loginApi";
 function MenuModal(props){
+    console.log(props)
     const [menuUpdateList, setMenuUpdateList] = useState([])
     const [menuInput, setMenuInput] = useState(false)
     const [pickedIndex, setPickedIndex] = useState(0)
@@ -82,19 +83,18 @@ function MenuModal(props){
                     (error) => {
                         console.log(error)
                         props.openModal()
-                        props.setIsLoading(false)
                         props.getAlert("red",`데이터 저장 실패`)
                     }
                 );
             }
             
-        }        
+        }
+        console.log("complete")
     }
 
     const postNewMenu = async() => {
         const pushIndex = menuUpdateList.findIndex((element) => element.name === "NO DATA")
         console.log(pushIndex)
-        
         for (let i =menuLength; i<pushIndex;i++){
             let formData = new FormData()
             console.log(i)
@@ -119,14 +119,13 @@ function MenuModal(props){
                 (error) => {
                     console.log(error)
                     props.openModal()
-                    props.setIsLoading(false)
                     props.getAlert("red","데이터 저장 실패")
                 }
             );
 
         }
-        //isloading -> get이 호출되면서 loading이 false로 바뀜
-
+        console.log("complete")
+        //페이지 다시 로딩시킴
     }
 
     
@@ -205,10 +204,13 @@ function MenuModal(props){
                             <div className="modal-btn" onClick={props.openModal}>
                                 <Button id="modal-btn" txt="취소" color="grey" shape="rect" fontColor="white"></Button> 
                             </div>
-                            <div className="modal-btn" onClick={() =>{
+                            <div className="modal-btn" onClick={async() =>{
                                 props.openModal()
-                                postNewMenu()
-                                putMenu()
+                                console.log(props.setReload)
+                                props.setReload(true)
+                                await postNewMenu()
+                                await putMenu()
+                                props.setReload(false)
                                 props.getAlert("green","입력한 메뉴가 정상적으로 등록되었습니다.")
                                 }
                                 
