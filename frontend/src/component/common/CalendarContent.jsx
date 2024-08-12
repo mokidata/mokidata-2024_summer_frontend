@@ -35,12 +35,12 @@ function CalendarContent(props){
     }
     
     //월, 주 ,일 목록 뽑아내는 코드
-    do {
-        dateList.push(formatDate(date))
-        monthList.push(`${formatYear(formatDate(date))} ${formatMonth(formatDate(date))}`)
-        date.setMonth(date.getMonth()-1)
-        i++;
-    } while (i<4);
+    for ( let validDate of props.validDateList){
+        dateList.push(validDate)
+        monthList.push(`${formatYear(validDate)} ${formatMonth(validDate)}`)
+
+    }
+   
     dateList.forEach((element,index)=>{
         let list = []
         const elemDate = new Date(element)
