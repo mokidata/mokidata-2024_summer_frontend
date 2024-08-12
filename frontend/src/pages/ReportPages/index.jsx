@@ -18,10 +18,12 @@ import { totalThunks } from "../../services/salesApiSlice";
 import TopButton from "../../component/common/TopButton";
 import LoadingScreen from "../../component/common/LoadingScreen";
 import { current } from "@reduxjs/toolkit";
+import { useTranslation } from "react-i18next";
 
 function ReportPage(props){
     
     console.log("!!!report page!!!")
+    const {t,i18n} = useTranslation();  
     const sideList = ['이번 매출','매출 예상과 실제 매출 비교',"매출 예상","가장 많이 팔린 메뉴","직전 대비 가장 많이/적게 팔린 메뉴"]
     const [page] = usePageInfo(props.page)
     const {
@@ -42,6 +44,18 @@ function ReportPage(props){
     const todayDate = formatDate(new Date())
     const [topVisible,setTopVisible] = useState(false)
     const [validDateList,setVaildDateList] = useState([])
+    const changeLanguage = (type) => {
+        if (i18n.language === 'en' && type ==='ko'){
+            i18n.changeLanguage('ko')
+        }
+        else if(i18n.language === 'ko' && type ==='en'){
+            i18n.changeLanguage('en')
+        }
+        setLeftSide(false)
+
+        
+        
+    }
     const handleScrollTop = () => {
         if (window.scrollY > 500) {
             setTopVisible(true);
@@ -148,7 +162,7 @@ function ReportPage(props){
                     exit={{ x: '-100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <DropDownMenu sideList={sideList} open={openLeftSide} onclickFunction={scrollToContent}></DropDownMenu>
+                    <DropDownMenu sideList={sideList} changeLanguage={changeLanguage} open={openLeftSide} onclickFunction={scrollToContent}></DropDownMenu>
                 </motion.div>
                 <motion.div
                     className="side-nav__calendar"
@@ -169,7 +183,7 @@ function ReportPage(props){
                     transition={{ duration: 0.7 }}
                     
                 >
-                    <TodaySales page={page} value={todayValue}></TodaySales> 
+                    <TodaySales page={page} value={todayValue} t={t} i18n={i18n}></TodaySales> 
                 </motion.div>
                 <motion.div
                     className="report-item"
@@ -180,7 +194,7 @@ function ReportPage(props){
                     transition={{ duration: componentFade[1] ?  0.7 : 0 }}
                     
                 >
-                    <CompPredictSales page={page} isVisible={componentFade[1]} value={predictLastValue} todayValue={todayValue} menuObject={menuObject}></CompPredictSales>
+                    <CompPredictSales page={page} isVisible={componentFade[1]} value={predictLastValue} todayValue={todayValue} menuObject={menuObject} t={t} i18n={i18n}></CompPredictSales>
                 </motion.div>
                 <motion.div
                     className="report-item"
@@ -191,7 +205,7 @@ function ReportPage(props){
                     transition={{ duration: 0.7 }}
                     
                 >
-                    <PredictSales currentDate={currentDate} predictNextValue={predictNextValue} page={page} isVisible={componentFade[2]} value={predictDetailValue} menuObject={menuObject} rankCompareValue={rankCompareValue}></PredictSales>
+                    <PredictSales currentDate={currentDate} predictNextValue={predictNextValue} page={page} isVisible={componentFade[2]} value={predictDetailValue} menuObject={menuObject} rankCompareValue={rankCompareValue} t={t} i18n={i18n}></PredictSales>
                 </motion.div>
                 <motion.div
                     className="report-item"
@@ -202,7 +216,7 @@ function ReportPage(props){
                     transition={{ duration: 0.7 }}
                     
                 >
-                    <BestMenu page={page} currentDate={currentDate} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue}></BestMenu>
+                    <BestMenu page={page} currentDate={currentDate} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue} t={t} i18n={i18n}></BestMenu>
                 </motion.div>
                 <motion.div
                     className="report-item"
@@ -212,7 +226,7 @@ function ReportPage(props){
                     animate={{ opacity: componentFade[4] ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <BiggestDiffMenu page={page} currentDate={currentDate} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}></BiggestDiffMenu>
+                    <BiggestDiffMenu page={page} currentDate={currentDate} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}  t={t} i18n={i18n}></BiggestDiffMenu>
                 </motion.div>
                 <motion.div className="top-button__div"
                     initial={{opacity:0}}
@@ -229,7 +243,7 @@ function ReportPage(props){
                 
                 
                 
-                <BottomNavbar page={page} info="reportIndex" currentDate={currentDate}></BottomNavbar>
+                <BottomNavbar page={page} info="reportIndex" currentDate={currentDate}  t={t} i18n={i18n}></BottomNavbar>
             </div>
             
         );

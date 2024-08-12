@@ -90,80 +90,58 @@ function BiggestDiffMenu(props){
     } , ...]
     */ 
 
-    return(
-        <div className="report-component" id="biggest-diff-menu" >
+    return (
+        <div className="report-component" id="biggest-diff-menu">
             <div className="report-title"> 
                 {
-                    props.page === 'daily'? '어제':
-                    props.page === 'weekly'? '지난 주':
-                    props.page === 'monthly' ? '지난 달':
-                    '어제'
-
-                } 대비 많이 팔린 메뉴
+                    props.page === 'daily' ? props.t('biggestDiffMenu.moreSold.daily') :
+                    props.page === 'weekly' ? props.t('biggestDiffMenu.moreSold.weekly') :
+                    props.page === 'monthly' ? props.t('biggestDiffMenu.moreSold.monthly') :
+                    props.t('biggestDiffMenu.moreSold')
+                }
             </div>
             <div className="diff">
-                <div className="diff-desc" style={{textAlign:"left"}}>
+                <div className="diff-desc" style={{textAlign: "left"}}>
                     <div className="diff-desc__title">
                         {bestMenu.name}
                     </div>
-                    <div className="diff-desc__percent" >
+                    <div className="diff-desc__percent">
                         {bestMenu.percentage} %
                     </div>
-                    <Triangle diff={bestMenu.diff} unit="원" > 
-
-                    </Triangle>
-                    
+                    <Triangle diff={bestMenu.diff} unit="원" />
                 </div>
-                <div className="diff-img" style={{backgroundImage:`url(${BASE_URL}${bestMenu.img})`}}>
-
-                </div>
+                <div className="diff-img" style={{backgroundImage: `url(${BASE_URL}${bestMenu.img})`}} />
             </div>
-            <div className="notice" style={{textAlign:"right"}}>
-                ❕판매기록이 없었던 제품은 제외됩니다.
+            <div className="notice" style={{textAlign: "right"}}>
+                {props.t('biggestDiffMenu.noSalesRecord')}
             </div>
-           
         
             <div className="report-title">
                 {
-                    props.page === 'daily'? '어제':
-                    props.page === 'weekly'? '지난 주':
-                    props.page === 'monthly' ? '지난 달':
-                    '어제'
-
-                } 대비 적게 팔린 메뉴
-            </div>
-            <div>
-
+                    props.page === 'daily' ? props.t('biggestDiffMenu.lessSold.daily') :
+                    props.page === 'weekly' ? props.t('biggestDiffMenu.lessSold.weekly') :
+                    props.page === 'monthly' ? props.t('biggestDiffMenu.lessSold.monthly') :
+                    props.t('biggestDiffMenu.lessSold')
+                }
             </div>
             <div className="diff">
-                <div className="diff-img" style={{backgroundImage:`url(${BASE_URL}${worstMenu.img})`}} >
-                </div>
-                <div className="diff-desc" style={{textAlign:"right"}}>
+                <div className="diff-img" style={{backgroundImage: `url(${BASE_URL}${worstMenu.img})`}} />
+                <div className="diff-desc" style={{textAlign: "right"}}>
                     <div className="diff-desc__title">
                         {worstMenu.name}
                     </div>
                     <div className="diff-desc__percent">
                         {worstMenu.percentage} %
                     </div>
-                    <Triangle diff={worstMenu.diff} unit="원" > 
-
-                    </Triangle>
-                    
+                    <Triangle diff={worstMenu.diff} unit="원" />
                 </div>
-                
-
             </div>
-            <div className="notice" style={{textAlign:"left"}}>
-                ❕판매기록이 없었던 제품은 제외됩니다.
+            <div className="notice" style={{textAlign: "left"}}>
+                {props.t('biggestDiffMenu.noSalesRecord')}
             </div>
-            <div className="button-div" id="report" onClick={(event)=>{
-                BiggestDiffDetailNavigate()
-
-            }}>
-                <Button txt="자세히 보기 &nbsp;> " color="transparent"></Button>
+            <div className="button-div" id="report" onClick={BiggestDiffDetailNavigate}>
+                <Button txt={props.t('biggestDiffMenu.details')} color="transparent" />
             </div>
-            
-            
         </div>
     );
 }

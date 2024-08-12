@@ -4,8 +4,9 @@ import Price from "../common/Price";
 import { formatDate, formatDay } from "../common/DateConverter";
 
 
-function TodaySales (props){
 
+function TodaySales (props){
+    
     const [todayTotal, setTodayTotal] = useState(0);
     const [yesterdayTotal , setYesterdayTotal] = useState(0); 
     useEffect(()=>{
@@ -23,15 +24,22 @@ function TodaySales (props){
             <div className="report-title__div">
                 <div className="report-title" id="todaysales"> 
                     <div className="report-title__benefit">
-                        <div> {
-                            props.page === 'daily' ? '오늘 ':
-                            props.page === 'weekly' ? '이번 주 ':
-                            props.page === 'monthly' ? '이번 달 ':
-                            '오늘'
-                            } 매출  &nbsp;</div>
-                        <Price value={todayTotal} underline={true} unit="원"> </Price>
+
+                        <div style={{display:"flex"}}>
+                            {
+                                props.page === 'daily' ? props.t(`todaySales.title.daily`) : 
+                                props.page === 'weekly'? props.t('todaySales.title.weekly') :
+                                props.page === 'monthly'? props.t('todaySales.title.monthly'):
+                                ""
+                            }
+                           &nbsp;
+                            <Price value={todayTotal} underline={true} unit={props.t('todaySales.unit')}> </Price>
+                        </div>
+                        <div>
+                            {props.t("todaySales.recorded")} { todayTotal - yesterdayTotal >= 0 ? "🥳":"" }
+                        </div>
+                        
                     </div>
-                    기록했어요 {todayTotal - yesterdayTotal >= 0 ? "🥳":""}
                 </div>
                 {
                     props.page === 'daily' ? 
@@ -52,21 +60,20 @@ function TodaySales (props){
             </div>
             <div className="today-cmp">
                 <div className="today-cmp__date-div"> 
-                    <div className="today-cmp__date" id="yesterday">
+                    <div className="today-cmp__date" id="yesterday" style={{width:props.i18n.language =='en' ? '100px' : ""}}> 
                         {
-                            props.page === 'daily' ? '어제':
-                            props.page === 'weekly' ? '지난주':
-                            props.page === 'monthly' ? '지난달':
-                            '어제'
+                            props.page === 'daily' ? props.t('todaySales.yesterday') :
+                            props.page === 'weekly' ? props.t('todaySales.lastWeek') :
+                            props.page === 'monthly' ? props.t('todaySales.lastMonth') :
+                            props.t('todaySales.yesterday') // 기본값
                         }
-                        
                     </div>
-                    <div className="today-cmp__date" id="today">
+                    <div className="today-cmp__date" id="today" style={{width:props.i18n.language =='en' ? '100px' : ""}}>
                         {
-                            props.page === 'daily' ? '오늘':
-                            props.page === 'weekly' ? '이번주':
-                            props.page === 'monthly' ? '이번달':
-                            '오늘'
+                            props.page === 'daily' ? props.t('todaySales.today') :
+                            props.page === 'weekly' ? props.t('todaySales.thisWeek') :
+                            props.page === 'monthly' ? props.t('todaySales.thisMonth') :
+                            props.t('todaySales.today') // 기본값
                         }
                     </div>
                 </div>
@@ -74,7 +81,7 @@ function TodaySales (props){
                     <div className="today-cmp__sales" id="yesterday">
                     
                         <div className="today-cmp__benefits" id="yesterday">
-                            <Price value={yesterdayTotal} unit="원"></Price>
+                            <Price value={yesterdayTotal} unit={props.t('todaySales.unit')}></Price>
                         </div>
 
                     </div>
@@ -82,7 +89,7 @@ function TodaySales (props){
                     <div className="today-cmp__sales" id="today">
                     
                         <div className="today-cmp__benefits" id="today">
-                            <Price value={todayTotal} unit="원"></Price>
+                            <Price value={todayTotal} unit={props.t('todaySales.unit')}></Price>
                         </div>
                     </div>
                 </div>
@@ -91,7 +98,7 @@ function TodaySales (props){
                 
             </div>
             <div className="today-diff">
-                <Triangle diff={todayTotal - yesterdayTotal} unit="원" ></Triangle>
+                <Triangle diff={todayTotal - yesterdayTotal} unit={props.t('todaySales.unit')} ></Triangle>
             </div>
             
             

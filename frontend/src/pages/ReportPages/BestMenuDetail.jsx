@@ -10,10 +10,13 @@ import CalendarContent from "../../component/common/CalendarContent";
 import BottomNavbar from "../../component/common/BottomNavbar";
 import useSalesData from "../../hooks/useSalesData";
 import LoadingScreen from "../../component/common/LoadingScreen";
+import { useTranslation } from "react-i18next";
+import { formatDate } from "../../component/common/DateConverter";
 
 function BestMenuDetail(props){
     const location = useLocation()
     const navigate = useNavigate()
+    const {t,i18n} = useTranslation()
     const {
         currentDate,
         isLoadingState,
@@ -35,8 +38,35 @@ function BestMenuDetail(props){
     const [topVisible,setTopVisible] = useState(false)
     const [leftSide,setLeftSide] = useState(false)
     const [rightSide,setRightSide] = useState(false)
+    const [validDateList,setVaildDateList] = useState([])
+    const todayDate = formatDate(new Date())
+    useEffect(()=>{
+        console.log(rankCompareValue)
+        console.log(currentDate)
+        let list = []
+        if(rankCompareValue !== null && todayDate === currentDate){
+            list.push(todayDate)
+            for(let date of Object.keys(rankCompareValue['monthly']) ){
+                if (rankCompareValue['monthly'][date].length !== 0){
+                    list.push(date)
+                }
+            }
+            setVaildDateList(list)
+        }
+    },[rankCompareValue, currentDate])
 
-    
+    const changeLanguage = (type) => {
+        if (i18n.language === 'en' && type ==='ko'){
+            i18n.changeLanguage('ko')
+        }
+        else if(i18n.language === 'ko' && type ==='en'){
+            i18n.changeLanguage('en')
+        }
+        setLeftSide(false)
+
+        
+        
+    }
     
     useEffect(()=>{
         if(rankDetailValue !== null){
@@ -77,108 +107,101 @@ function BestMenuDetail(props){
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-    const sideList = ['오늘 판매 순위','이번주 판매 순위','이번달 판매 순위','어제와 판매 비교','지난주와 판매 비교','지난달과 판매 비교']
-    const urlList = ['bestmenu','bestmenu','bestmenu','biggestdiff','biggestdiff','biggestdiff']
-    const pageList =['daily','weekly','monthly']
+    const sideList = [
+        t('bestMenuDetail.daily') + t('bestMenuDetail.back'),
+        t('bestMenuDetail.weekly') + t('bestMenuDetail.back'),
+        t('bestMenuDetail.monthly') + t('bestMenuDetail.back'),
+        '어제와 판매 비교',
+        '지난주와 판매 비교',
+        '지난달과 판매 비교'
+    ];
+    
+    const urlList = ['bestmenu', 'bestmenu', 'bestmenu', 'biggestdiff', 'biggestdiff', 'biggestdiff'];
+    const pageList = ['daily', 'weekly', 'monthly'];
+
     const goBack = () => {
+        navigate(`/${state.page}`);
+    };
 
-        navigate(`/${state.page}`)
-    }
     const goPage = (index) => {
-        navigate(`/${urlList[index]}`,{state:{page:pageList[index%3], currentDate:state.currentDate }})
+        navigate(`/${urlList[index]}`, { state: { page: pageList[index % 3], currentDate: state.currentDate } });
+    };
 
-    }
-    useEffect(()=>{
-        window.scroll(0,0)
-    },[state])
-    useEffect(()=>{
-        const obj = {}
-        console.log(lastDetailValue)
-        // Object.keys(lastDetailValue[state.page]).length !== 0 
-        if(lastDetailValue !== null ) 
-        {   
-            console.log(lastDetailValue[state.page])
-            lastDetailValue[state.page].forEach((element,index) => {
-                obj[element.name] = index+1
+    useEffect(() => {
+        window.scroll(0, 0);
+    }, [state]);
+
+    useEffect(() => {
+        const obj = {};
+        if (lastDetailValue !== null) {
+            lastDetailValue[state.page].forEach((element, index) => {
+                obj[element.name] = index + 1;
             });
             setLastRank(obj);
         }
-       
-        
-    },[state,lastDetailValue])
-    useEffect(()=>{
-        console.log(rankArray)
-    },[rankArray])
-    useEffect(()=>{
-        console.log(lastRank)
-    },[lastRank])
+    }, [state, lastDetailValue]);
 
-    if(isLoadingState){
+    if (isLoadingState) {
         return (
-            <LoadingScreen txt={<span>매출 데이터를 <br /> 가져오고 있어요!</span>}></LoadingScreen>
-        )
+            <LoadingScreen txt={<span dangerouslySetInnerHTML={{ __html: t('bestMenuDetail.loading') }} />} />
+        );
     }
-    return(
+
+    return (
         <div className="report-page">
-            <Header leftSide={setLeftSide} rightSide={setRightSide} page={state.page} currentDate={state.currentDate}></Header>
+            <Header leftSide={setLeftSide} rightSide={setRightSide} page={state.page} currentDate={state.currentDate} />
             <motion.div
-                    className="side-nav__dropdown"
-                    initial={{ x: '-100%', opacity: 0 }}
-                    animate={{ x: leftSide ? 0 : '-100%', opacity: leftSide ? 1 : 0 }}
-                    exit={{ x: '-100%', opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    {leftSide && <DropDownMenu sideList={sideList} open={openLeftSide} onclickFunction={goPage}></DropDownMenu>}
+                className="side-nav__dropdown"
+                initial={{ x: '-100%', opacity: 0 }}
+                animate={{ x: leftSide ? 0 : '-100%', opacity: leftSide ? 1 : 0 }}
+                exit={{ x: '-100%', opacity: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                {leftSide && <DropDownMenu changeLanguage={changeLanguage} sideList={sideList} open={openLeftSide} onclickFunction={goPage} />}
             </motion.div>
             <motion.div
                 className="side-nav__calendar"
                 initial={{ x: '+100%', opacity: 0 }}
-                animate={{ x: rightSide ? 0 :'+100%' , opacity: rightSide ? 1 : 0 }}
+                animate={{ x: rightSide ? 0 : '+100%', opacity: rightSide ? 1 : 0 }}
                 exit={{ x: '+100%', opacity: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                 {rightSide && <CalendarContent info={"bestmenu"} page={state.page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
+                {rightSide && <CalendarContent info={"bestmenu"} validDateList={validDateList} page={state.page} currentDate={state.currentDate} open={openRightSide} />}
             </motion.div>
-               
-            <motion.div 
-            initial={{opacity:0}}
-            animate={{opacity:1}}
-            transition={{ duration: 0.5 }}
-            className="report-component" 
-            id="best-rank">
-                <div className="best-rank__goback" onClick={goBack}>
-                    &lt; {
-                    state.page === 'daily'? '오늘':
-                    state.page === 'weekly'? '이번 주':
-                    state.page === 'monthly' ? '이번 달':
-                    '오늘'
-                    } 판매 순위
 
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="report-component"
+                id="best-rank"
+            >
+                <div className="best-rank__goback" onClick={goBack}>
+                    &lt; {t(`bestMenuDetail.${state.page}`)} {t('bestMenuDetail.back')}
                 </div>
                 <div className="best-rank__table">
                     <div className="best-rank__column-info">
                         <div className="best-rank__column" id="rank__rank">
-                            순위
+                            {t('bestMenuDetail.rank')}
                         </div>
                         <div className="best-rank__column" id="rank__diff">
-                            변동
+                            {t('bestMenuDetail.diff')}
                         </div>
                         <div className="best-rank__column" id="rank__menu-info">
-                            메뉴명<br></br>판매갯수
+                            {t('bestMenuDetail.menuInfo')}
                         </div>
                         <div className="best-rank__column" id="rank__profit">
-                            판매금액
+                            {t('bestMenuDetail.profit')}
                         </div>
-
                     </div>
                     {
-                        rankArray.map((element,index) => (
-                            <div className="best-rank__each" id={(index+1) %2 === 0 ? "even":"odd"}>
+                        rankArray.map((element, index) => (
+                            <div className="best-rank__each" key={index} id={(index + 1) % 2 === 0 ? "even" : "odd"}>
                                 <div className="best-rank__row" id="rank__rank">
-                                    {index+1}
+                                    {index + 1}
                                 </div>
                                 <div className="best-rank__row" id="rank__diff">
-                                    <Triangle diff={lastRank[element.name] - (index+1)  } unit=""></Triangle>
+                                    <Triangle diff={lastRank[element.name] - (index + 1)} unit="" />
                                 </div>
                                 <div className="best-rank__row" id="rank__menu-info">
                                     <div className="best-rank__row__menu">
@@ -187,38 +210,24 @@ function BestMenuDetail(props){
                                     <div className="best-rank__row__sales">
                                         {element.count}
                                     </div>
-
                                 </div>
                                 <div className="best-rank__row" id="rank__profit">
-                                    <Price value={element.count * element.price} unit="원"></Price>
+                                    <Price value={element.count * element.price} unit="원" />
                                 </div>
-
                             </div>
-
                         ))
                     }
-                    
-
                 </div>
-
             </motion.div>
             <motion.div className="top-button__div"
-                    initial={{opacity:0}}
-                    animate={{opacity: 
-                        topVisible?
-                        1:0
-                    }}
-                    transition={{duration:0.3}}
-                    
-                >
-                    <TopButton></TopButton>
-
+                initial={{ opacity: 0 }}
+                animate={{ opacity: topVisible ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+            >
+                <TopButton />
             </motion.div>
-            <BottomNavbar page={state.page} info="bestmenu" currentDate={state.currentDate}></BottomNavbar>
-            
-
+            <BottomNavbar page={state.page} info="bestmenu" currentDate={state.currentDate}  t={t} i18n={i18n} />
         </div>
-
     );
 
 

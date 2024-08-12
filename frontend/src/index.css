@@ -192,6 +192,7 @@ body {
   }
   .report-title__benefit{
     display: flex;
+    flex-direction: column;
   }
   .today-desc__day{
     display: flex;
@@ -245,6 +246,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    white-space: none;
   }
   .today-cmp__sales-div{
     display: flex;
@@ -530,6 +532,7 @@ body {
   }
   .botton-nav__button{
     width: 33%;
+    padding: 3%;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -1154,6 +1157,19 @@ body {
   .side-nav__bottom{
     display: flex;
     justify-content: space-between;
+  }
+  .side-nav__bottom-language__div{
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+  }
+  .side-nav__bottom-language{
+    width: 70px;
+    padding-inline: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   .side-nav__bottom-name{

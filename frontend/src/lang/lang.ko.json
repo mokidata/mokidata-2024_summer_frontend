@@ -1,0 +1,123 @@
+{
+    "todaySales": {
+        "title": {
+            "daily": "오늘 매출 ",
+            "weekly": "이번 주 매출 ",
+            "monthly": "이번 달 매출 ",
+            "default": "오늘 매출 "
+        },
+        "recorded": "기록했어요 ",
+        "yesterday": "어제",
+        "today": "오늘",
+        "lastWeek": "지난주",
+        "thisWeek": "이번주",
+        "lastMonth": "지난달",
+        "thisMonth": "이번달",
+        "unit":"원"
+    },
+    "compPredictSales":{
+        "today": "오늘",
+        "thisWeek": "이번 주",
+        "thisMonth": "이번 달",
+        "moreEarned_kr": "더 벌었어요!",
+        "moreEarned_en" : "",
+        "lessEarned_kr": " 낮아요",
+        "lessEarned_en": "",
+        "todaySales": "오늘 매출은 예상보다 ",
+        "thisWeekSales": "이번 주 매출은 예상보다 " ,
+        "thisMonthSales": "이번 달 매출은 예상보다 ",
+        "unit":"원",
+        "expectedRevenue" : "예상 매출",
+        "actualRevenue" : "실제 매출"
+    },
+    "predictSales":{
+        
+        "title":{
+            "daily":"내일 매출 예상",
+            "weekly" :"다음주 매출 예상",
+            "monthly":"다음달 매출 예상"
+        },
+        "average":{
+            "daily":{
+                "first":"평균 매출은 하루에 ",
+                "second":"만원 정도에요"
+
+            },
+            "weekly":{
+                "first" :"평균 매출은 일주일에",
+                "second":"만원 정도에요"
+    
+
+            },
+            "monthly":{
+                "first" : "평균 매출은 한달에",
+                "second":"만원 정도에요"
+
+            }
+        },
+        "tomorrow": "내일",
+        "nextWeek": "다음 주",
+        "nextMonth": "다음 달",
+        "averageSales": "평균 매출은 ",
+        "perDay": "하루에",
+        "perWeek": "일주일에",
+        "perMonth": "한달에",
+        "notice": "계절과 휴일에 따른 매출 데이터 변화를 종합한 결과에요."
+    },
+    "bestMenu": {
+        "today": "오늘",
+        "thisWeek": "이번 주에",
+        "thisMonth": "이번 달에",
+        "bestSellingMenu": "가장 많이 팔린 메뉴",
+        "details": "자세히 보기 >"
+    },
+    "biggestDiffMenu": {
+        "moreSold":{
+            "daily":"어제 대비 많이 팔린 메뉴",
+            "weekly": "지난주 대비 많이 팔린 메뉴",
+            "monthly":"지난달 많이 팔린 메뉴"
+        },
+        "lessSold":{
+            "daily":"어제 대비 적게 팔린 메뉴",
+            "weekly": "지난주 대비 적게 팔린 메뉴",
+            "monthly":"지난달 대비 적게 팔린 메뉴"
+        },
+        "noSalesRecord": "❕판매기록이 없었던 제품은 제외됩니다.",
+        "details": "자세히 보기 >"
+    },
+    "bestMenuDetail": {
+        "daily": "오늘",
+        "weekly": "이번 주",
+        "monthly": "이번 달",
+        "back": "판매 순위",
+        "loading": "매출 데이터를 <br /> 가져오고 있어요!",
+        "rank": "순위",
+        "diff": "변동",
+        "menuInfo": "메뉴명<br>판매갯수",
+        "profit": "판매금액"
+    },
+    "biggestDiff":{
+
+        "daily": "오늘 ",
+        "weekly": "이번주 ",
+        "monthly": "이번달 ",
+        "back": "판매 순위",
+        "diffTitle":{
+            "daily":"어제와 판매 비교",
+            "weekly":"지난 주와 판매 비교",
+            "monthly":"지난 달과 판매 비교"
+        },
+        "notice": "판매 기록이 없었던 제품은 제외됩니다.",
+        "rank": "순위",
+        "menuName": "메뉴명",
+        "lastWeek": "지난주",
+        "thisWeek": "이번주",
+        "saleCount": "판매갯수",
+        "saleProfit": "판매수익"    
+    },
+    "bottomNavBar":{
+        "daily": "일별",
+        "weekly": "주별",
+        "monthly": "월별"
+    }
+}

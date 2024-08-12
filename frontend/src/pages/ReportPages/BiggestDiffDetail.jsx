@@ -11,10 +11,12 @@ import CalendarContent from "../../component/common/CalendarContent";
 import useSalesData from "../../hooks/useSalesData";
 import BottomNavbar from "../../component/common/BottomNavbar";
 import LoadingScreen from "../../component/common/LoadingScreen";
-
+import { useTranslation } from "react-i18next";
+import { formatDate } from "../../component/common/DateConverter";
 function BiggestDiffDetail (props){
     const location = useLocation()
     const navigate =useNavigate()
+    const {t,i18n} = useTranslation()
     const {
         currentDate,
         isLoadingState,
@@ -33,6 +35,18 @@ function BiggestDiffDetail (props){
 
     const [todayArray,setTodayArray] = useState([{"daily":[],"weekly":[],"monthly":[]}]) 
     const [lastArray,setLastArray] = useState([{"daily":[],"weekly":[],"monthly":[]}]) 
+    const changeLanguage = (type) => {
+        if (i18n.language === 'en' && type ==='ko'){
+            i18n.changeLanguage('ko')
+        }
+        else if(i18n.language === 'ko' && type ==='en'){
+            i18n.changeLanguage('en')
+        }
+        setLeftSide(false)
+
+        
+        
+    }
     useEffect(()=>{
         if(rankDetailValue !== null){
             console.log(rankDetailValue)
@@ -51,8 +65,16 @@ function BiggestDiffDetail (props){
     const [topVisible,setTopVisible] = useState(false)
     const [leftSide,setLeftSide] = useState(false)
     const [rightSide,setRightSide] = useState(false)
+    const [validDateList,setVaildDateList] = useState([])
 
-    const sideList = ['오늘 판매 순위','이번주 판매 순위','이번달 판매 순위','어제와 판매 비교','지난주와 판매 비교','지난달과 판매 비교']
+    const sideList = [
+        t('biggestDiff.daily') + t('bestMenuDetail.back'),
+        t('biggestDiff.weekly') + t('bestMenuDetail.back'),
+        t('biggestDiff.monthly') + t('bestMenuDetail.back'),
+        t('biggestDiff.diffTitle.daily'),
+        t('biggestDiff.diffTitle.weekly'),
+        t('biggestDiff.diffTitle.monthly')
+    ];
     const urlList = ['bestmenu','bestmenu','bestmenu','biggestdiff','biggestdiff','biggestdiff']
     const pageList =['daily','weekly','monthly']
     const goPage = (index) => {
@@ -79,6 +101,19 @@ function BiggestDiffDetail (props){
             setTopVisible(false);
         }
     };
+    const todayDate = formatDate(new Date())
+    useEffect(()=>{
+        let list = []
+        if(rankCompareValue !== null && todayDate === currentDate){
+            list.push(todayDate)
+            for(let date of Object.keys(rankCompareValue['monthly']) ){
+                if (rankCompareValue['monthly'][date].length !== 0){
+                    list.push(date)
+                }
+            }
+            setVaildDateList(list)
+        }
+    },[rankCompareValue, currentDate])
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -143,7 +178,7 @@ function BiggestDiffDetail (props){
                     exit={{ x: '-100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    {leftSide && <DropDownMenu sideList={sideList} open={openLeftSide} onclickFunction={goPage}></DropDownMenu>}
+                    {leftSide && <DropDownMenu changeLanguage={changeLanguage} sideList={sideList} open={openLeftSide} onclickFunction={goPage}></DropDownMenu>}
             </motion.div>
             <motion.div
                 className="side-nav__calendar"
@@ -152,7 +187,7 @@ function BiggestDiffDetail (props){
                 exit={{ x: '+100%', opacity: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                 {rightSide && <CalendarContent info={"biggestdiff"} page={state.page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
+                 {rightSide && <CalendarContent validDateList={validDateList} info={"biggestdiff"} page={state.page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
             </motion.div>
             <motion.div 
             initial={{opacity:0}}
@@ -161,26 +196,26 @@ function BiggestDiffDetail (props){
             className="report-component" id="best-rank">
                 <div className="best-rank__goback" onClick={() => goBack()}>
                     &lt; {
-                    state.page === 'daily'? '어제와':
-                    state.page === 'weekly'? '지난 주와':
-                    state.page === 'monthly' ? '지난 달과':
-                    '어제와'
+                    state.page === 'daily'? t('biggestDiff.diffTitle.daily'):
+                    state.page === 'weekly'? t('biggestDiff.diffTitle.weekly'):
+                    state.page === 'monthly' ? t('biggestDiff.diffTitle.monthly'):
+                    t('biggestDiff.diffTitle.daily')
 
-                } 판매 비교
+                    }
                 </div>
                 <div className="best-rank__notice">
                     <div className="notice">
-                        판매 기록이 없었던 제품은 제외됩니다.
+                        {t('biggestDiff.notice')}
                     </div>
                     
                 </div>
                 <div className="best-rank__button">
-                    <div className="best-rank__each-button" onClick={(event) => changeType("sale")}>
-                        <Button color={diffType==="sale" ? "black":"white"} txt="판매갯수"></Button>
-                    </div>
-                    <div className="best-rank__each-button" onClick={(event) => changeType("profit")}>
-                        <Button color={diffType==="sale" ? "white":"black"} txt="판매수익"></Button>
-                    </div>
+                <div className="best-rank__each-button" onClick={(event) => changeType("sale")}>
+                    <Button color={diffType === "sale" ? "black" : "white"} txt={t('biggestDiff.saleCount')}></Button>
+                </div>
+                <div className="best-rank__each-button" onClick={(event) => changeType("profit")}>
+                    <Button color={diffType === "sale" ? "white" : "black"} txt={t('biggestDiff.saleProfit')}></Button>
+                </div>
                 
                     
                     
@@ -188,16 +223,16 @@ function BiggestDiffDetail (props){
                 <div className="best-rank__table">
                     <div className="best-rank__column-info">
                         <div className="best-rank__column" id="rank__rank">
-                            순위
+                            {t('biggestDiff.rank')}
                         </div>
                         <div className="best-rank__column" id="rank__menu-info">
-                            메뉴명
+                            {t('biggestDiff.menuName')}
                         </div>
                         <div className="best-rank__column" id="rank__last-profit">
-                            지난주
+                            {t('biggestDiff.lastWeek')}
                         </div>
                         <div className="best-rank__column" id="rank__profit">
-                            이번주
+                            {t('biggestDiff.thisWeek')}
                         </div>
                     </div>
                     {
@@ -277,7 +312,7 @@ function BiggestDiffDetail (props){
                     <TopButton></TopButton>
 
             </motion.div>
-            <BottomNavbar page={state.page} info="biggestdiff" currentDate={state.currentDate}></BottomNavbar>
+            <BottomNavbar page={state.page} info="biggestdiff" currentDate={state.currentDate} t={t} i18n={i18n}></BottomNavbar>
             
         </div>
     )

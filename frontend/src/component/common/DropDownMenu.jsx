@@ -38,7 +38,14 @@ function DropDownMenu (props){
 
             </div>
             <div className="side-nav__bottom">
-                <div className="side-nav__bottom-opt">
+                <div className="side-nav__bottom-language__div">
+                    <div className="side-nav__bottom-language" onClick={() => props.changeLanguage('ko')} >
+                        한국어
+                    </div>
+                    |
+                    <div className="side-nav__bottom-language" onClick={() => props.changeLanguage('en')}>
+                        English
+                    </div>
 
                 </div>
                 <div className="side-nav__bottom-name">

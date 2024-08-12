@@ -1,0 +1,129 @@
+{
+    "todaySales": {
+        "title": {
+            "daily": "Today Sales",
+            "weekly": "This Week Sales",
+            "monthly": "This Month Sales",
+            "default": "Today Sales"
+        },
+        "recorded": "Recorded",
+        "yesterday": "Yesterday",
+        "today": "Today",
+        "lastWeek": "Last Week",
+        "thisWeek": "This Week",
+        "lastMonth": "Last Month",
+        "thisMonth": "This Month",
+        "unit":"₩"
+    },
+
+    "compPredictSales":{
+        "today": "Today",
+        "thisWeek": "This Week",
+        "thisMonth": "This Month",
+        "moreEarned_kr": "",
+        "moreEarned_en" : "Earned more than expected 😆!",
+        "lessEarned_kr" : "",
+        "lessEarned": "Less than expected",
+        "todaySales": "Today's sales are",
+        "thisWeekSales": "This week's sales are",
+        "thisMonthSales": "This month's sales are",
+        "unit":"₩",
+        "expectedRevenue" : "Expected",
+        "actualRevenue" : "Actual"
+        
+    },
+    "predictSales":{
+        "title":{
+            "daily":"Expected sales for tomorrow ",
+            "weekly":"Expected sales for next week ",
+            "monthly":"Expected sales for next month "
+        },
+        "average":{
+            "daily":{
+                "first":"The average daily sales is  ",
+                "second":"0000  ₩"
+
+            },
+            "weekly":{
+                "first" :"The average weekly sales is ",
+                "second":"0000  ₩"
+    
+
+            },
+            "monthly":{
+                "first" : "The average monthly sales is ",
+                "second":"0000  ₩"
+
+            }
+        },
+        
+        
+        
+        "tomorrow": "Tomorrow",
+        "nextWeek": "Next Week",
+        "nextMonth": "Next Month",
+        "averageSales": "The average sales are",
+        "perDay": "per day",
+        "perWeek": "per week",
+        "perMonth": "per month",
+        "notice": "This is a summary of sales data changes due to seasons and holidays."
+    },
+    "bestMenu": {
+        "today": "Today",
+        "thisWeek": "This Week",
+        "thisMonth": "This Month",
+        "bestSellingMenu": "Best Selling Menu",
+        "details": "View Details >"
+    },
+    "biggestDiffMenu": {
+        "moreSold":{
+            "daily":"Best Selling Menu Compared To Yesterday",
+            "weekly": "Best Selling Menu Compared To Last week",
+            "monthly":"Best Selling Menu Compared To Last Month"
+        },
+        "lessSold":{
+            "daily":"Less Sold Menu Compared To Yesterday" ,
+            "weekly": "Less Sold Menu Compared To Last week",
+            "monthly":"Less Sold Menu Compared To Last Month"
+        },
+        "noSalesRecord": "❕Products with no sales record are excluded.",
+        "details": "View Details >"
+    },
+    "bestMenuDetail": {
+        "daily": "Today",
+        "weekly": "This Week",
+        "monthly": "This Month",
+        "back": "Sales Ranking",
+        "loading": "Loading sales data <br />!",
+        "rank": "Rank",
+        "diff": "Change",
+        "menuInfo": "Menu Name<br>Sales Quantity",
+        "profit": "Sales Amount"
+    },
+    "biggestDiff":{
+
+        "daily": "Today ",
+        "weekly": "This Week ",
+        "monthly": "This Month ",
+        "back": "Sales Ranking ",
+        "diffTitle":{
+            "daily":"Comparison with Yesterday",
+            "weekly":"Comparison with Last Week",
+            "monthly":"Comparison with Last Month"
+        },
+        "notice": "Products with no sales records will be excluded.",
+        "rank": "Rank",
+        "menuName": "Menu Name",
+        "lastWeek": "Last Week",
+        "thisWeek": "This Week",
+        "saleCount": "Sale Count",
+        "saleProfit": "Sale Profit"
+        
+    },
+    "bottomNavBar":{
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly"
+    }   
+
+}
