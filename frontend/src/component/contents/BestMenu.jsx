@@ -4,7 +4,7 @@ import Price from "../common/Price";
 import { BASE_URL } from "../Url";
 import { useLocation, useNavigate } from "react-router-dom";
 function BestMenu(props){
-    const rankDetail = props.rankDetailValue[props.page]
+    const rankDetail = [...props.rankDetailValue[props.page]]
     const [rankFirst,setRankFirst] = useState({})
     const [rankSecond,setRankSecond] = useState({})
     const [rankThird,setRankThird] = useState({})
@@ -12,13 +12,17 @@ function BestMenu(props){
     const navigate = useNavigate();
 
     useEffect(()=>{
-        if(rankDetail.length !== 0){
+        console.log(rankDetail)
+        
+        if(props.rankDetailValue[props.page].length !== 0){
+            console.log(rankDetail)
+            rankDetail.sort((a, b) => (b.price * b.count) - (a.price * a.count));
             setRankFirst(rankDetail[0]);
             setRankSecond(rankDetail[1]);
             setRankThird(rankDetail[2]);
         }
         
-    },[rankDetail])
+    },[props.rankDetailValue[props.page]])
 
     useEffect(()=>{
         if(rankFirst.name && Object.keys(props.menuObject).length !== 0 ){
@@ -28,7 +32,7 @@ function BestMenu(props){
     },[rankFirst])
 
     const navigateRankDetail= () => {
-        navigate("/bestmenu",{state:{rankDetail:props.rankDetailValue, currentDate:props.currentDate, lastDetail: props.lastDetailValue, page:props.page}})
+        navigate("/bestmenu",{state:{rankDetail:rankDetail, currentDate:props.currentDate, lastDetail: props.lastDetailValue, page:props.page}})
 
     }
 

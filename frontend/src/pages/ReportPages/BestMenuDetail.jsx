@@ -40,7 +40,9 @@ function BestMenuDetail(props){
     useEffect(()=>{
         if(rankDetailValue !== null){
             console.log(rankDetailValue[state.page])
-            setRankArray(rankDetailValue[state.page])
+            const copy = [...rankDetailValue[state.page]]
+            copy.sort((a, b) => (b.price * b.count) - (a.price * a.count));
+            setRankArray(copy)
         }
         
         // setRankInfo(state.page)

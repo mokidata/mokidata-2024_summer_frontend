@@ -44,7 +44,8 @@ function BiggestDiffDetail (props){
     },[lastDetailValue,state])
     
     console.log(state)
-    const [diffRank,setDiffRank] = useState([])
+    const [diffSaleRank,setDiffSaleRank] = useState([])
+    const [diffProfitRank, setDiffProfitRank] = useState([])
     const [diffType,setDiffType] = useState("sale")
     const [topVisible,setTopVisible] = useState(false)
     const [leftSide,setLeftSide] = useState(false)
@@ -113,12 +114,13 @@ function BiggestDiffDetail (props){
                 }
             });
             diffArray.sort((a,b) => a.profitDiff - b.profitDiff).reverse()
-            setDiffRank(diffArray);
+            setDiffProfitRank([...diffArray]);
+            //sale 차이 구하기
+            diffArray.sort((a,b) => a.profitDiff - b.profitDiff).reverse()
+            setDiffSaleRank([...diffArray])
         }
     },[todayArray])
-    useEffect(()=>{
-        console.log(diffRank)
-    },[diffRank]);
+  
     function changeType(type) {
         setDiffType(type);
     }
@@ -198,7 +200,8 @@ function BiggestDiffDetail (props){
                         </div>
                     </div>
                     {
-                        diffRank.map((element,index)=>(
+                        diffType ==='sale' ? 
+                        diffSaleRank.map((element,index)=>(
                             <div className="best-rank__each" id={(index+1) %2 === 0 ? "even":"odd"}>
                                 <div className="best-rank__row" id="rank__rank">
                                     {index+1}
@@ -216,29 +219,46 @@ function BiggestDiffDetail (props){
         
                                 </div>
                                 <div className="best-rank__row" id="rank__last-profit">
-                                    {diffType === "sale" ? 
-                                    `${element.lastSales}개`:
-                                    <Price value = {element.lastProfit} unit="원"></Price>
-                                    
-                                    }
-                                    
-        
+                                    {element.lastSales}개:
+  
                                 </div>
                                 <div className="best-rank__row" id="rank__profit">
-                                    {diffType === "sale" ? 
-                                    `${element.todaySales}개`:
-                                    <Price value = {element.todayProfit} unit="원"></Price>                   
-                                     
-                                    }
-                                    
-                                    
+                                    {element.todaySales}개               
                                 </div>
         
                             </div>
 
 
                         ))
-                        
+                        :
+                        diffProfitRank.map((element,index)=>(
+                            <div className="best-rank__each" id={(index+1) %2 === 0 ? "even":"odd"}>
+                                <div className="best-rank__row" id="rank__rank">
+                                    {index+1}
+                                </div>
+                                <div className="best-rank__row" id="rank__menu-info">
+                                    <div className="best-rank__row__menu">
+                                        {element.name}
+                                    </div>
+                                    <div className="best-rank__row__sales" 
+                                        style={{color:element.profitDiff >= 0 ? "red" :
+                                                "blue"
+                                        }}>
+                                        {element.profitDiff > 0 ? "+" : ""}
+                                        <Price value = {element.profitDiff} unit=""></Price>
+                                        
+                                    </div>
+                                </div>
+                                <div className="best-rank__row" id="rank__last-profit">
+                                    <Price value = {element.lastProfit} unit="원"></Price>
+                                </div>
+                                <div className="best-rank__row" id="rank__profit">
+                                    <Price value = {element.todayProfit} unit="원"></Price>        
+                                </div>
+        
+                            </div>
+                        ))
+
                     }
                    
                 </div>
