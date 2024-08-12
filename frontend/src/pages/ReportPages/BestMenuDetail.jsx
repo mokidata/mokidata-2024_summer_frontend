@@ -9,6 +9,7 @@ import DropDownMenu from "../../component/common/DropDownMenu";
 import CalendarContent from "../../component/common/CalendarContent";
 import BottomNavbar from "../../component/common/BottomNavbar";
 import useSalesData from "../../hooks/useSalesData";
+import LoadingScreen from "../../component/common/LoadingScreen";
 
 function BestMenuDetail(props){
     const location = useLocation()
@@ -25,33 +26,26 @@ function BestMenuDetail(props){
         menuObject,
         lastDetailValue} = useSalesData();
     const {state} = location
+    console.log(state)
     // const [pageInfo,setPageInfo] = useState("daily")
-    const rankArray = state.rankDetail[state.page]
-    // const [rankArray,setRankArray] = useState([{"name":"","count":0,"price":0}])   
-    const [lastRank,setLastRank] = useState({})
+    // const rankArray = state.rankDetail[state.page]
+    const [rankArray,setRankArray] = useState([{"name":"","count":0,"price":0}])   
+    const [lastRank,setLastRank] = useState({"daily":[],"weekly":[],"monthly":[]})
     const [topVisible,setTopVisible] = useState(false)
     const [leftSide,setLeftSide] = useState(false)
     const [rightSide,setRightSide] = useState(false)
-    // const asyncSetPage = async (page) => {
-    //     setPageInfo(page)
-    // }
-    // const asyncSetRank = async (page) => {
-    //     setRankArray(rankDetailValue[page])
-    // }
-    
-    // const setRankInfo = async (page) => {
-    //     await asyncSetPage(page)
-    //     console.log(pageInfo)
-    //     await asyncSetRank(pageInfo)
-    //     console.log(rankArray)
-    // }
+
     
     
-    // useEffect(()=>{
-    //     console.log(rankDetailValue)
-    //     console.log(state)
-    //     // setRankInfo(state.page)
-    // },[rankDetailValue,state])
+    useEffect(()=>{
+        if(rankDetailValue !== null){
+            console.log(rankDetailValue[state.page])
+            setRankArray(rankDetailValue[state.page])
+        }
+        
+        // setRankInfo(state.page)
+    },[rankDetailValue,state])
+    
     const openLeftSide = ()=>{
         if(rightSide){
             setRightSide(false)
@@ -75,15 +69,20 @@ function BestMenuDetail(props){
         window.addEventListener('scroll', handleScroll);
         setLeftSide(false)
         setRightSide(false)
+        setLastRank({"daily":[],"weekly":[],"monthly":[]})
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+    const sideList = ['오늘 판매 순위','이번주 판매 순위','이번달 판매 순위','어제와 판매 비교','지난주와 판매 비교','지난달과 판매 비교']
+    const urlList = ['bestmenu','bestmenu','bestmenu','biggestdiff','biggestdiff','biggestdiff']
+    const pageList =['daily','weekly','monthly']
     const goBack = () => {
 
-        navigate(-1)
+        navigate(`/${state.page}`)
     }
-    const goPage = () => {
+    const goPage = (index) => {
+        navigate(`/${urlList[index]}`,{state:{page:pageList[index%3], currentDate:state.currentDate }})
 
     }
     useEffect(()=>{
@@ -91,16 +90,19 @@ function BestMenuDetail(props){
     },[state])
     useEffect(()=>{
         const obj = {}
-        if(state.lastDetail[state.page].length !== 0)
-        {
-            state.lastDetail[state.page].forEach((element,index) => {
+        console.log(lastDetailValue)
+        // Object.keys(lastDetailValue[state.page]).length !== 0 
+        if(lastDetailValue !== null ) 
+        {   
+            console.log(lastDetailValue[state.page])
+            lastDetailValue[state.page].forEach((element,index) => {
                 obj[element.name] = index+1
             });
             setLastRank(obj);
         }
        
         
-    },[state])
+    },[state,lastDetailValue])
     useEffect(()=>{
         console.log(rankArray)
     },[rankArray])
@@ -108,8 +110,11 @@ function BestMenuDetail(props){
         console.log(lastRank)
     },[lastRank])
 
-    const sideList = ['오늘 판매 순위','이번주 판매 순위','이번달 판매 순위','어제와 판매 비교','지난주와 판매 비교','지난달과 판매 비교']
-
+    if(isLoadingState){
+        return (
+            <LoadingScreen txt={<span>매출 데이터를 <br /> 가져오고 있어요!</span>}></LoadingScreen>
+        )
+    }
     return(
         <div className="report-page">
             <Header leftSide={setLeftSide} rightSide={setRightSide} page={state.page} currentDate={state.currentDate}></Header>
@@ -129,7 +134,7 @@ function BestMenuDetail(props){
                 exit={{ x: '+100%', opacity: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                 {rightSide && <CalendarContent page={state.page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
+                 {rightSide && <CalendarContent info={"bestmenu"} page={state.page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
             </motion.div>
                
             <motion.div 
@@ -206,7 +211,7 @@ function BestMenuDetail(props){
                     <TopButton></TopButton>
 
             </motion.div>
-            <BottomNavbar page={state.page} currentDate={state.currentDate}></BottomNavbar>
+            <BottomNavbar page={state.page} info="bestmenu" currentDate={state.currentDate}></BottomNavbar>
             
 
         </div>

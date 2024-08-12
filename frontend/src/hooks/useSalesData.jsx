@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 function useSalesData() {
     console.log("!!!!use Sales Data!!!");
     const [currentDate,setCurrentDate] = useState("")
-    const [todayValue, setTodayValue] = useState({ daily: {}, weekly: {}, monthly: {} });
+    const [todayValue, setTodayValue] = useState(null);
     const [predictTodayValue, setPredictTodayValue] = useState({ daily: {}, weekly: {}, monthly: {} });
     const [predictDetailValue, setPredictDetailValue] = useState({ daily: {}, weekly: {}, monthly: {} });
     const [rankCompareValue, setRankCompareValue] = useState({ daily: {}, weekly: {}, monthly: {} });
-    const [rankDetailValue, setRankDetailValue] = useState({ daily: {}, weekly: {}, monthly: {} });
-    const [lastDetailValue, setLastDetailValue] = useState({ daily: {}, weekly: {}, monthly: {} });
+    const [rankDetailValue, setRankDetailValue] = useState(null);
+    const [lastDetailValue, setLastDetailValue] = useState(null);
     const [predictLastValue, setPredictLastValue] = useState({ daily: {}, weekly: {}, monthly: {} });
     const [menuObject, setMenuObject] = useState({});
     const [isLoadingState, setIsLoadingState] = useState(true);

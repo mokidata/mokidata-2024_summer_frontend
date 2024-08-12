@@ -9,33 +9,39 @@ import TopButton from "../../component/common/TopButton";
 import DropDownMenu from "../../component/common/DropDownMenu";
 import CalendarContent from "../../component/common/CalendarContent";
 import useSalesData from "../../hooks/useSalesData";
+import BottomNavbar from "../../component/common/BottomNavbar";
+import LoadingScreen from "../../component/common/LoadingScreen";
 
 function BiggestDiffDetail (props){
     const location = useLocation()
     const navigate =useNavigate()
-    // const {
-    //     currentDate,
-    //     isLoadingState,
-    //     todayValue,
-    //     predictTodayValue,
-    //     predictDetailValue,
-    //     predictLastValue,
-    //     rankDetailValue,
-    //     rankCompareValue,
-    //     menuObject,
-    //     lastDetailValue} = useSalesData();
+    const {
+        currentDate,
+        isLoadingState,
+        todayValue,
+        predictTodayValue,
+        predictDetailValue,
+        predictLastValue,
+        rankDetailValue,
+        rankCompareValue,
+        menuObject,
+        lastDetailValue} = useSalesData();
     const {state} = location
-    const todayArray = state.todayValue[state.page]
-    const lastArray = state.lastDetailValue[state.page]
+    // const todayArray = state.todayValue[state.page]
+    // const lastArray = state.lastDetailValue[state.page]
 
-    // const [todayArray,setTodayArray] = useState([]) 
-    // const [lastArray,setLastArray] = useState([]) 
-    // useEffect(()=>{
-    //     setTodayArray(todayValue[state.page])
-    // },[todayValue,state])
-    // useEffect(()=>{
-    //     setLastArray(lastDetailValue[state.page])
-    // },[lastDetailValue,state])
+    const [todayArray,setTodayArray] = useState([{"daily":[],"weekly":[],"monthly":[]}]) 
+    const [lastArray,setLastArray] = useState([{"daily":[],"weekly":[],"monthly":[]}]) 
+    useEffect(()=>{
+        if(rankDetailValue !== null){
+            console.log(rankDetailValue)
+            setTodayArray(rankDetailValue[state.page])
+        }
+    },[rankDetailValue,state])
+    useEffect(()=>{
+        if(lastDetailValue !== null)
+        setLastArray(lastDetailValue[state.page])
+    },[lastDetailValue,state])
     
     console.log(state)
     const [diffRank,setDiffRank] = useState([])
@@ -43,6 +49,14 @@ function BiggestDiffDetail (props){
     const [topVisible,setTopVisible] = useState(false)
     const [leftSide,setLeftSide] = useState(false)
     const [rightSide,setRightSide] = useState(false)
+
+    const sideList = ['오늘 판매 순위','이번주 판매 순위','이번달 판매 순위','어제와 판매 비교','지난주와 판매 비교','지난달과 판매 비교']
+    const urlList = ['bestmenu','bestmenu','bestmenu','biggestdiff','biggestdiff','biggestdiff']
+    const pageList =['daily','weekly','monthly']
+    const goPage = (index) => {
+        navigate(`/${urlList[index]}`,{state:{page:pageList[index%3], currentDate:state.currentDate }})
+
+    }
     
     const openLeftSide = ()=>{
         if(rightSide){
@@ -71,16 +85,15 @@ function BiggestDiffDetail (props){
     }, []);
     const goBack = () => {
 
-        navigate(-1)
-    }
-    const goPage = () => {
-        
+        navigate(`/${state.page}`)
     }
     useEffect(()=>{
         window.scroll(0,0)
     },[state])
     useEffect(()=>{
-        if(Object.keys(state.todayValue[state.page]).length !== 0 ){
+        console.log(todayArray)
+        
+        if(Object.keys(todayArray).length !== 0 ){
             
             const diffArray = []
             todayArray.forEach(element => {
@@ -102,7 +115,7 @@ function BiggestDiffDetail (props){
             diffArray.sort((a,b) => a.profitDiff - b.profitDiff).reverse()
             setDiffRank(diffArray);
         }
-    },[state])
+    },[todayArray])
     useEffect(()=>{
         console.log(diffRank)
     },[diffRank]);
@@ -110,7 +123,12 @@ function BiggestDiffDetail (props){
         setDiffType(type);
     }
     
-    const sideList = ['오늘 판매 순위','이번주 판매 순위','이번달 판매 순위','어제와 판매 비교','지난주와 판매 비교','지난달과 판매 비교']
+
+    if(isLoadingState){
+        return (
+            <LoadingScreen txt={<span>매출 데이터를 <br /> 가져오고 있어요!</span>}></LoadingScreen>
+        )
+    }
 
     return(
         <div className="report-page">
@@ -131,7 +149,7 @@ function BiggestDiffDetail (props){
                 exit={{ x: '+100%', opacity: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                 {rightSide && <CalendarContent page={state.page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
+                 {rightSide && <CalendarContent info={"biggestdiff"} page={state.page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
             </motion.div>
             <motion.div 
             initial={{opacity:0}}
@@ -140,9 +158,9 @@ function BiggestDiffDetail (props){
             className="report-component" id="best-rank">
                 <div className="best-rank__goback" onClick={() => goBack()}>
                     &lt; {
-                    props.page === 'daily'? '어제와':
-                    props.page === 'weekly'? '지난 주와':
-                    props.page === 'monthly' ? '지난 달과':
+                    state.page === 'daily'? '어제와':
+                    state.page === 'weekly'? '지난 주와':
+                    state.page === 'monthly' ? '지난 달과':
                     '어제와'
 
                 } 판매 비교
@@ -238,6 +256,8 @@ function BiggestDiffDetail (props){
                     <TopButton></TopButton>
 
             </motion.div>
+            <BottomNavbar page={state.page} info="biggestdiff" currentDate={state.currentDate}></BottomNavbar>
+            
         </div>
     )
 }

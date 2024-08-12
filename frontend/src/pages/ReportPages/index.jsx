@@ -212,7 +212,7 @@ function ReportPage(props){
                 
                 
                 
-                <BottomNavbar page={page} currentDate={currentDate}></BottomNavbar>
+                <BottomNavbar page={page} info="reportIndex" currentDate={currentDate}></BottomNavbar>
             </div>
             
         );

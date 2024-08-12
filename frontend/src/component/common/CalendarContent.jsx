@@ -11,6 +11,7 @@ function CalendarContent(props){
     let monthList = []
     let finalMap = {}
     let i = 0;
+    const navigate =useNavigate()
     const dispatch = useDispatch()
     const [isMonthSelect,setIsMonthSelect] = useState(false)
     const [currentMonth,setCurrentMonth] = useState("")
@@ -20,11 +21,17 @@ function CalendarContent(props){
         setCurrentMonth(cur)
     }
 
-    const HandleDispatch=(date,page) =>{
+    const HandleDispatch= (date,page) =>{
         props.open()
         // setIsMonthSelect(!isMonthSelect)
         console.log(date)
         dispatch(totalThunks(date))
+        if (props.info === "bestmenu"){
+            navigate("/bestmenu",{state:{currentDate:date, page:props.page}})
+        }
+        else if(props.info === "biggestdiff"){
+            navigate("/biggestdiff",{state:{currentDate:date, page:props.page}})
+        }
     }
     
     //월, 주 ,일 목록 뽑아내는 코드
