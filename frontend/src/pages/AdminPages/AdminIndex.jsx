@@ -108,7 +108,9 @@ function AdminIndex(){
     }
     const postRandom = async () =>{
         console.log("post random")
+        setLoadingMsg("데이터 생성 중")
         setIsLoading(true) //로딩 페이지 띄우기
+
         let formData = {"startDate":startDate,"endDate":endDate}
         const response = await mokiApi.post(`/api/menu/random`,formData).then(
             (response)=>{
