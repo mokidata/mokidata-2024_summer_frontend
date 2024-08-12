@@ -22,6 +22,7 @@ function BiggestDiffDetail (props){
         predictTodayValue,
         predictDetailValue,
         predictLastValue,
+        predictNextValue,
         rankDetailValue,
         rankCompareValue,
         menuObject,

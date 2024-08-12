@@ -8,10 +8,11 @@ function useSalesData() {
     const [todayValue, setTodayValue] = useState(null);
     const [predictTodayValue, setPredictTodayValue] = useState({ daily: {}, weekly: {}, monthly: {} });
     const [predictDetailValue, setPredictDetailValue] = useState({ daily: {}, weekly: {}, monthly: {} });
-    const [rankCompareValue, setRankCompareValue] = useState({ daily: {}, weekly: {}, monthly: {} });
+    const [rankCompareValue, setRankCompareValue] = useState(null);
     const [rankDetailValue, setRankDetailValue] = useState(null);
     const [lastDetailValue, setLastDetailValue] = useState(null);
     const [predictLastValue, setPredictLastValue] = useState({ daily: {}, weekly: {}, monthly: {} });
+    const [predictNextValue, setPredictNextValue] = useState(null)
     const [menuObject, setMenuObject] = useState({});
     const [isLoadingState, setIsLoadingState] = useState(true);
     
@@ -25,6 +26,7 @@ function useSalesData() {
             setTodayValue(totalData['today']);
             setPredictTodayValue(totalData['predictToday']);
             setPredictDetailValue(totalData['predictDetail']);
+            setPredictNextValue(totalData['predictNext'])
             setRankCompareValue(totalData['rankCompare']);
             setPredictLastValue(totalData['predictLast'])
             setRankDetailValue(totalData['rankDetail']);
@@ -46,7 +48,7 @@ function useSalesData() {
 
 
    
-    return { currentDate,isLoadingState, todayValue, predictTodayValue, predictDetailValue, predictLastValue ,rankDetailValue, rankCompareValue, menuObject , lastDetailValue };
+    return { currentDate,isLoadingState, todayValue, predictTodayValue, predictDetailValue, predictLastValue ,predictNextValue,rankDetailValue, rankCompareValue, menuObject , lastDetailValue };
 }
 
 export default useSalesData;

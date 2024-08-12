@@ -21,6 +21,7 @@ function BestMenuDetail(props){
         predictTodayValue,
         predictDetailValue,
         predictLastValue,
+        predictNextValue,
         rankDetailValue,
         rankCompareValue,
         menuObject,

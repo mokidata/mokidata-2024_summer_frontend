@@ -5,8 +5,10 @@ import DateConVerter, { formatDateNum, formatMonth, formatWeek } from "../common
 
 function PredictSales (props){
     console.log(props)
-    const predictValue = props.value[props.page]['predicts']
+    const todayValue = props.value[props.page]['predicts']
+    const nextValue = props.predictNextValue[props.page]['predicts']
     const compareValue = props.rankCompareValue[props.page]
+    const nextDate = props.predictNextValue[props.page]['date']
     const menuObject = props.menuObject
     let data= []
     var profit = 0
@@ -39,20 +41,38 @@ function PredictSales (props){
       
     }
     profit = 0
-    predictValue.forEach(element=>{
+    todayValue.forEach(element=>{
       
       for (const dates of Object.keys(element.predictData)){
         
         profit += element.predictData[dates] * menuObject[element.name]['price']
       }
     })
-    const obj = {column :
+    let obj = {column :
       props.page === 'daily' ? `${formatDateNum(props.currentDate)} ` :
         props.page === 'weekly' ? `${formatWeek(props.currentDate)} `:
         props.page === 'monthly' ? `${formatMonth(props.currentDate)} `: ""
+      , value : GetInteger(profit/ 10000 ) , highlight: false , valueHighlight: false}
+    data.push(obj)
+
+    profit = 0 
+    nextValue.forEach(element => {
+      for (const dates of Object.keys(element.predictData)){
+        profit += element.predictData[dates] * menuObject[element.name]['price']
+      }
+    })
+
+    obj = {column :
+      props.page === 'daily' ? `${formatDateNum(nextDate)} ` :
+        props.page === 'weekly' ? `${formatWeek(nextDate)} `:
+        props.page === 'monthly' ? `${formatMonth(nextDate)} `: ""
       , value : GetInteger(profit/ 10000 ) , highlight: true , valueHighlight: false}
     data.push(obj)
+    
     let avg = getAverage()
+
+
+    
     
 
    

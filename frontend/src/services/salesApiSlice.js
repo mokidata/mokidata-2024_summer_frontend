@@ -13,7 +13,7 @@ const initialState = {
 export const totalThunks = createAsyncThunk(
   'saleSlice/fetchData',
   async (initialFormatDate,thunkAPI) => {
-    let data = {"date":initialFormatDate,"today":{},"predictToday":{},"predictLast":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
+    let data = {"date":initialFormatDate,"today":{},"predictNext":{}, "predictToday":{},"predictLast":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
     
     //토큰 가져다 쓰기
     const token = sessionStorage.getItem('accessToken');
@@ -24,19 +24,34 @@ export const totalThunks = createAsyncThunk(
     const yesterday = new Date(initialFormatDate)
     const lastWeek = new Date(initialFormatDate)
     const lastMonth = new Date(initialFormatDate)
+    const tomorrow = new Date(initialFormatDate)
+    const nextWeek =  new Date(initialFormatDate)
+    const nextMonth =  new Date(initialFormatDate)
     yesterday.setDate(yesterday.getDate()-1)
     lastWeek.setDate(lastWeek.getDate()-7)
     lastMonth.setDate(lastMonth.getDate()-30)
+    tomorrow.setDate(tomorrow.getDate()+1)
+    nextWeek.setDate(nextWeek.getDate()+7)
+    nextMonth.setDate(nextMonth.getDate()+30)
+    // 다음 주의 월요일 구하기
+    nextWeek.setDate(nextWeek.getDate() - nextWeek.getDay() + 1);
+    // 다음 달의 1일 구하기
+    nextMonth.setDate(1); // 1일로 설정
+
+    
     const formattedYesterday = formatDate(yesterday)
     const formattedLastWeek= formatDate(lastWeek)
     const formattedLastMonth = formatDate(lastMonth)
+    const formattedTomorrow = formatDate(tomorrow)
+    const formattedNextWeek= formatDate(nextWeek)
+    const formattedNextMonth = formatDate(nextMonth)
     const daily_dates = []
     const weekly_dates = []
     const monthly_dates = []
     //daily_dates = 하루단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-27,...]
     //weekly_dates = 주단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-21,...]
     //monthly_dates = 월단위 매출 얻기위한 날짜들 [2024-07-28,2024-06-28,...]
-    for(let i = 1; i< 5;i++){
+    for(let i = 1; i< 4;i++){
       yesterday.setDate(yesterday.getDate()-1)
       lastWeek.setDate(lastWeek.getDate()-7)
       lastMonth.setDate(lastMonth.getDate()-30)
@@ -151,19 +166,68 @@ export const totalThunks = createAsyncThunk(
       data.predictLast.weekly = {}
       console.log(error)
     }
+
+
     try{
       const response = await mokiApi.get(`/api/predict/monthly`, {
         params: {
           localDate: formattedLastMonth,
         },
       })
-      console.log(formattedLastMonth)
+      
       data.predictLast.monthly = response.data
     }
     catch(error){
       data.predictLast.monthly = {}
       console.log(error)
     }
+
+    try{
+      const response = await mokiApi.get(`/api/predict/daily-detail`, {
+        params: {
+          localDate: formattedTomorrow,
+        },
+      })
+      data.predictNext.daily = response.data
+      data.predictNext.daily.date = formattedTomorrow
+      
+    }
+    catch(error){
+      data.predictNext.monthly = {}
+      console.log(error)
+    }
+    try{
+      const response = await mokiApi.get(`/api/predict/weekly-detail`, {
+        params: {
+          localDate: formattedNextWeek,
+        },
+      })
+     
+      data.predictNext.weekly = response.data
+      data.predictNext.weekly.date = formattedNextWeek
+
+    }
+    catch(error){
+      data.predictNext.weekly = {}
+      console.log(error)
+    }
+
+    
+    try{
+      const response = await mokiApi.get(`/api/predict/monthly-detail`, {
+        params: {
+          localDate: formattedNextMonth,
+        },
+      })
+     
+      data.predictNext.monthly = response.data
+      data.predictNext.monthly.date = formattedNextMonth
+    }
+    catch(error){
+      data.predictNext.monthly = {}
+      console.log(error)
+    }
+
 
     try{
       const response = await mokiApi.get(`/api/predict/daily-detail`, {

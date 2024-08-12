@@ -10,13 +10,14 @@ import usePageInfo from "../../hooks/usePageInfo";
 import useSalesData from "../../hooks/useSalesData";
 import {motion} from "framer-motion"
 import DropDownMenu from "../../component/common/DropDownMenu";
-import { formatDate } from "../../component/common/DateConverter";
+import { formatDate, formatMonth } from "../../component/common/DateConverter";
 import { useLocation } from "react-router-dom";
 import CalendarContent from "../../component/common/CalendarContent";
 import { useDispatch } from "react-redux";
 import { totalThunks } from "../../services/salesApiSlice";
 import TopButton from "../../component/common/TopButton";
 import LoadingScreen from "../../component/common/LoadingScreen";
+import { current } from "@reduxjs/toolkit";
 
 function ReportPage(props){
     
@@ -30,6 +31,7 @@ function ReportPage(props){
         predictTodayValue,
         predictDetailValue,
         predictLastValue,
+        predictNextValue,
         rankDetailValue,
         rankCompareValue,
         menuObject,
@@ -39,6 +41,7 @@ function ReportPage(props){
     const [rightSide,setRightSide] = useState(false)
     const todayDate = formatDate(new Date())
     const [topVisible,setTopVisible] = useState(false)
+    const [validDateList,setVaildDateList] = useState([])
     const handleScrollTop = () => {
         if (window.scrollY > 500) {
             setTopVisible(true);
@@ -52,6 +55,20 @@ function ReportPage(props){
             window.removeEventListener('scroll', handleScrollTop);
         };
     }, []);
+
+    //유효한 데이터 범위 파악
+    useEffect(()=>{
+        let list = []
+        if(rankCompareValue !== null && todayDate === currentDate){
+            list.push(todayDate)
+            for(let date of Object.keys(rankCompareValue['monthly']) ){
+                if (rankCompareValue['monthly'][date].length !== 0){
+                    list.push(date)
+                }
+            }
+            setVaildDateList(list)
+        }
+    },[rankCompareValue, currentDate])
 
     const handleScroll = () => {
         const items = document.querySelectorAll('.report-item');
@@ -140,7 +157,7 @@ function ReportPage(props){
                     exit={{ x: '+100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <CalendarContent page={page} currentDate={todayDate} open={openRightSide}></CalendarContent>
+                    <CalendarContent page={page} validDateList={validDateList} currentDate={todayDate} open={openRightSide}></CalendarContent>
                 </motion.div>
                 
                 <motion.div
@@ -174,7 +191,7 @@ function ReportPage(props){
                     transition={{ duration: 0.7 }}
                     
                 >
-                    <PredictSales currentDate={currentDate} page={page} isVisible={componentFade[2]} value={predictDetailValue} menuObject={menuObject} rankCompareValue={rankCompareValue}></PredictSales>
+                    <PredictSales currentDate={currentDate} predictNextValue={predictNextValue} page={page} isVisible={componentFade[2]} value={predictDetailValue} menuObject={menuObject} rankCompareValue={rankCompareValue}></PredictSales>
                 </motion.div>
                 <motion.div
                     className="report-item"
