@@ -5,6 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+function setScreenSize() {
+  let vh = window.innerHeight * 0.01;
+
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+setScreenSize()
 root.render(
   <React.StrictMode>
     <App />
