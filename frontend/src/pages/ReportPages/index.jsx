@@ -21,7 +21,7 @@ import LoadingScreen from "../../component/common/LoadingScreen";
 function ReportPage(props){
     
     console.log("!!!report page!!!")
-    const dispatch = useDispatch()
+    const sideList = ['이번 매출','매출 예상과 실제 매출 비교',"매출 예상","가장 많이 팔린 메뉴","직전 대비 가장 많이/적게 팔린 메뉴"]
     const [page] = usePageInfo(props.page)
     const {
         currentDate,
@@ -131,7 +131,7 @@ function ReportPage(props){
                     exit={{ x: '-100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <DropDownMenu open={openLeftSide} scroll={scrollToContent}></DropDownMenu>
+                    <DropDownMenu sideList={sideList} open={openLeftSide} onclickFunction={scrollToContent}></DropDownMenu>
                 </motion.div>
                 <motion.div
                     className="side-nav__calendar"

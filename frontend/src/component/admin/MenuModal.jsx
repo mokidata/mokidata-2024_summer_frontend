@@ -15,7 +15,7 @@ function MenuModal(props){
     const updateMenu = (data,index) => {
         console.log(data)
         //신메뉴 추가, 수정일 때 -> 메뉴리스트에 업데이트만
-        if(index >= menuLength){
+        if(index > menuLength){
             setMenuUpdateList((preV) => {
                 let copy = [...preV]
                 const replaceIndex = copy.findIndex(element => element.name ==="NO DATA")
@@ -101,7 +101,7 @@ function MenuModal(props){
             console.log(menuUpdateList)
             formData.append(`menuList[0].menuName`,menuUpdateList[i].name )
             formData.append(`menuList[0].price`,menuUpdateList[i].price)
-            if(menuUpdateList[i].img !== undefined){
+            if(menuUpdateList[i].img !== undefined && menuUpdateList[i].img !== null){
                 formData.append(`menuList[0].image`,menuUpdateList[i].img)
             }
             formData.append(`menuList[0].maxCount`,menuUpdateList[i].maxCount)

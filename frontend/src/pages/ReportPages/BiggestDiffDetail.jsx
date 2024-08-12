@@ -6,18 +6,56 @@ import GetInteger from "../../component/common/GetInteger";
 import Price from "../../component/common/Price";
 import { motion } from "framer-motion";
 import TopButton from "../../component/common/TopButton";
+import DropDownMenu from "../../component/common/DropDownMenu";
+import CalendarContent from "../../component/common/CalendarContent";
+import useSalesData from "../../hooks/useSalesData";
 
 function BiggestDiffDetail (props){
     const location = useLocation()
     const navigate =useNavigate()
+    // const {
+    //     currentDate,
+    //     isLoadingState,
+    //     todayValue,
+    //     predictTodayValue,
+    //     predictDetailValue,
+    //     predictLastValue,
+    //     rankDetailValue,
+    //     rankCompareValue,
+    //     menuObject,
+    //     lastDetailValue} = useSalesData();
     const {state} = location
     const todayArray = state.todayValue[state.page]
     const lastArray = state.lastDetailValue[state.page]
+
+    // const [todayArray,setTodayArray] = useState([]) 
+    // const [lastArray,setLastArray] = useState([]) 
+    // useEffect(()=>{
+    //     setTodayArray(todayValue[state.page])
+    // },[todayValue,state])
+    // useEffect(()=>{
+    //     setLastArray(lastDetailValue[state.page])
+    // },[lastDetailValue,state])
     
     console.log(state)
     const [diffRank,setDiffRank] = useState([])
     const [diffType,setDiffType] = useState("sale")
     const [topVisible,setTopVisible] = useState(false)
+    const [leftSide,setLeftSide] = useState(false)
+    const [rightSide,setRightSide] = useState(false)
+    
+    const openLeftSide = ()=>{
+        if(rightSide){
+            setRightSide(false)
+        }
+        setLeftSide(!leftSide)
+    }
+    const openRightSide = ()=>{
+        if(leftSide){
+            setLeftSide(false)
+        }
+        setRightSide(!rightSide)
+    }
     const handleScroll = () => {
         if (window.scrollY > 500) {
             setTopVisible(true);
@@ -34,6 +72,9 @@ function BiggestDiffDetail (props){
     const goBack = () => {
 
         navigate(-1)
+    }
+    const goPage = () => {
+        
     }
     useEffect(()=>{
         window.scroll(0,0)
@@ -69,10 +110,29 @@ function BiggestDiffDetail (props){
         setDiffType(type);
     }
     
+    const sideList = ['오늘 판매 순위','이번주 판매 순위','이번달 판매 순위','어제와 판매 비교','지난주와 판매 비교','지난달과 판매 비교']
 
     return(
         <div className="report-page">
-            <Header page={state.page} currentDate={state.currentDate} ></Header>
+            <Header leftSide={setLeftSide} rightSide={setRightSide} page={state.page} currentDate={state.currentDate}></Header>
+            <motion.div
+                    className="side-nav__dropdown"
+                    initial={{ x: '-100%', opacity: 0 }}
+                    animate={{ x: leftSide ? 0 : '-100%', opacity: leftSide ? 1 : 0 }}
+                    exit={{ x: '-100%', opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    {leftSide && <DropDownMenu sideList={sideList} open={openLeftSide} onclickFunction={goPage}></DropDownMenu>}
+            </motion.div>
+            <motion.div
+                className="side-nav__calendar"
+                initial={{ x: '+100%', opacity: 0 }}
+                animate={{ x: rightSide ? 0 :'+100%' , opacity: rightSide ? 1 : 0 }}
+                exit={{ x: '+100%', opacity: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                 {rightSide && <CalendarContent page={state.page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
+            </motion.div>
             <motion.div 
             initial={{opacity:0}}
             animate={{opacity:1}}

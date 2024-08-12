@@ -24,7 +24,6 @@ function BarElement(props){
         return () => clearInterval(timer);
     }
     useEffect(()=>{
-        console.log(`${props.value} ${props.max} ${props.min} ${props.isVisible}`)
         if(props.isVisible)
         {
             setBarValue(70)

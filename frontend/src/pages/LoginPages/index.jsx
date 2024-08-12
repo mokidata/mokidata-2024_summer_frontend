@@ -25,7 +25,7 @@ function Login() {
     const handleLoginSuccess = () => {
         fetchData();
         console.log("")
-        navigate("weekly");
+        navigate("daily");
     };
     const handleLogin = async (event,inputValue) => {
         
@@ -36,6 +36,7 @@ function Login() {
                 password: inputValue.pswd
             });
             sessionStorage.setItem("accessToken",response.data.token)
+            sessionStorage.setItem("name",response.data.name)
             mokiApi.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
             console.log(mokiApi.defaults.headers.common);
             console.log(response);
@@ -56,7 +57,6 @@ function Login() {
 
     return (
         <div className="login-page">
-            <Header page="login" />
             <div className="logo-div">
                 <svg className="logo-img"></svg>
             </div>

@@ -112,6 +112,8 @@ function AdminIndex(){
         setIsLoading(true) //로딩 페이지 띄우기
 
         let formData = {"startDate":startDate,"endDate":endDate}
+        console.log(startDate)
+        console.log(endDate)
         const response = await mokiApi.post(`/api/menu/random`,formData).then(
             (response)=>{
                 console.log(response)
@@ -202,10 +204,11 @@ function AdminIndex(){
             initial={{opacity:0}}
             animate={{opacity: isAlert?1:0}}
             transition={{duration:0.5}}
+
             >
-                <Alert isAlert={isAlert} color={alertColor} txt={alertMsg}></Alert>
+            {isAlert &&   <Alert color={alertColor} txt={alertMsg}></Alert>}
             </motion.div>
-            {warningModal && <WarningModal openModal={openWarningModal} setReload={setReload} deleteMenu={deleteAllData}> </WarningModal>}
+            {warningModal && <WarningModal openModal={openWarningModal} setLoadingMsg={setLoadingMsg} setReload={setReload} deleteMenu={deleteAllData}> </WarningModal>}
             {nameModal && <NameModal setUserName={setUserName} userName={userName} openModal={openNameModal}> </NameModal>}
             {menuModal && <MenuModal getAlert={getAlert} setReload={setReload} menuList={menuList} openModal={openMenuModal}> </MenuModal>}
             <InputName openModal={openNameModal} userName={userName}></InputName>

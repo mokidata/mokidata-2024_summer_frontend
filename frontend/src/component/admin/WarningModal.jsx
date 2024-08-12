@@ -15,9 +15,12 @@ function WarningModal(props){
                     <div className="modal-btn" onClick={props.openModal}>
                         <Button id="modal-btn" txt="취소" color="grey" shape="rect" fontColor="white"></Button> 
                     </div>
-                    <div className="modal-btn" onClick={() =>{
+                    <div className="modal-btn" onClick={async () =>{
+                        props.setLoadingMsg("데이터 삭제 중")
+                        props.setReload(true)
                         props.openModal()
-                        props.deleteMenu()
+                        await props.deleteMenu()
+                        props.setReload(false)
                         }}>
                         <Button id="modal-btn" txt="확인" color="red" shape="rect" > </Button>
                     </div>

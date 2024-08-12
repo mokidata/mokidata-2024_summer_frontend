@@ -385,6 +385,11 @@ export const saleSlice = createSlice({
   name: 'saleSlice',
   initialState,
   reducers: {
+    clearStore: (state) => {
+      // 상태를 초기 상태로 리셋
+      console.log(initialState)
+      return initialState;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -402,6 +407,7 @@ export const saleSlice = createSlice({
   },
 });
 
+export const { clearStore } = saleSlice.actions;
 
 
 

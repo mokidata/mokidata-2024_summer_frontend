@@ -5,13 +5,65 @@ import Triangle from "../../component/common/Triangle";
 import { useEffect, useState } from "react";
 import {motion} from 'framer-motion'
 import TopButton from "../../component/common/TopButton";
+import DropDownMenu from "../../component/common/DropDownMenu";
+import CalendarContent from "../../component/common/CalendarContent";
+import BottomNavbar from "../../component/common/BottomNavbar";
+import useSalesData from "../../hooks/useSalesData";
+
 function BestMenuDetail(props){
     const location = useLocation()
     const navigate = useNavigate()
+    const {
+        currentDate,
+        isLoadingState,
+        todayValue,
+        predictTodayValue,
+        predictDetailValue,
+        predictLastValue,
+        rankDetailValue,
+        rankCompareValue,
+        menuObject,
+        lastDetailValue} = useSalesData();
     const {state} = location
+    // const [pageInfo,setPageInfo] = useState("daily")
     const rankArray = state.rankDetail[state.page]
+    // const [rankArray,setRankArray] = useState([{"name":"","count":0,"price":0}])   
     const [lastRank,setLastRank] = useState({})
     const [topVisible,setTopVisible] = useState(false)
+    const [leftSide,setLeftSide] = useState(false)
+    const [rightSide,setRightSide] = useState(false)
+    // const asyncSetPage = async (page) => {
+    //     setPageInfo(page)
+    // }
+    // const asyncSetRank = async (page) => {
+    //     setRankArray(rankDetailValue[page])
+    // }
+    
+    // const setRankInfo = async (page) => {
+    //     await asyncSetPage(page)
+    //     console.log(pageInfo)
+    //     await asyncSetRank(pageInfo)
+    //     console.log(rankArray)
+    // }
+    
+    
+    // useEffect(()=>{
+    //     console.log(rankDetailValue)
+    //     console.log(state)
+    //     // setRankInfo(state.page)
+    // },[rankDetailValue,state])
+    const openLeftSide = ()=>{
+        if(rightSide){
+            setRightSide(false)
+        }
+        setLeftSide(!leftSide)
+    }
+    const openRightSide = ()=>{
+        if(leftSide){
+            setLeftSide(false)
+        }
+        setRightSide(!rightSide)
+    }
     const handleScroll = () => {
         if (window.scrollY > 500) {
             setTopVisible(true);
@@ -21,6 +73,8 @@ function BestMenuDetail(props){
     };
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
+        setLeftSide(false)
+        setRightSide(false)
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -28,6 +82,9 @@ function BestMenuDetail(props){
     const goBack = () => {
 
         navigate(-1)
+    }
+    const goPage = () => {
+
     }
     useEffect(()=>{
         window.scroll(0,0)
@@ -51,12 +108,30 @@ function BestMenuDetail(props){
         console.log(lastRank)
     },[lastRank])
 
-
+    const sideList = ['오늘 판매 순위','이번주 판매 순위','이번달 판매 순위','어제와 판매 비교','지난주와 판매 비교','지난달과 판매 비교']
 
     return(
         <div className="report-page">
-            <Header page={state.page} currentDate={state.currentDate}></Header>
-            
+            <Header leftSide={setLeftSide} rightSide={setRightSide} page={state.page} currentDate={state.currentDate}></Header>
+            <motion.div
+                    className="side-nav__dropdown"
+                    initial={{ x: '-100%', opacity: 0 }}
+                    animate={{ x: leftSide ? 0 : '-100%', opacity: leftSide ? 1 : 0 }}
+                    exit={{ x: '-100%', opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    {leftSide && <DropDownMenu sideList={sideList} open={openLeftSide} onclickFunction={goPage}></DropDownMenu>}
+            </motion.div>
+            <motion.div
+                className="side-nav__calendar"
+                initial={{ x: '+100%', opacity: 0 }}
+                animate={{ x: rightSide ? 0 :'+100%' , opacity: rightSide ? 1 : 0 }}
+                exit={{ x: '+100%', opacity: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                 {rightSide && <CalendarContent page={state.page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
+            </motion.div>
+               
             <motion.div 
             initial={{opacity:0}}
             animate={{opacity:1}}
@@ -131,6 +206,7 @@ function BestMenuDetail(props){
                     <TopButton></TopButton>
 
             </motion.div>
+            <BottomNavbar page={state.page} currentDate={state.currentDate}></BottomNavbar>
             
 
         </div>
