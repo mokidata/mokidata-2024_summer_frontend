@@ -44,15 +44,15 @@ function CompPredictSales(props) {
                     <div className="report-title">
                         <div>
                             {
-                                props.page === 'daily' ? props.t('compPredictSales.today') :
-                                props.page === 'weekly' ? props.t('compPredictSales.thisWeek') :
-                                props.page === 'monthly' ? props.t('compPredictSales.thisMonth') :
-                                props.t('compPredictSales.today')
-                            } {props.t('compPredictSales.moreEarned_en')} 😆
+                                props.page === 'daily' ? props.t('compPredictSales.todaySales') :
+                                props.page === 'weekly' ? props.t('compPredictSales.thisWeekSales') :
+                                props.page === 'monthly' ? props.t('compPredictSales.thisMonthSales') :
+                                props.t('compPredictSales.todaySales')
+                            } 😆
                         </div>
                         <div className="report-title__benefit">
                             <Price value={todayTotal - predictTotal} unit={props.t('compPredictSales.unit')}></Price>
-                            &nbsp; {props.t('compPredictSales.moreEarned_kr')}
+                            &nbsp; {props.t('compPredictSales.moreEarned')}
                         </div>
                     </div>
                     :
@@ -63,11 +63,11 @@ function CompPredictSales(props) {
                                 props.page === 'weekly' ? props.t('compPredictSales.thisWeekSales') :
                                 props.page === 'monthly' ? props.t('compPredictSales.thisMonthSales') :
                                 props.t('compPredictSales.todaySales')
-                            } {props.t('compPredictSales.lessEarned_en')}
+                            } 
                         </div>
                         <div className="report-title__benefit" style={{flexDirection:"row"}}>
                             <Price value={predictTotal - todayTotal} unit={props.t('compPredictSales.unit')}></Price>
-                            &nbsp; {props.t('compPredictSales.lessEarned_kr')}
+                            &nbsp; {props.t('compPredictSales.lessEarned')}
                         </div>
                     </div>
             }

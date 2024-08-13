@@ -192,7 +192,6 @@ body {
   }
   .report-title__benefit{
     display: flex;
-    flex-direction: column;
   }
   .today-desc__day{
     display: flex;

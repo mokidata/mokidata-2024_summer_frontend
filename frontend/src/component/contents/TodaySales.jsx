@@ -23,7 +23,7 @@ function TodaySales (props){
         <div className="report-component">
             <div className="report-title__div">
                 <div className="report-title" id="todaysales"> 
-                    <div className="report-title__benefit">
+                    <div className="report-title__benefit" style={{flexDirection:"column"}}>
 
                         <div style={{display:"flex"}}>
                             {
