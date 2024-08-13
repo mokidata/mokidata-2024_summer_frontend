@@ -77,7 +77,11 @@ function ReportPage(props){
             list.push(todayDate)
             for(let date of Object.keys(rankCompareValue['monthly']) ){
                 if (rankCompareValue['monthly'][date].length !== 0){
-                    list.push(date)
+                    let lastday = new Date(date)
+                    lastday.setMonth(lastday.getMonth() + 1)
+                    lastday.setDate(0)
+                    console.log(formatDate(lastday))
+                    list.push(formatDate(lastday))
                 }
             }
             setVaildDateList(list)
