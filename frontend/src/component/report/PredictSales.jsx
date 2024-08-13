@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Chart from "../common/Chart";
-import GetInteger from "../common/GetInteger";
-import DateConverter, { formatDateNum, formatMonth, formatWeek } from "../common/DateConverter";
+import GetInteger from "../../functions/GetInteger"
+import DateConverter, { formatDateNum, formatMonth, formatWeek } from "../../functions/DateConverter";
 import Price from "../common/Price";
 
 function PredictSales(props) {

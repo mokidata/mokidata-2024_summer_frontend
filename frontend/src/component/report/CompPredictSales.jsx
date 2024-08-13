@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next"; // i18n 추가
 import Chart from "../common/Chart";
 import Price from "../common/Price";
-import GetInteger from "../common/GetInteger";
+import GetInteger from "../../functions/GetInteger"
 
 function CompPredictSales(props) {
     

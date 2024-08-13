@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { formatDate, formatDateNum, formatMonth, formatWeek, formatYear } from "./DateConverter";
+import { formatDate, formatDateNum, formatMonth, formatWeek, formatYear } from "../../functions/DateConverter";
 import { useDispatch } from "react-redux";
-import { totalThunks } from "../../services/salesApiSlice";
+import { totalThunks } from "../../store/salesApiSlice";
 import { useNavigate } from "react-router-dom";
 
 function CalendarContent(props){
@@ -16,7 +16,6 @@ function CalendarContent(props){
     const [isMonthSelect,setIsMonthSelect] = useState(false)
     const [currentMonth,setCurrentMonth] = useState("")
     const HandleMonthSelect = (cur) => {
-        console.log()
         setIsMonthSelect(!isMonthSelect)
         setCurrentMonth(cur)
     }
@@ -24,7 +23,6 @@ function CalendarContent(props){
     const HandleDispatch= (date,page) =>{
         props.open()
         // setIsMonthSelect(!isMonthSelect)
-        console.log(date)
         dispatch(totalThunks(date))
         if (props.detail ){
             navigate("/detail",{state:{currentDate:date, page:props.page, pageType:props.detail}})

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Calendar from "react-calendar"
 import "react-calendar/dist/Calendar.css"
 import "../../index.css"
-import { formatDate } from "../common/DateConverter";
+import { formatDate } from "../../functions/DateConverter";
 function CalendarScreen(props){
     const [dateValue,setDateValue] = useState(props.initDate)
     const getDate = (d) =>{

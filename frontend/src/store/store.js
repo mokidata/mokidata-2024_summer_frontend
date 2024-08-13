@@ -1,6 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit'
-import { saleSlice } from '../services/salesApiSlice';
-import apiSliceReducer from './api/apiSlice';
+import { saleSlice } from './salesApiSlice';
 import {  PERSIST, PURGE, persistReducer, persistStore} from 'redux-persist'
 import sessionStorage from 'redux-persist/es/storage/session';
 
@@ -13,7 +12,6 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig,saleSlice.reducer);
 export const store = configureStore({
     reducer:{
-        login: apiSliceReducer,
         sale : persistedReducer,
     },
     middleware:(getDefaultMiddleWare) => 

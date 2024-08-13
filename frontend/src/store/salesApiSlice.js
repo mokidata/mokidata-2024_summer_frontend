@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { mokiApi } from "../app/api/loginApi";
+import { mokiApi } from "../services/loginApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { act } from "react";
-import { formatDate } from "../component/common/DateConverter";
+import { formatDate } from "../functions/DateConverter";
 
 const initialState = {
     totalData:{},

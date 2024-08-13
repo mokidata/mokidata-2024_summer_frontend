@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { totalThunks } from "../services/salesApiSlice";
+import { totalThunks } from "../store/salesApiSlice";
 import { useEffect, useState } from "react";
 
 function useSalesData() {

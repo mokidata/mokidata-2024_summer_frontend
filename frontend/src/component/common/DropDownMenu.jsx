@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {clearStore} from "../../services/salesApiSlice"
+import {clearStore} from "../../store/salesApiSlice"
 function DropDownMenu (props){
     const navigate = useNavigate()
     const dispatch = useDispatch()

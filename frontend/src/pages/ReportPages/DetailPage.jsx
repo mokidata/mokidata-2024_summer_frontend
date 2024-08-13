@@ -1,7 +1,5 @@
 import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import Header from "../../component/common/Header";
-import Price from "../../component/common/Price";
-import Triangle from "../../component/common/Triangle";
 import { useEffect, useState,useRef } from "react";
 import {motion} from 'framer-motion'
 import TopButton from "../../component/common/TopButton";
@@ -11,9 +9,9 @@ import BottomNavbar from "../../component/common/BottomNavbar";
 import useSalesData from "../../hooks/useSalesData";
 import LoadingScreen from "../../component/common/LoadingScreen";
 import { useTranslation } from "react-i18next";
-import { formatDate } from "../../component/common/DateConverter";
-import BestMenuDetail from "../../component/contents/BestMenuDetail";
-import BiggestDiffDetail from "../../component/contents/BiggestDiffDetail";
+import { formatDate } from "../../functions/DateConverter";
+import BestMenuDetail from "../../component/report/BestMenuDetail";
+import BiggestDiffDetail from "../../component/report/BiggestDiffDetail";
 
 function DetailPage(props){
     const location = useLocation()
@@ -32,8 +30,6 @@ function DetailPage(props){
         menuObject,
         lastDetailValue} = useSalesData();
     const {state} = location
-    // const todayArray = state.todayValue[page]
-    // const lastArray = state.lastDetailValue[page]
     const [page,setPage] = useState("")
     const [pageType,setPageType] = useState("")
     const changeLanguage = (type) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Triangle from "../common/Triangle";
 import Price from "../common/Price";
-import { formatDate, formatDay } from "../common/DateConverter";
+import { formatDate, formatDay } from "../../functions/DateConverter";
 
 
 

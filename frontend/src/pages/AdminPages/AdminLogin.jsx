@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../../component/common/Button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { mokiApi } from "../../app/api/loginApi";
+import { mokiApi } from "../../services/loginApi";
 
 function AdminLogin(){
     const navigate = useNavigate()

@@ -3,10 +3,10 @@ import Button from "../../component/common/Button";
 import Header from "../../component/common/Header";
 import { useDispatch, useSelector } from "react-redux";
 import {useNavigate} from "react-router-dom"
-import { mokiApi } from "../../app/api/loginApi";
-import { totalThunks } from "../../services/salesApiSlice";
+import { mokiApi } from "../../services/loginApi";
+import { totalThunks } from "../../store/salesApiSlice";
 import axios from "axios";
-import { formatDate } from "../../component/common/DateConverter";
+import { formatDate } from "../../functions/DateConverter";
 
 function Login() {
     const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import Button from "../common/Button"
-import CalendarScreen from "../contents/CalendarScreen"
+import CalendarScreen from "./CalendarScreen"
 import { useState } from "react"
 function InputPeriod (props){
     

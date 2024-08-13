@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import Button from "../common/Button"
-import { mokiApi } from "../../app/api/loginApi"
+import { mokiApi } from "../../services/loginApi"
 import { BASE_URL } from "../Url"
 
 function InputMenu(props){

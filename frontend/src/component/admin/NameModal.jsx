@@ -1,4 +1,4 @@
-import { mokiApi } from "../../app/api/loginApi";
+import { mokiApi } from "../../services/loginApi";
 import Button from "../common/Button";
 import { useState } from "react";
 

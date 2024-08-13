@@ -13,6 +13,7 @@ function BiggestDiffMenu(props){
     const [worstMenu,setWorstMenu] = useState({"name":"","percentage" : 0,"diff" : 0,"img":""})
     let result = {};
     
+    //1. 오늘,이번주,다음주 판매데이터 -> SalesDetailValue,lastDetailValue 저장
     useEffect(()=>{
         if(props.todayValue[props.page].length !== 0){
             result ={}
@@ -31,6 +32,8 @@ function BiggestDiffMenu(props){
             setLastDetailValue(result);
         }
     },[props])
+
+    //지난달과 이번달 비교 -> percentage 값 도출 -> diffArray에 저장 -> 순서대로 출력
     useEffect(()=>{
         if(salesDetailValue.length !== 0 && lastDetailValue.length !== 0){
             const diff = Object.keys(salesDetailValue).map((name)=>{
@@ -40,7 +43,13 @@ function BiggestDiffMenu(props){
                     const todayProfit = salesDetailValue[name].price * salesDetailValue[name].count
                     const lastProfit = lastDetailValue[name].price * lastDetailValue[name].count
                     obj['diff'] =  todayProfit - lastProfit
-                    obj['percentage'] = Math.round((todayProfit - lastProfit) / lastProfit * 100 * 100  )/100 //소숫점 둘째자리로 반올림
+                    if(lastProfit !== 0){
+                        obj['percentage'] = Math.round((todayProfit - lastProfit) / lastProfit * 100 * 100  )/100 //소숫점 둘째자리로 반올림
+                    }
+                    else{
+                        obj['percentage'] = 0
+                    }
+                    
                 }
                 
                 return obj;
@@ -51,7 +60,7 @@ function BiggestDiffMenu(props){
     },[salesDetailValue,lastDetailValue])
 
     useEffect(()=>{
-        // 가자 상승률 높은 객체 찾기
+        // 가장 상승률 높은 객체 찾기
         if(diffArray.length !== 0){
             const maxPercentageObject = diffArray.reduce((max, item) => {
                 return item.percentage > max.percentage ? item : max;
@@ -62,11 +71,11 @@ function BiggestDiffMenu(props){
             }
             
 
-            // 가장 상승률 낮은 객체 찾기
+            // 가장 낮은 객체 찾기
             const minPercentageObject = diffArray.reduce((min, item) => {
                 return item.percentage < min.percentage ? item : min;
             });
-            //가장 상승률 높은 메뉴의 이미지 찾기
+            //가장 낮은 메뉴의 이미지 찾기
             if(Object.keys(props.menuObject).length !== 0){ 
                 minPercentageObject["img"] = props.menuObject[minPercentageObject.name]['img']
             }
@@ -78,7 +87,7 @@ function BiggestDiffMenu(props){
     },[diffArray])
 
     function BiggestDiffDetailNavigate (){
-        navigate("/detail",{state:{ pageInfo:"biggestDiff",todayValue:props.todayValue, validDateList:props.validDateList, lastDetailValue:props.lastDetailValue , page:props.page, currentDate:props.currentDate}})
+        navigate("/detail",{state:{ pageType:"biggestDiff", validDateList:props.validDateList, page:props.page, currentDate:props.currentDate}})
     }
     
     /*

@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import BottomNavbar from "../../component/common/BottomNavbar";
 import Header from "../../component/common/Header";
-import BestMenu from "../../component/contents/BestMenu";
-import BiggestDiffMenu from "../../component/contents/BiggestDiffMenu";
-import CompPredictSales from "../../component/contents/CompPredictSales";
-import PredictSales from "../../component/contents/PredictSales";
-import TodaySales from "../../component/contents/TodaySales";
+import BestMenu from "../../component/report/BestMenu";
+import BiggestDiffMenu from "../../component/report/BiggestDiffMenu";
+import CompPredictSales from "../../component/report/CompPredictSales";
+import PredictSales from "../../component/report/PredictSales";
+import TodaySales from "../../component/report/TodaySales";
 import usePageInfo from "../../hooks/usePageInfo";
 import useSalesData from "../../hooks/useSalesData";
 import {motion} from "framer-motion"
 import DropDownMenu from "../../component/common/DropDownMenu";
-import { formatDate, formatMonth } from "../../component/common/DateConverter";
+import { formatDate, formatMonth } from "../../functions/DateConverter";
 import { useLocation } from "react-router-dom";
 import CalendarContent from "../../component/common/CalendarContent";
 import { useDispatch } from "react-redux";
-import { totalThunks } from "../../services/salesApiSlice";
+import { totalThunks } from "../../store/salesApiSlice";
 import TopButton from "../../component/common/TopButton";
 import LoadingScreen from "../../component/common/LoadingScreen";
 import { current } from "@reduxjs/toolkit";
@@ -86,7 +86,7 @@ function ReportPage(props){
                     list.push(formatDate(lastday))
                 }
             }
-            setVaildDateList(list)
+            setVaildDateList([...list])
         }
     },[rankCompareValue, currentDate])
 

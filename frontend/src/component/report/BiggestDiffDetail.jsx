@@ -1,47 +1,48 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../component/common/Button";
-import Header from "../../component/common/Header";
 import { useEffect, useState } from "react";
-import GetInteger from "../../component/common/GetInteger";
 import Price from "../../component/common/Price";
 import { motion } from "framer-motion";
-import TopButton from "../../component/common/TopButton";
-import DropDownMenu from "../../component/common/DropDownMenu";
-import CalendarContent from "../../component/common/CalendarContent";
-import useSalesData from "../../hooks/useSalesData";
-import BottomNavbar from "../../component/common/BottomNavbar";
-import LoadingScreen from "../../component/common/LoadingScreen";
-import { useTranslation } from "react-i18next";
-import { formatDate } from "../../component/common/DateConverter";
+
 function BiggestDiffDetail (props){
    
     console.log(props)
 
-    const [todayArray,setTodayArray] = useState([{"daily":[],"weekly":[],"monthly":[]}]) 
-    const [lastArray,setLastArray] = useState([{"daily":[],"weekly":[],"monthly":[]}]) 
+
+    
+    const [todayArray,setTodayArray] = useState([]) 
+    const [lastArray,setLastArray] = useState([]) 
+    const [diffSaleRank,setDiffSaleRank] = useState([])
+    const [diffProfitRank, setDiffProfitRank] = useState([])
+    const [diffType,setDiffType] = useState("sale")
+
+    //정렬 결과를 제대로 반영하기 위한 비동기 함수
+    const sorting = async (arr,key,type) => {
+        await arr.sort((a,b) => {return a[key] - b[key]} )
+        console.log(arr)
+        if (type === "sale"){
+            setDiffSaleRank([...arr].reverse())
+        }
+        else{
+            setDiffProfitRank([...arr].reverse())
+        }
+    }
+
+    //1. 오늘,이번주,이번달 데이터와 어제,지난주,지난달 판매데이터 가져옴
     useEffect(()=>{
         if(props.rankDetailValue !== null){
             console.log(props.rankDetailValue)
             setTodayArray(props.rankDetailValue[props.page])
         }
-    },[props.rankDetailValue , props])
-    useEffect(()=>{
         if(props.lastDetailValue !== null){
-             setLastArray(props.lastDetailValue[props.page])
+            setLastArray(props.lastDetailValue[props.page])
         }
-       
-    },[props.lastDetailValue, props])
-    
-    const [diffSaleRank,setDiffSaleRank] = useState([])
-    const [diffProfitRank, setDiffProfitRank] = useState([])
-    const [diffType,setDiffType] = useState("sale")
-
+     },[props])
+    //2. 오늘 판매와 지난 판매 비교값 구하기
     useEffect(()=>{
-        console.log(todayArray)
-        
-        if(Object.keys(todayArray).length !== 0 ){
+        if(todayArray.length !== 0 && lastArray.length !== 0 ){
             
             const diffArray = []
+            //오늘 메뉴별 매출 데이터를 돌면서 어제 데이터의 매출 데이터 확인 -> obj에 추가해 diffArray에 푸쉬
             todayArray.forEach(element => {
                 const obj = {}
                 const compareElement = lastArray.find((item)=> item.name === element.name)
@@ -54,17 +55,27 @@ function BiggestDiffDetail (props){
                     obj['todayProfit'] = todayProfit
                     obj['lastProfit'] = lastProfit
                     obj['profitDiff'] =  todayProfit - lastProfit
-                    obj['percentage'] = Math.round(((todayProfit - lastProfit) / lastProfit)*100*100)/100 
+                    if(compareElement.count !== 0){
+                         obj['percentage'] = Math.round(((element.count - compareElement.count) / compareElement.count)*100*100)/100 
+                    }
+                    else{
+                        obj['percentage'] = NaN
+                    }
+                   
                     diffArray.push(obj)
                 }
             });
-            diffArray.sort((a,b) => a.profitDiff - b.profitDiff).reverse()
-            setDiffProfitRank([...diffArray]);
-            //sale 차이 구하기
-            diffArray.sort((a,b) => a.profitDiff - b.profitDiff).reverse()
-            setDiffSaleRank([...diffArray])
+            //판매 갯수 변화에 따라 따라 정렬
+            
+            sorting([...diffArray],'percentage','sale')
+            sorting([...diffArray],'profitDiff','profit')
+
+            //sale 차이에 따라 정렬
+
+            setDiffSaleRank(diffArray.sort((a,b) => a.profitDiff - b.profitDiff).reverse())
+            
         }
-    },[todayArray])
+    },[todayArray,lastArray])
   
     function changeType(type) {
         setDiffType(type);
@@ -140,8 +151,8 @@ function BiggestDiffDetail (props){
                                     {element.name}
                                 </div>
                                 <div className="best-rank__row__sales" 
-                                    style={{color:element.percentage >= 0 ? "red" :
-                                            "blue"
+                                    style={{color:element.percentage > 0 ? "red" :
+                                                element.percentage < 0 ?  "blue":"grey"
                                     }}>
                                     {element.percentage > 0 ? "+" : ""}{element.percentage}%
                                 </div>

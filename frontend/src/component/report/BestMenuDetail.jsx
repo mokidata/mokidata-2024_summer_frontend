@@ -1,17 +1,8 @@
-import { useLocation, useNavigate, useNavigation } from "react-router-dom";
-import Header from "../../component/common/Header";
 import Price from "../../component/common/Price";
 import Triangle from "../../component/common/Triangle";
 import { useEffect, useState } from "react";
 import {motion} from 'framer-motion'
-import TopButton from "../../component/common/TopButton";
-import DropDownMenu from "../../component/common/DropDownMenu";
-import CalendarContent from "../../component/common/CalendarContent";
-import BottomNavbar from "../../component/common/BottomNavbar";
-import useSalesData from "../../hooks/useSalesData";
-import LoadingScreen from "../../component/common/LoadingScreen";
-import { useTranslation } from "react-i18next";
-import { formatDate } from "../../component/common/DateConverter";
+
 
 function BestMenuDetail(props){
    
@@ -44,7 +35,7 @@ function BestMenuDetail(props){
         }
     }, [props, props.lastDetailValue]);
 
-    
+
 
 
     return (

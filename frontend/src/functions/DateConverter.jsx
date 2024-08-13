@@ -59,3 +59,37 @@ export default function DateConVerter(dateValue){
     return result;
 };
 
+export function enWeekly (dateString){
+    const date = new Date(dateString)
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    const year = date.getFullYear();
+    const weekNumber = getWeekOfMonth(date);
+    if (weekNumber === 1){
+
+        return `${month} ${weekNumber}st week, ${year}`;
+    }
+    else if (weekNumber === 2){
+        return `${month} ${weekNumber}nd week, ${year}`;
+
+    }
+    else if (weekNumber === 3){
+        return `${month} ${weekNumber}rd week, ${year}`;
+    }
+    return `${month} ${weekNumber}th week, ${year}`;
+}
+
+export function enMonthly (dateString){
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long'})
+     
+}
+
+export function enDaily (dateString){
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    
+}
+
+
+
+

@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import InputName from "../../component/admin/InputName";
 import InputPeriod from "../../component/admin/InputPeriod";
 import MenuSet from "../../component/admin/MenuSet";
-import { formatDate } from "../../component/common/DateConverter";
+import { formatDate } from "../../functions/DateConverter";
 import NameModal from "../../component/admin/NameModal";
 import MenuModal from "../../component/admin/MenuModal";
 import { useLocation } from "react-router-dom";
-import { mokiApi } from "../../app/api/loginApi";
+import { mokiApi } from "../../services/loginApi";
 import Button from "../../component/common/Button";
 import Loading from "../../component/admin/Loading";
 import WarningModal from "../../component/admin/WarningModal";
 import Alert from "../../component/admin/Alert";
 import LoadingScreen from "../../component/common/LoadingScreen";
 import {motion} from "framer-motion"
-import CalendarScreen from "../../component/contents/CalendarScreen";
+import CalendarScreen from "../../component/admin/CalendarScreen";
 
 function AdminIndex(){
     const [initial,setInitial] = useState(false)

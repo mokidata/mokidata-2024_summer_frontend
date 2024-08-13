@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../common/Button";
 import InputMenu from "./InputMenu";
-import { mokiApi } from "../../app/api/loginApi";
+import { mokiApi } from "../../services/loginApi";
 function MenuModal(props){
     console.log(props)
     const [menuUpdateList, setMenuUpdateList] = useState([])
