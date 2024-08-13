@@ -7,7 +7,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     width: 100vw;
     height: 100svh;
-    height: calc(var(--vh,1vh) * 100);
+    /* height: calc(var(--vh,1vh) * 100); */
     overflow-x: hidden;
   }
   
@@ -1182,7 +1182,7 @@ body {
   }
 
   .menu-info__div{
-    height: calc(100vh - 272px);
+    height: calc(100svh - 272px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
