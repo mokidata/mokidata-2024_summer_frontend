@@ -222,7 +222,7 @@ function ReportPage(props){
                     transition={{ duration: 0.7 }}
                     
                 >
-                    <BestMenu page={page} currentDate={currentDate} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue} t={t} i18n={i18n}></BestMenu>
+                    <BestMenu page={page} currentDate={currentDate} validDateList={validDateList} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue} t={t} i18n={i18n}></BestMenu>
                 </motion.div>
                 <motion.div
                     className="report-item"
@@ -232,7 +232,7 @@ function ReportPage(props){
                     animate={{ opacity: componentFade[4] ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <BiggestDiffMenu page={page} currentDate={currentDate} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}  t={t} i18n={i18n}></BiggestDiffMenu>
+                    <BiggestDiffMenu page={page} currentDate={currentDate} validDateList={validDateList} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}  t={t} i18n={i18n}></BiggestDiffMenu>
                 </motion.div>
                 <motion.div className="top-button__div"
                     initial={{opacity:0}}

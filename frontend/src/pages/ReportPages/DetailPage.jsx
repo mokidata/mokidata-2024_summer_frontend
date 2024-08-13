@@ -47,13 +47,10 @@ function DetailPage(props){
     }
     
     console.log(state)
-    const [diffSaleRank,setDiffSaleRank] = useState([])
-    const [diffProfitRank, setDiffProfitRank] = useState([])
-    const [diffType,setDiffType] = useState("sale")
+
     const [topVisible,setTopVisible] = useState(false)
     const [leftSide,setLeftSide] = useState(false)
     const [rightSide,setRightSide] = useState(false)
-    const [validDateList,setVaildDateList] = useState([])
 
     const sideList = [
         t('biggestDiff.daily') + t('bestMenuDetail.back'),
@@ -95,21 +92,8 @@ function DetailPage(props){
         }
     };
     const todayDate = formatDate(new Date())
-    function changeType(type) {
-        setDiffType(type);
-    }
-    useEffect(()=>{
-        let list = []
-        if(rankCompareValue !== null && todayDate === currentDate){
-            list.push(todayDate)
-            for(let date of Object.keys(rankCompareValue['monthly']) ){
-                if (rankCompareValue['monthly'][date].length !== 0){
-                    list.push(date)
-                }
-            }
-            setVaildDateList(list)
-        }
-    },[rankCompareValue, currentDate])
+    
+    
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -135,7 +119,7 @@ function DetailPage(props){
     }
     return(
         <div className="report-page">
-            <Header leftSide={setLeftSide} t={t} i18n={i18n}rightSide={setRightSide} page={page} currentDate={currentDate}></Header>
+            <Header leftSide={setLeftSide} t={t} i18n={i18n} rightSide={setRightSide} page={page} currentDate={currentDate}></Header>
             <motion.div
                     className="side-nav__dropdown"
                     initial={{ x: '-100%', opacity: 0 }}
@@ -143,7 +127,7 @@ function DetailPage(props){
                     exit={{ x: '-100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    {leftSide && <DropDownMenu changeLanguage={changeLanguage} sideList={sideList} open={openLeftSide} onclickFunction={handleDropDown}></DropDownMenu>}
+                    {leftSide && <DropDownMenu changeLanguage={changeLanguage} sideList={sideList} open={openLeftSide} onclickFunction={handleDropDown} t={t} i18n={i18n}></DropDownMenu>}
             </motion.div>
             <motion.div
                 className="side-nav__calendar"
@@ -152,7 +136,7 @@ function DetailPage(props){
                 exit={{ x: '+100%', opacity: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                 {rightSide && <CalendarContent validDateList={validDateList} detail={pageType}  page={page} currentDate={state.currentDate} open={openRightSide}></CalendarContent>}
+                 {rightSide && <CalendarContent validDateList={state.validDateList} detail={pageType}  page={page} currentDate={state.currentDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>}
             </motion.div>
             {
                 pageType === "bestMenu" ?
