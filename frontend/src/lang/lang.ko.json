@@ -91,7 +91,8 @@
         "loading": "매출 데이터를 <br /> 가져오고 있어요!",
         "rank": "순위",
         "diff": "변동",
-        "menuInfo": "메뉴명<br>판매갯수",
+        "menuName": "메뉴명",
+        "menuQuantity":"판매갯수",
         "profit": "판매금액"
     },
     "biggestDiff":{
@@ -108,8 +109,16 @@
         "notice": "판매 기록이 없었던 제품은 제외됩니다.",
         "rank": "순위",
         "menuName": "메뉴명",
-        "lastWeek": "지난주",
-        "thisWeek": "이번주",
+        "lastValue":{
+            "daily" : "어제",
+            "weekly" : "지난주",
+            "monthly" : "지난달"
+        },
+        "thisValue":{
+            "daily" : "오늘",
+            "weekly" : "이번주",
+            "monthly" : "이번달"
+        },
         "saleCount": "판매갯수",
         "saleProfit": "판매수익"    
     },
@@ -117,5 +126,23 @@
         "daily": "일별",
         "weekly": "주별",
         "monthly": "월별"
+    },
+    "date":{
+        "week": "주",
+        "month": "월",
+        "year": "년",
+        "day": "일",
+        "daysOfWeek": ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]
+    },
+    "logout" :"로그아웃",
+    "sideList": {
+        "todaySales": "이번 매출",
+        "compPredictSales": "매출 예상과 실제 매출 비교",
+        "predictSales": "매출 예상",
+        "bestMenu": "가장 많이 팔린 메뉴",
+        "biggestDiff": "직전 대비 가장 많이/적게 팔린 메뉴"
+    },
+    "calendar":{
+        "selectMonth" :"날짜 선택하기"
     }
 }

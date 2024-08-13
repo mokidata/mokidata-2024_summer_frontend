@@ -1,4 +1,4 @@
-function getWeekOfMonth(date) {
+export function getWeekOfMonth(date) {
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const dayOfWeek = firstDay.getDay();
     const weekNumber = Math.ceil((date.getDate() + dayOfWeek) / 7);
