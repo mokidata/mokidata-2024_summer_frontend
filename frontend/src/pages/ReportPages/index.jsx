@@ -24,7 +24,9 @@ function ReportPage(props){
     
     console.log("!!!report page!!!")
     const {t,i18n} = useTranslation();  
-    const sideList = ['이번 매출','매출 예상과 실제 매출 비교',"매출 예상","가장 많이 팔린 메뉴","직전 대비 가장 많이/적게 팔린 메뉴"]
+    const sideList = Object.values(t('sideList',{returnObjects:true}))
+    console.log(sideList)
+    
     const [page] = usePageInfo(props.page)
     const {
         currentDate,
@@ -141,14 +143,14 @@ function ReportPage(props){
         setComponentFade([true,false,false,false,false])
 
     },[])
+    //페이지 옮길 때 스크롤 맨 위로 올림
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [componentFade]);
 
 
-    //페이지 옮길 때 스크롤 맨 위로 올림
-
+    
     if(isLoadingState){
         return (
             <LoadingScreen txt={<span>매출 데이터를 <br /> 가져오고 있어요!</span>}></LoadingScreen>
@@ -158,7 +160,7 @@ function ReportPage(props){
         console.log({isLoadingState,todayValue,predictTodayValue,predictDetailValue,predictLastValue,rankDetailValue,lastDetailValue,rankCompareValue,menuObject})
          return(
             <div className="report-page">
-                <Header leftSide={openLeftSide} rightSide={openRightSide} currentDate={currentDate} page={page}></Header>
+                <Header leftSide={openLeftSide} rightSide={openRightSide} currentDate={currentDate} page={page} t={t} i18n={i18n}></Header>
                 <motion.div
                     className="side-nav__dropdown"
                     initial={{ x: '-100%', opacity: 0 }}
@@ -166,7 +168,7 @@ function ReportPage(props){
                     exit={{ x: '-100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <DropDownMenu sideList={sideList} changeLanguage={changeLanguage} open={openLeftSide} onclickFunction={scrollToContent}></DropDownMenu>
+                    <DropDownMenu sideList={sideList} changeLanguage={changeLanguage} open={openLeftSide} onclickFunction={scrollToContent} t={t} i18n={i18n}></DropDownMenu>
                 </motion.div>
                 <motion.div
                     className="side-nav__calendar"
@@ -175,7 +177,7 @@ function ReportPage(props){
                     exit={{ x: '+100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <CalendarContent page={page} validDateList={validDateList} currentDate={todayDate} open={openRightSide}></CalendarContent>
+                    <CalendarContent page={page} validDateList={validDateList} currentDate={todayDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>
                 </motion.div>
                 
                 <motion.div
@@ -247,7 +249,7 @@ function ReportPage(props){
                 
                 
                 
-                <BottomNavbar page={page} info="reportIndex" currentDate={currentDate}  t={t} i18n={i18n}></BottomNavbar>
+                <BottomNavbar page={page} pageType="reportIndex" currentDate={currentDate}  t={t} i18n={i18n}></BottomNavbar>
             </div>
             
         );
