@@ -1201,9 +1201,10 @@ body {
   .alert__div{
     display: flex;
     width: 100%;
+    height: 20px;
     justify-content: center;
     position:fixed;
-    top:650px;
+    top:calc(100svh - 200px);
     z-index: 9999;
   }
 
