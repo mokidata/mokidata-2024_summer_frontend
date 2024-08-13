@@ -25,10 +25,10 @@ function ReportPage(props){
     console.log("!!!report page!!!")
     const {t,i18n} = useTranslation();  
     const sideList = Object.values(t('sideList',{returnObjects:true}))
-    console.log(sideList)
     
     const [page] = usePageInfo(props.page)
     const {
+        todayDate,
         currentDate,
         isLoadingState,
         todayValue,
@@ -39,13 +39,12 @@ function ReportPage(props){
         rankDetailValue,
         rankCompareValue,
         menuObject,
-        lastDetailValue} = useSalesData();
+        lastDetailValue,
+        validDateList} = useSalesData();
     const [componentFade ,setComponentFade] = useState([true,false,false,false,false])
     const [leftSide,setLeftSide] = useState(false)
     const [rightSide,setRightSide] = useState(false)
-    const todayDate = formatDate(new Date())
     const [topVisible,setTopVisible] = useState(false)
-    const [validDateList,setVaildDateList] = useState([])
     const changeLanguage = (type) => {
         if (i18n.language === 'en' && type ==='ko'){
             i18n.changeLanguage('ko')
@@ -54,9 +53,6 @@ function ReportPage(props){
             i18n.changeLanguage('en')
         }
         setLeftSide(false)
-
-        
-        
     }
     const handleScrollTop = () => {
         if (window.scrollY > 500) {
@@ -66,29 +62,13 @@ function ReportPage(props){
         }
     };
     useEffect(() => {
+        console.log(validDateList)
         window.addEventListener('scroll', handleScrollTop);
         return () => {
             window.removeEventListener('scroll', handleScrollTop);
         };
     }, []);
 
-    //유효한 데이터 범위 파악
-    useEffect(()=>{
-        let list = []
-        if(rankCompareValue !== null && todayDate === currentDate){
-            list.push(todayDate)
-            for(let date of Object.keys(rankCompareValue['monthly']) ){
-                if (rankCompareValue['monthly'][date].length !== 0){
-                    let lastday = new Date(date)
-                    lastday.setMonth(lastday.getMonth() + 1)
-                    lastday.setDate(0)
-                    console.log(formatDate(lastday))
-                    list.push(formatDate(lastday))
-                }
-            }
-            setVaildDateList([...list])
-        }
-    },[rankCompareValue, currentDate])
 
     const handleScroll = () => {
         const items = document.querySelectorAll('.report-item');
@@ -157,7 +137,6 @@ function ReportPage(props){
         )
     }
     else{
-        console.log({isLoadingState,todayValue,predictTodayValue,predictDetailValue,predictLastValue,rankDetailValue,lastDetailValue,rankCompareValue,menuObject})
          return(
             <div className="report-page">
                 <Header leftSide={openLeftSide} rightSide={openRightSide} currentDate={currentDate} page={page} t={t} i18n={i18n}></Header>
@@ -177,7 +156,7 @@ function ReportPage(props){
                     exit={{ x: '+100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <CalendarContent page={page} validDateList={validDateList} currentDate={todayDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>
+                    <CalendarContent page={page} validDateList={validDateList.current} currentDate={todayDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>
                 </motion.div>
                 
                 <motion.div
@@ -222,7 +201,7 @@ function ReportPage(props){
                     transition={{ duration: 0.7 }}
                     
                 >
-                    <BestMenu page={page} currentDate={currentDate} validDateList={validDateList} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue} t={t} i18n={i18n}></BestMenu>
+                    <BestMenu page={page} currentDate={currentDate} rankDetailValue={rankDetailValue} menuObject={menuObject} lastDetailValue={lastDetailValue} t={t} i18n={i18n}></BestMenu>
                 </motion.div>
                 <motion.div
                     className="report-item"
@@ -232,7 +211,7 @@ function ReportPage(props){
                     animate={{ opacity: componentFade[4] ? 1 : 0 }}
                     transition={{ duration: 0.7 }}
                 >
-                    <BiggestDiffMenu page={page} currentDate={currentDate} validDateList={validDateList} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}  t={t} i18n={i18n}></BiggestDiffMenu>
+                    <BiggestDiffMenu page={page} currentDate={currentDate} todayValue={rankDetailValue} lastDetailValue={lastDetailValue} menuObject={menuObject}  t={t} i18n={i18n}></BiggestDiffMenu>
                 </motion.div>
                 <motion.div className="top-button__div"
                     initial={{opacity:0}}

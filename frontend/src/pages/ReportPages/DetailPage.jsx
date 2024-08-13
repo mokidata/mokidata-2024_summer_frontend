@@ -18,6 +18,7 @@ function DetailPage(props){
     const navigate =useNavigate()
     const {t,i18n} = useTranslation()
     const {
+        todayDate,
         currentDate,
         isLoadingState,
         todayValue,
@@ -28,7 +29,8 @@ function DetailPage(props){
         rankDetailValue,
         rankCompareValue,
         menuObject,
-        lastDetailValue} = useSalesData();
+        lastDetailValue,
+        validDateList} = useSalesData();
     const {state} = location
     const [page,setPage] = useState("")
     const [pageType,setPageType] = useState("")
@@ -87,7 +89,6 @@ function DetailPage(props){
             setTopVisible(false);
         }
     };
-    const todayDate = formatDate(new Date())
     
     
     useEffect(() => {
@@ -115,7 +116,7 @@ function DetailPage(props){
     }
     return(
         <div className="report-page">
-            <Header leftSide={setLeftSide} t={t} i18n={i18n} rightSide={setRightSide} page={page} currentDate={currentDate}></Header>
+            <Header leftSide={openLeftSide} t={t} i18n={i18n} rightSide={openRightSide} page={page} currentDate={currentDate}></Header>
             <motion.div
                     className="side-nav__dropdown"
                     initial={{ x: '-100%', opacity: 0 }}
@@ -132,7 +133,7 @@ function DetailPage(props){
                 exit={{ x: '+100%', opacity: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                 {rightSide && <CalendarContent validDateList={state.validDateList} detail={pageType}  page={page} currentDate={state.currentDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>}
+                 {rightSide && <CalendarContent validDateList={validDateList.current} detail={pageType}  page={page} currentDate={state.currentDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>}
             </motion.div>
             {
                 pageType === "bestMenu" ?

@@ -29,7 +29,7 @@ function BestMenu(props) {
     }, [rankFirst]);
 
     const navigateRankDetail = () => {
-        navigate("/detail", { state: { pageType :"bestMenu", validDateList:props.validDateList, rankDetail: rankDetail, currentDate: props.currentDate, lastDetail: props.lastDetailValue, page: props.page} });
+        navigate("/detail", { state: { pageType :"bestMenu", rankDetail: rankDetail, currentDate: props.currentDate, lastDetail: props.lastDetailValue, page: props.page} });
     }
 
     return (

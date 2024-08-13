@@ -87,7 +87,7 @@ function BiggestDiffMenu(props){
     },[diffArray])
 
     function BiggestDiffDetailNavigate (){
-        navigate("/detail",{state:{ pageType:"biggestDiff", validDateList:props.validDateList, page:props.page, currentDate:props.currentDate}})
+        navigate("/detail",{state:{ pageType:"biggestDiff", page:props.page, currentDate:props.currentDate}})
     }
     
     /*

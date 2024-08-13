@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { formatDate, formatDateNum, formatMonth, formatWeek, formatYear } from "../../functions/DateConverter";
+import { enDaily, enMonthly, enWeekly, formatDate, formatDateNum, formatMonth, formatWeek, formatYear } from "../../functions/DateConverter";
 import { useDispatch } from "react-redux";
 import { totalThunks } from "../../store/salesApiSlice";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ function CalendarContent(props){
     const dispatch = useDispatch()
     const [isMonthSelect,setIsMonthSelect] = useState(false)
     const [currentMonth,setCurrentMonth] = useState("")
+    const [enCurrentMonth,setEnCurrentMonth] = useState("")
     const HandleMonthSelect = (cur) => {
         setIsMonthSelect(!isMonthSelect)
         setCurrentMonth(cur)
@@ -97,7 +98,7 @@ function CalendarContent(props){
                             setIsMonthSelect(false)
                             
                         }}>
-                            {currentMonth}
+                            {props.i18n.language === "ko" ? currentMonth : enCurrentMonth}
                         </div>
                         {
                         
@@ -107,8 +108,10 @@ function CalendarContent(props){
                                     HandleDispatch(date,props.page)
                                 }}>
                                     {
-                                        props.page === 'daily' ? formatDateNum(date):
-                                        props.page === 'weekly' ? formatWeek(date):
+                                        props.page === 'daily' && props.i18n.language === 'ko'? formatDateNum(date):
+                                        props.page === 'weekly' && props.i18n.language === 'ko' ? formatWeek(date):
+                                        props.page === 'daily' && props.i18n.language === 'en' ?  enDaily(date) :
+                                        props.page === 'weekly' && props.i18n.language === 'ko'? enWeekly(date) :
                                         ""
                                     }
                                     
@@ -121,11 +124,17 @@ function CalendarContent(props){
                     dateList.map((date,index)=>(
                         <div>
                             <div className="side-nav__content" id="calendar" onClick={()=>{
-                                props.page === 'monthly' ? HandleDispatch(date,props.page) : HandleMonthSelect(`${formatYear(date)} ${formatMonth(date)}`)
+                                props.page === 'monthly' ? HandleDispatch(date,props.page) :
+                                 HandleMonthSelect(`${formatYear(date)} ${formatMonth(date)}`)
+                                 setEnCurrentMonth(`${enMonthly(date)}`)
                             
                             
                             }} >
-                            {`${formatYear(date)} ${formatMonth(date)}`}
+                            {
+                                props.i18n.language === 'ko'?
+                            `${formatYear(date)} ${formatMonth(date)}`:
+                            `${enMonthly(date)}`
+                            }
                             </div>
                         </div>
                         
