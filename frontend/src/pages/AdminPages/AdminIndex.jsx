@@ -33,9 +33,10 @@ function AdminIndex(){
     const [endDate, setEndDate] = useState(formatDate(new Date()))
     const [menuList,setMenuList] = useState([])
     const [isEmpty,setIsEmpty] = useState(false)
+    const [isRandomData, setIsRandomData] = useState(false)  
     const [isLoading, setIsLoading] = useState(false)
-    const [alertColor,setAlertColor] = useState("")
-    const [alertMsg,setAlertMsg] = useState("")
+    const [alertColor,setAlertColor] = useState("green")
+    const [alertMsg,setAlertMsg] = useState("alert")
     const [loadingMsg,setLoadingMsg] = useState("")
     const [reload,setReload] = useState(false)
     const location = useLocation()
@@ -95,10 +96,13 @@ function AdminIndex(){
                 console.log(data.length)
                 if(data.length === 0){
                     setIsEmpty(true)
+                    setIsRandomData(false)
                 }
                 else{
                     setIsEmpty(false)
+                    setIsRandomData(true)
                 }
+
             }
         ).catch(
             (error) => {console.log(error)}
@@ -138,9 +142,10 @@ function AdminIndex(){
             tempArr.push(menu.name)
         }
         console.log(tempArr)
-        const queryString = tempArr.map(menu => `menu=${encodeURIComponent(menu)}`).join('&');
+        // const queryString = tempArr.map(menu => `menu=${encodeURIComponent(menu)}`).join('&');
 
-        const response = await mokiApi.delete(`/api/menu?${queryString}`)
+        // const response = await mokiApi.delete(`/api/menu?${queryString}`)
+        const response = await mokiApi.delete(`/api/auth/init`)
         .then((response)=> {
             console.log(response.status)
         })
@@ -216,7 +221,7 @@ function AdminIndex(){
             <div className="menu-info__div">
                 <MenuSet openModal={openMenuModal} menuList={menuList}></MenuSet>
                 <div className="admin-btn__div">
-                    <div className="remove-btn" onClick={() => {openWarningModal()}} > 데이터 초기화 </div>
+                    {isRandomData && <div className="remove-btn" onClick={() => {openWarningModal()}} > 데이터 초기화 </div>}
                     <div className="modal-btn__div" onClick={() => {postRandom()}}>
                         <Button txt="데이터 생성하기" color={isEmpty? "grey" :"black"} shape="rect" fontSize="12px"></Button>
                     </div>
