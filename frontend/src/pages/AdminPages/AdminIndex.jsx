@@ -147,6 +147,7 @@ function AdminIndex(){
         // const response = await mokiApi.delete(`/api/menu?${queryString}`)
         const response = await mokiApi.delete(`/api/auth/init`)
         .then((response)=> {
+            setUserName("")
             console.log(response.status)
         })
         .catch((error) => {
