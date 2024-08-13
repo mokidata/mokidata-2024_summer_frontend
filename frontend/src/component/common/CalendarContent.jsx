@@ -26,11 +26,8 @@ function CalendarContent(props){
         // setIsMonthSelect(!isMonthSelect)
         console.log(date)
         dispatch(totalThunks(date))
-        if (props.info === "bestmenu"){
-            navigate("/bestmenu",{state:{currentDate:date, page:props.page}})
-        }
-        else if(props.info === "biggestdiff"){
-            navigate("/biggestdiff",{state:{currentDate:date, page:props.page}})
+        if (props.detail ){
+            navigate("/detail",{state:{currentDate:date, page:props.page, pageType:props.detail}})
         }
     }
     
@@ -87,7 +84,7 @@ function CalendarContent(props){
         <div className="side-nav">
             <div className="side-nav__top">
                 <div className="side-nav__title">
-                    월 선택하기
+                    {props.t('calendar.selectMonth')}
                 </div>
                 <div className="side-nav__close" onClick={() => props.open()}>
                     X

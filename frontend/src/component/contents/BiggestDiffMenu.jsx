@@ -78,7 +78,7 @@ function BiggestDiffMenu(props){
     },[diffArray])
 
     function BiggestDiffDetailNavigate (){
-        navigate("/biggestdiff",{state:{todayValue:props.todayValue, lastDetailValue:props.lastDetailValue , page:props.page, currentDate:props.currentDate}})
+        navigate("/detail",{state:{ pageInfo:"biggestDiff",todayValue:props.todayValue, lastDetailValue:props.lastDetailValue , page:props.page, currentDate:props.currentDate}})
     }
     
     /*

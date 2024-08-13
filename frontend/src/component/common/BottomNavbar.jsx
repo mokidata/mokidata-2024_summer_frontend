@@ -23,13 +23,11 @@ const BottomNavbar = (props) => {
             default:
                 dateType = props.page;
         }
-        if (props.page !== dateType && props.info === "reportIndex") {
+        if (props.page !== dateType && props.pageType === "reportIndex") {
             navigate(`/${dateType}`, { state: { currentDate: props.currentDate } });
-        } else if (props.page !== dateType && props.info === "bestmenu") {
-            navigate(`/bestmenu`, { state: { currentDate: props.currentDate, page: dateType } });
-        } else if (props.page !== dateType && props.info === "biggestdiff") {
-            navigate(`/biggestdiff`, { state: { currentDate: props.currentDate, page: dateType } });
-        }
+        } else if (props.page !== dateType ){
+            props.changeDetail(dateType)
+        } 
     }
 
     return (
