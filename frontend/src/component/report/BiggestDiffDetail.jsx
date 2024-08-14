@@ -154,7 +154,10 @@ function BiggestDiffDetail (props){
                                     style={{color:element.percentage > 0 ? "red" :
                                                 element.percentage < 0 ?  "blue":"grey"
                                     }}>
-                                    {element.percentage > 0 ? "+" : ""}{element.percentage}%
+                                    {element.percentage > 0 ? `+${element.percentage}%` :
+                                    element.percentage < 0 ? `${element.percentage}%`:
+                                    "-"
+                                    }
                                 </div>
     
                             </div>
@@ -181,11 +184,13 @@ function BiggestDiffDetail (props){
                                     {element.name}
                                 </div>
                                 <div className="best-rank__row__sales" 
-                                    style={{color:element.profitDiff >= 0 ? "red" :
-                                            "blue"
+                                    style={{color:element.profitDiff > 0 ? "red" :
+                                                element.profitDiff < 0 ? "blue":
+                                                "grey"
                                     }}>
                                     {element.profitDiff > 0 ? "+" : ""}
-                                    <Price value = {element.profitDiff} unit=""></Price>
+                                    {element.profitDiff !== 0 ? <Price value = {element.profitDiff} unit=""></Price> : "-"}
+                                    
                                     
                                 </div>
                             </div>
