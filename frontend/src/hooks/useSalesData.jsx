@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-import { totalThunks } from "../store/salesApiSlice";
+import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { formatDate } from "../functions/DateConverter";
 
@@ -17,13 +16,14 @@ function useSalesData() {
     const [predictNextValue, setPredictNextValue] = useState(null)
     const [menuObject, setMenuObject] = useState({});
     const [isLoadingState, setIsLoadingState] = useState(true);
-    const validDateList = useRef([])
+    const validDateList = useSelector((state) => state.sale.validDateList)
     const isLoading = useSelector((state) => state.sale.isLoading);
     const totalData = useSelector((state) => state.sale.totalData);
 
     useEffect(() => {
         if (!isLoading) {
             console.log(totalData);
+            console.log(validDateList)
             setTodayDate(formatDate(new Date()))
             setCurrentDate(totalData['date'])
             setTodayValue(totalData['today']);
@@ -50,31 +50,11 @@ function useSalesData() {
         }
     }, [isLoading, totalData]); // totalData를 의존성 배열에 추가
 
-    useEffect(()=>{
-        if(rankCompareValue !== null && todayDate !== null && currentDate !== null&& todayDate === currentDate){
-            console.log(rankCompareValue)
-            console.log(todayDate)
-            console.log(currentDate)
-            console.log(todayDate)
-            let list = []
-            list.push(todayDate)
-            for(let date of Object.keys(rankCompareValue['monthly']) ){
-                if (rankCompareValue['monthly'][date].length !== 0){
-                    let lastday = new Date(date)
-                    lastday.setMonth(lastday.getMonth() + 1)
-                    lastday.setDate(0)
-                    console.log(formatDate(lastday))
-                    list.push(formatDate(lastday))
-                }
-            }
-            validDateList.current = [...list]
-        }
 
-    },[rankCompareValue,todayDate,currentDate])
 
 
    
-    return { todayDate,currentDate,isLoadingState, todayValue, predictTodayValue, predictDetailValue, predictLastValue ,predictNextValue,rankDetailValue, rankCompareValue, menuObject , lastDetailValue , validDateList};
+    return { todayDate,currentDate,isLoadingState, todayValue, predictTodayValue, predictDetailValue, predictLastValue ,predictNextValue,rankDetailValue, rankCompareValue, menuObject , lastDetailValue,validDateList };
 }
 
 export default useSalesData;

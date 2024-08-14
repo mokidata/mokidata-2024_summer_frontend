@@ -3,11 +3,13 @@ import { mokiApi } from "../services/loginApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { act } from "react";
 import { formatDate } from "../functions/DateConverter";
+import { useSelector } from "react-redux";
 
 const initialState = {
     totalData:{},
     isLoading:true,
-    error : false
+    error : false,
+    validDateList : []
 }
 
 export const totalThunks = createAsyncThunk(
@@ -438,6 +440,9 @@ export const totalThunks = createAsyncThunk(
       data.menuList = []
       console.log(error)
     }
+
+    
+    
     
     return data;
   }
@@ -465,6 +470,25 @@ export const saleSlice = createSlice({
         
         state.totalData = action.payload
         console.log(state.totalData) 
+        
+        if ([...state.validDateList].length === 0 ){
+          const todayDate = formatDate(new Date()) 
+          let list = []
+          list.push(todayDate)
+          console.log(list)
+          const cmpList = state.totalData.rankCompare['monthly']
+          console.log(cmpList)
+          for(let date of Object.keys(cmpList) ){
+            if (cmpList[date].length !== 0){
+                let lastday = new Date(date)
+                lastday.setMonth(lastday.getMonth() + 1)
+                lastday.setDate(0)
+                console.log(formatDate(lastday))
+                list.push(formatDate(lastday))
+            }
+          }
+          state.validDateList = [...list]
+        }
         state.isLoading = false;
       })
      ;

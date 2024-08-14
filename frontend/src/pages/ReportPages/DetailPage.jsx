@@ -14,6 +14,7 @@ import BestMenuDetail from "../../component/report/BestMenuDetail";
 import BiggestDiffDetail from "../../component/report/BiggestDiffDetail";
 
 function DetailPage(props){
+    console.log(props)
     const location = useLocation()
     const navigate =useNavigate()
     const {t,i18n} = useTranslation()
@@ -109,6 +110,7 @@ function DetailPage(props){
         }
     },[state])
 
+
     if(isLoadingState){
         return (
             <LoadingScreen txt={<span>매출 데이터를 <br /> 가져오고 있어요!</span>}></LoadingScreen>
@@ -133,7 +135,7 @@ function DetailPage(props){
                 exit={{ x: '+100%', opacity: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                 {rightSide && <CalendarContent validDateList={validDateList.current} detail={pageType}  page={page} currentDate={state.currentDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>}
+                 {rightSide && <CalendarContent validDateList={validDateList} detail={pageType}  page={page} currentDate={state.currentDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>}
             </motion.div>
             {
                 pageType === "bestMenu" ?

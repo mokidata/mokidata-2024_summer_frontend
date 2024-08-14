@@ -22,7 +22,6 @@ import { useTranslation } from "react-i18next";
 
 function ReportPage(props){
     
-    console.log("!!!report page!!!")
     const {t,i18n} = useTranslation();  
     const sideList = Object.values(t('sideList',{returnObjects:true}))
     
@@ -45,6 +44,7 @@ function ReportPage(props){
     const [leftSide,setLeftSide] = useState(false)
     const [rightSide,setRightSide] = useState(false)
     const [topVisible,setTopVisible] = useState(false)
+ 
     const changeLanguage = (type) => {
         if (i18n.language === 'en' && type ==='ko'){
             i18n.changeLanguage('ko')
@@ -62,12 +62,15 @@ function ReportPage(props){
         }
     };
     useEffect(() => {
-        console.log(validDateList)
         window.addEventListener('scroll', handleScrollTop);
         return () => {
             window.removeEventListener('scroll', handleScrollTop);
         };
     }, []);
+
+    useEffect(()=>{
+        console.log(validDateList)
+    },[validDateList])
 
 
     const handleScroll = () => {
@@ -156,7 +159,7 @@ function ReportPage(props){
                     exit={{ x: '+100%', opacity: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <CalendarContent page={page} validDateList={validDateList.current} currentDate={todayDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>
+                    <CalendarContent page={page} validDateList={validDateList} currentDate={todayDate} open={openRightSide} t={t} i18n={i18n}></CalendarContent>
                 </motion.div>
                 
                 <motion.div
