@@ -115,7 +115,7 @@ function BiggestDiffMenu(props){
                         {bestMenu.name}
                     </div>
                     <div className="diff-desc__percent">
-                        {bestMenu.percentage} %
+                        {bestMenu.percentage}%
                     </div>
                     <Triangle diff={bestMenu.diff} unit="원" />
                 </div>
@@ -140,7 +140,7 @@ function BiggestDiffMenu(props){
                         {worstMenu.name}
                     </div>
                     <div className="diff-desc__percent">
-                        {worstMenu.percentage} %
+                        {worstMenu.percentage}%
                     </div>
                     <Triangle diff={worstMenu.diff} unit="원" />
                 </div>
