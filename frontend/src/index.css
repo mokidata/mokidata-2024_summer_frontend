@@ -1094,11 +1094,13 @@ body {
   .side-nav__dropdown{
     position: fixed;
     left: 20px;
+    z-index: 9999;
     
   }
   .side-nav__calendar{
     position: fixed;
     right: 20px;
+    z-index: 9999;
 
   }
   .side-nav{
