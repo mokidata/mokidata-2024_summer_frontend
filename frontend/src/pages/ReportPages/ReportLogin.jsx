@@ -49,7 +49,7 @@ function Login() {
             
         } catch (error) {
             console.error(error);
-            // setPassed(false); // 로그인 실패 시 상태 업데이트
+            setPassed(false); // 로그인 실패 시 상태 업데이트
         }
     };
     
