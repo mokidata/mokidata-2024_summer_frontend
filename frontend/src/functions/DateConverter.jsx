@@ -70,7 +70,6 @@ export function enWeekly (dateString){
     }
     else if (weekNumber === 2){
         return `${month} ${weekNumber}nd week, ${year}`;
-
     }
     else if (weekNumber === 3){
         return `${month} ${weekNumber}rd week, ${year}`;

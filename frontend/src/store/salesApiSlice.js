@@ -35,7 +35,9 @@ export const totalThunks = createAsyncThunk(
     lastMonth.setMonth(lastMonth.getMonth() - 1)
     tomorrow.setDate(tomorrow.getDate()+1)
     nextWeek.setDate(nextWeek.getDate()+7)
-    nextMonth.setDate(nextMonth.getDate()+30)
+    // nextMonth.setDate(nextMonth.getDate()+30)
+    nextMonth.setDate(1)
+    nextMonth.setMonth(nextMonth.getMonth() + 1)
     // 다음 주의 월요일 구하기
     nextWeek.setDate(nextWeek.getDate() - nextWeek.getDay() + 1);
     // 다음 달의 1일 구하기
@@ -54,11 +56,11 @@ export const totalThunks = createAsyncThunk(
     //daily_dates = 하루단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-27,...]
     //weekly_dates = 주단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-21,...]
     //monthly_dates = 월단위 매출 얻기위한 날짜들 [2024-07-28,2024-06-28,...]
-    for(let i = 1; i< 4;i++){
+    for(let i = 1; i< 5;i++){
       yesterday.setDate(yesterday.getDate()-1)
       lastWeek.setDate(lastWeek.getDate()-7)
       // lastMonth.setDate(lastMonth.getDate()-30)
-      lastMonth.setDate(1)
+      lastMonth.setDate(1);
       lastMonth.setMonth(lastMonth.getMonth() - 1)
       const seven_days_ago = formatDate(lastWeek)
       const thirthy_days_ago = formatDate(lastMonth)
@@ -480,12 +482,14 @@ export const saleSlice = createSlice({
           list.push(todayDate)
           console.log(list)
           const cmpList = state.totalData.rankCompare['monthly']
-          console.log(cmpList)
+          console.log("cmpList: ", cmpList)
           for(let date of Object.keys(cmpList) ){
             if (cmpList[date].length !== 0){
                 let lastday = new Date(date)
+                // lastday.setMonth(lastday.getMonth() + 1)
+                // lastday.setDate(0)
+                lastday.setDate(1)
                 lastday.setMonth(lastday.getMonth() + 1)
-                lastday.setDate(0)
                 console.log(formatDate(lastday))
                 list.push(formatDate(lastday))
             }
