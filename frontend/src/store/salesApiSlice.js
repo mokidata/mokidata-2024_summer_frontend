@@ -56,7 +56,7 @@ export const totalThunks = createAsyncThunk(
     //daily_dates = 하루단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-27,...]
     //weekly_dates = 주단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-21,...]
     //monthly_dates = 월단위 매출 얻기위한 날짜들 [2024-07-28,2024-06-28,...]
-    for(let i = 1; i< 5;i++){
+    for(let i = 1; i< 4;i++){
       yesterday.setDate(yesterday.getDate()-1)
       lastWeek.setDate(lastWeek.getDate()-7)
       // lastMonth.setDate(lastMonth.getDate()-30)
@@ -484,15 +484,7 @@ export const saleSlice = createSlice({
           const cmpList = state.totalData.rankCompare['monthly']
           console.log("cmpList: ", cmpList)
           for(let date of Object.keys(cmpList) ){
-            if (cmpList[date].length !== 0){
-                let lastday = new Date(date)
-                // lastday.setMonth(lastday.getMonth() + 1)
-                // lastday.setDate(0)
-                lastday.setDate(1)
-                lastday.setMonth(lastday.getMonth() + 1)
-                console.log(formatDate(lastday))
-                list.push(formatDate(lastday))
-            }
+            list.push(date)
           }
           state.validDateList = [...list]
         }
