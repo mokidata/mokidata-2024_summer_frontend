@@ -1,101 +1,143 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../component/common/Button";
 import Header from "../../component/common/Header";
 import { useDispatch, useSelector } from "react-redux";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { mokiApi } from "../../services/loginApi";
 import { totalThunks } from "../../store/salesApiSlice";
 import axios from "axios";
 import { formatDate } from "../../functions/DateConverter";
+import ToastMessage from "../../component/common/Toast";
 
 function Login() {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [inputValue, setInputValue] = useState({ id: "", pswd: "" });
-    const [passed, setPassed] = useState(true);
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setInputValue({ ...inputValue, [name]: value });
-    };
-    const fetchData = () => {
-        console.log("dispatch!")
-        dispatch(totalThunks(formatDate(new Date())));
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState({ id: "", pswd: "" });
+  const [toast, setToast] = useState(false);
+  const [autoLogin, setAutoLogin] = useState(false);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setInputValue({ ...inputValue, [name]: value });
+  };
+  const fetchData = () => {
+    console.log("dispatch!");
+    dispatch(totalThunks(formatDate(new Date())));
+  };
+
+  const handleLoginSuccess = () => {
+    fetchData();
+    console.log("");
+    navigate("../daily");
+  };
+  const handleLogin = async (event, inputValue) => {
+    try {
+      const response = await mokiApi.post("/api/auth/login", {
+        id: inputValue.id,
+        password: inputValue.pswd,
+        remember_me: autoLogin,
+      });
+      sessionStorage.setItem("accessToken", response.data.token);
+      sessionStorage.setItem("name", response.data.name);
+      mokiApi.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
+      console.log(mokiApi.defaults.headers.common);
+      console.log(response);
+      if (response.status == 200) {
+        handleLoginSuccess();
+      } else {
+        console.log("login error!");
+      }
+    } catch (error) {
+      console.error(error);
+      setToast(true);
     }
-   
-    const handleLoginSuccess = () => {
-        fetchData();
-        console.log("")
-        navigate("daily");
-    };
-    const handleLogin = async (event,inputValue) => {
-        
-        
-        try {
-            const response = await mokiApi.post("/api/auth/login", {
-                id: inputValue.id,
-                password: inputValue.pswd
-            });
-            sessionStorage.setItem("accessToken",response.data.token)
-            sessionStorage.setItem("name",response.data.name)
-            mokiApi.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
-            console.log(mokiApi.defaults.headers.common);
-            console.log(response);
-            if(response.status == 200){
-                handleLoginSuccess();
-            }
-            else{
-                console.log("login error!")
-            }
-            
-        } catch (error) {
-            console.error(error);
-            setPassed(false); // 로그인 실패 시 상태 업데이트
+  };
+
+  useEffect(() => {
+    const refreshToken = async () => {
+      try {
+        const refreshResponse = await mokiApi.post("/refresh");
+        if (refreshResponse.status === 200) {
+          const refreshData = refreshResponse.data;
+          sessionStorage.setItem("accessToken", refreshData.accessToken);
+          handleLoginSuccess();
         }
+      } catch (error) {
+        console.error("Failed to refresh token:", error);
+      }
     };
-    
 
+    refreshToken();
+  }, []);
 
-    return (
-        <div className="login-page">
-            <div className="logo-div">
-                <svg className="logo-img"></svg>
-            </div>
-            <div className="input-div">
-                <div className="login-desc" id='id'>
-                    <p>아이디</p>
-                </div>
-                <div className="login-input" id='id'>
-                    <input
-                        className="login-input-img"
-                        name="id"
-                        value={inputValue.id}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div className="login-desc" id='pswd'>
-                    <p>비밀번호</p>
-                </div>
-                <div className="login-input">
-                    <input
-                        className="login-input-img"
-                        name="pswd"
-                        value={inputValue.pswd}
-                        type="password"
-                        onChange={handleInputChange}
-                    />
-                </div>
-            </div>
-            <div className="button-div" id="login" onClick={(event) => {
-                handleLogin(event, inputValue); // 함수 참조로 호출
-            
-            }}>
-                <Button color="black" txt="로그인" shape="rect"/>
-            </div>
-            <div className="login-msg">
-                {passed ? "" : "아이디 또는 비밀번호를 잘못 입력했습니다."}
-            </div>
+  return (
+    <div className="login-page">
+      <div className="logo-div">
+        <svg className="logo-img"></svg>
+      </div>
+      <div className="input-div">
+        <div className="login-desc" id="id">
+          <p style={{ marginBottom: "0" }}>아이디(사업자번호)</p>
         </div>
-    );
+        <div className="login-input" id="id">
+          <input
+            className="login-input-img"
+            name="id"
+            value={inputValue.id}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="login-desc" id="pswd">
+          <p style={{ marginBottom: "0" }}>비밀번호</p>
+        </div>
+        <div className="login-input">
+          <input
+            className="login-input-img"
+            name="pswd"
+            value={inputValue.pswd}
+            type="password"
+            onChange={handleInputChange}
+          />
+        </div>
+      </div>
+      <div className="auto_login">
+        <label>
+          <input
+            type="checkbox"
+            checked={autoLogin}
+            onChange={(e) => setAutoLogin(e.target.checked)}
+          ></input>
+          자동 로그인
+        </label>
+      </div>
+      <div
+        className="button-div"
+        id="login"
+        onClick={(event) => {
+          if (inputValue.id && inputValue.pswd) {
+            handleLogin(event, inputValue); // 값이 있을 때만 함수 호출
+          }
+        }}
+      >
+        <button
+          className={
+            inputValue.id.trim() && inputValue.pswd.trim() ? "active" : ""
+          }
+          disabled={!(inputValue.id.trim() && inputValue.pswd.trim())}
+        >
+          로그인
+        </button>
+      </div>
+
+      {toast && (
+        <ToastMessage
+          setToast={setToast}
+          text="아이디 또는 비밀번호가 일치하지 않습니다."
+        />
+      )}
+    </div>
+  );
 }
 
 export default Login;

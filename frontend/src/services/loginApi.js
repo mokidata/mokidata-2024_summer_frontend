@@ -20,3 +20,12 @@ export async function postData(endpoint, datatosend){
     }
 };
 
+export async function getData(endpoint, datatosend){
+    try{
+        const response = await mokiApi.get(endpoint, {params: datatosend});
+        return response.data
+    }
+    catch(error) {
+        console.error('Error fetching data', error);
+    }
+}

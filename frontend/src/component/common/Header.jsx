@@ -1,6 +1,6 @@
 import React, { useEffect, useState ,useMemo} from "react";
 import usePageInfo from "../../hooks/usePageInfo";
-import { enDaily, enMonthly, enWeekly, formatDate, formatDateNum, formatMonth, formatWeek, formatYear } from "../../functions/DateConverter";
+import { enDaily, enMonthly, enWeekly, formatDate, formatDateNum, formatDay, formatMonth, formatWeek, formatYear } from "../../functions/DateConverter";
 import { getWeekOfMonth } from "../../functions/DateConverter";
 
 function Header(props){
@@ -14,7 +14,7 @@ function Header(props){
                     
                     props.i18n.language === 'ko'?
                     (    
-                        props.page === 'daily' ? `${formatYear(props.currentDate)} ${formatMonth(props.currentDate)} ${formatDateNum(props.currentDate)}`:
+                        props.page === 'daily' ? `${formatYear(props.currentDate)} ${formatMonth(props.currentDate)} ${formatDateNum(props.currentDate)} ${formatDay(props.currentDate)}`:
                         props.page === 'weekly'? `${formatYear(props.currentDate)} ${formatMonth(props.currentDate)} ${formatWeek(props.currentDate)}`:
                         props.page === 'monthly'? `${formatYear(props.currentDate)} ${formatMonth(props.currentDate)} `:
                         ""

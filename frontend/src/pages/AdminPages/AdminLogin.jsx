@@ -41,6 +41,9 @@ function AdminLogin(){
     };
     return(
         <div className="login-page">
+            <div className="logo-div">
+                <svg className="logo-img"></svg>
+            </div>
             <div className="input-div">
                 <div className="login-desc" id='id'>
                     <p>아이디</p>

@@ -15,8 +15,9 @@ const initialState = {
 export const totalThunks = createAsyncThunk(
   'saleSlice/fetchData',
   async (initialFormatDate,thunkAPI) => {
-    let data = {"date":initialFormatDate,"today":{},"predictNext":{}, "predictToday":{},"predictLast":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
-    
+    // let data = {"date":initialFormatDate,"today":{},"predictNext":{}, "predictToday":{},"predictLast":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
+    // let data = {"date":initialFormatDate,"today":{},"predictNext":{}, "predictLast":{},"predictDetail":{},"rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
+    let data = {"date":initialFormatDate,"today":{},"predict":{}, "rankDetail":{},"rankCompare":{},"menuList":[],'lastDetail':{}}
     //토큰 가져다 쓰기
     const token = sessionStorage.getItem('accessToken');
     if (token) {
@@ -56,7 +57,7 @@ export const totalThunks = createAsyncThunk(
     //daily_dates = 하루단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-27,...]
     //weekly_dates = 주단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-21,...]
     //monthly_dates = 월단위 매출 얻기위한 날짜들 [2024-07-28,2024-06-28,...]
-    for(let i = 1; i< 5;i++){
+    for(let i = 1; i< 4;i++){
       yesterday.setDate(yesterday.getDate()-1)
       lastWeek.setDate(lastWeek.getDate()-7)
       // lastMonth.setDate(lastMonth.getDate()-30)
@@ -109,68 +110,68 @@ export const totalThunks = createAsyncThunk(
       console.log(error)
     }
 
-    try{
-      const response = await mokiApi.get(`/api/predict/daily`, {
-        params: {
-          localDate: initialFormatDate,
-        },
-      })
-      data.predictToday.daily = response.data
-    }
-    catch(error){
-      data.predictToday .daily= {}
-      console.log(error)
-    }
-    try{
-      const response = await mokiApi.get(`/api/predict/weekly`, {
-        params: {
-          localDate: initialFormatDate,
-        },
-      })
-      data.predictToday.weekly = response.data
-    }
-    catch(error){
-      data.predictToday.weekly = {}
-      console.log(error)
-    }
-    try{
-      const response = await mokiApi.get(`/api/predict/monthly`, {
-        params: {
-          localDate: initialFormatDate,
-        },
-      })
-      data.predictToday.monthly = response.data
-    }
-    catch(error){
-      data.predictToday.monthly = {}
-      console.log(error)
-    }
+    // try{
+    //   const response = await mokiApi.get(`/api/predict/daily`, {
+    //     params: {
+    //       localDate: initialFormatDate,
+    //     },
+    //   })
+    //   data.predictToday.daily = response.data
+    // }
+    // catch(error){
+    //   data.predictToday .daily= {}
+    //   console.log(error)
+    // }
+    // try{
+    //   const response = await mokiApi.get(`/api/predict/weekly`, {
+    //     params: {
+    //       localDate: initialFormatDate,
+    //     },
+    //   })
+    //   data.predictToday.weekly = response.data
+    // }
+    // catch(error){
+    //   data.predictToday.weekly = {}
+    //   console.log(error)
+    // }
+    // try{
+    //   const response = await mokiApi.get(`/api/predict/monthly`, {
+    //     params: {
+    //       localDate: initialFormatDate,
+    //     },
+    //   })
+    //   data.predictToday.monthly = response.data
+    // }
+    // catch(error){
+    //   data.predictToday.monthly = {}
+    //   console.log(error)
+    // }
 
     // 예측값과 실제 매출값 비교를 위한 어제, 지난주, 지난달 예측값
     try{
       const response = await mokiApi.get(`/api/predict/daily`, {
         params: {
-          localDate: formattedYesterday,
+          localDate: initialFormatDate,
         },
       })
-      data.predictLast.daily = response.data
+      data.predict.daily = response.data
       console.log(formattedYesterday)
     }
     catch(error){
-      data.predictLast.monthly = {}
+      data.predict.monthly = {}
       console.log(error)
     }
     try{
       const response = await mokiApi.get(`/api/predict/weekly`, {
         params: {
-          localDate: formattedLastWeek,
+          localDate: initialFormatDate,
         },
       })
       console.log(formattedLastWeek)
-      data.predictLast.weekly = response.data
+      data.predict.weekly = response.data
     }
     catch(error){
-      data.predictLast.weekly = {}
+      data.predict.weekly = {}
       console.log(error)
     }
 
@@ -178,100 +179,100 @@ export const totalThunks = createAsyncThunk(
     try{
       const response = await mokiApi.get(`/api/predict/monthly`, {
         params: {
-          localDate: formattedLastMonth,
+          localDate: initialFormatDate,
         },
       })
       
-      data.predictLast.monthly = response.data
+      data.predict.monthly = response.data
     }
     catch(error){
-      data.predictLast.monthly = {}
+      data.predict.monthly = {}
       console.log(error)
     }
 
-    try{
-      const response = await mokiApi.get(`/api/predict/daily-detail`, {
-        params: {
-          localDate: formattedTomorrow,
-        },
-      })
-      data.predictNext.daily = response.data
-      data.predictNext.daily.date = formattedTomorrow
+    // try{
+    //   const response = await mokiApi.get(`/api/predict/daily-detail`, {
+    //     params: {
+    //       localDate: formattedTomorrow,
+    //     },
+    //   })
+    //   data.predictNext.daily = response.data
+    //   data.predictNext.daily.date = formattedTomorrow
       
-    }
-    catch(error){
-      data.predictNext.monthly = {}
-      console.log(error)
-    }
-    try{
-      const response = await mokiApi.get(`/api/predict/weekly-detail`, {
-        params: {
-          localDate: formattedNextWeek,
-        },
-      })
+    // }
+    // catch(error){
+    //   data.predictNext.monthly = {}
+    //   console.log(error)
+    // }
+    // try{
+    //   const response = await mokiApi.get(`/api/predict/weekly-detail`, {
+    //     params: {
+    //       localDate: formattedNextWeek,
+    //     },
+    //   })
      
-      data.predictNext.weekly = response.data
-      data.predictNext.weekly.date = formattedNextWeek
+    //   data.predictNext.weekly = response.data
+    //   data.predictNext.weekly.date = formattedNextWeek
 
-    }
-    catch(error){
-      data.predictNext.weekly = {}
-      console.log(error)
-    }
+    // }
+    // catch(error){
+    //   data.predictNext.weekly = {}
+    //   console.log(error)
+    // }
 
     
-    try{
-      const response = await mokiApi.get(`/api/predict/monthly-detail`, {
-        params: {
-          localDate: formattedNextMonth,
-        },
-      })
+    // try{
+    //   const response = await mokiApi.get(`/api/predict/monthly-detail`, {
+    //     params: {
+    //       localDate: formattedNextMonth,
+    //     },
+    //   })
      
-      data.predictNext.monthly = response.data
-      data.predictNext.monthly.date = formattedNextMonth
-    }
-    catch(error){
-      data.predictNext.monthly = {}
-      console.log(error)
-    }
+    //   data.predictNext.monthly = response.data
+    //   data.predictNext.monthly.date = formattedNextMonth
+    // }
+    // catch(error){
+    //   data.predictNext.monthly = {}
+    //   console.log(error)
+    // }
 
 
-    try{
-      const response = await mokiApi.get(`/api/predict/daily-detail`, {
-        params: {
-          localDate: initialFormatDate,
-        },
-      })
-      data.predictDetail.daily = response.data
-    }
-    catch(error){
-      data.predictDetail.daily = {}
-      console.log(error)
-    }
-    try{
-      const response = await mokiApi.get(`/api/predict/weekly-detail`, {
-        params: {
-          localDate: initialFormatDate,
-        },
-      })
-      data.predictDetail.weekly= response.data
-    }
-    catch(error){
-      data.predictDetail.weekly = {}
-      console.log(error)
-    }
-    try{
-      const response = await mokiApi.get(`/api/predict/monthly-detail`, {
-        params: {
-          localDate: initialFormatDate,
-        },
-      })
-      data.predictDetail.monthly = response.data
-    }
-    catch(error){
-      data.predictToday.monthly = {}
-      console.log(error)
-    }
+    // try{
+    //   const response = await mokiApi.get(`/api/predict/daily-detail`, {
+    //     params: {
+    //       localDate: initialFormatDate,
+    //     },
+    //   })
+    //   data.predictDetail.daily = response.data
+    // }
+    // catch(error){
+    //   data.predictDetail.daily = {}
+    //   console.log(error)
+    // }
+    // try{
+    //   const response = await mokiApi.get(`/api/predict/weekly-detail`, {
+    //     params: {
+    //       localDate: initialFormatDate,
+    //     },
+    //   })
+    //   data.predictDetail.weekly= response.data
+    // }
+    // catch(error){
+    //   data.predictDetail.weekly = {}
+    //   console.log(error)
+    // }
+    // try{
+    //   const response = await mokiApi.get(`/api/predict/monthly-detail`, {
+    //     params: {
+    //       localDate: initialFormatDate,
+    //     },
+    //   })
+    //   data.predictDetail.monthly = response.data
+    // }
+    // catch(error){
+    //   data.predictToday.monthly = {}
+    //   console.log(error)
+    // }
     try{
       const response = await mokiApi.get(`/api/sale/daily-detail`, {
         params: {
@@ -484,15 +485,16 @@ export const saleSlice = createSlice({
           const cmpList = state.totalData.rankCompare['monthly']
           console.log("cmpList: ", cmpList)
           for(let date of Object.keys(cmpList) ){
-            if (cmpList[date].length !== 0){
-                let lastday = new Date(date)
-                // lastday.setMonth(lastday.getMonth() + 1)
-                // lastday.setDate(0)
-                lastday.setDate(1)
-                lastday.setMonth(lastday.getMonth() + 1)
-                console.log(formatDate(lastday))
-                list.push(formatDate(lastday))
-            }
+            // if (cmpList[date].length !== 0){
+            //     let lastday = new Date(date)
+            //     // lastday.setMonth(lastday.getMonth() + 1)
+            //     // lastday.setDate(0)
+            //     lastday.setDate(1)
+            //     lastday.setMonth(lastday.getMonth() + 1)
+            //     console.log(formatDate(lastday))
+            //     list.push(formatDate(lastday))
+            // }
+            list.push(date)
           }
           state.validDateList = [...list]
         }
