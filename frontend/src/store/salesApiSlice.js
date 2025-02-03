@@ -485,16 +485,13 @@ export const saleSlice = createSlice({
           const cmpList = state.totalData.rankCompare['monthly']
           console.log("cmpList: ", cmpList)
           for(let date of Object.keys(cmpList) ){
-            // if (cmpList[date].length !== 0){
-            //     let lastday = new Date(date)
-            //     // lastday.setMonth(lastday.getMonth() + 1)
-            //     // lastday.setDate(0)
-            //     lastday.setDate(1)
-            //     lastday.setMonth(lastday.getMonth() + 1)
-            //     console.log(formatDate(lastday))
-            //     list.push(formatDate(lastday))
-            // }
-            list.push(date)
+            if (cmpList[date].length !== 0){
+                let lastday = new Date(date)
+                lastday.setDate(1)
+                lastday.setMonth(lastday.getMonth())
+                console.log(formatDate(lastday))
+                list.push(formatDate(lastday))
+            }
           }
           state.validDateList = [...list]
         }

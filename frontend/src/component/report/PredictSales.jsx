@@ -25,6 +25,18 @@ function PredictSales(props) {
     return date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
   };
 
+  const getNextWeek = (currentDate) => {
+    let date = new Date(currentDate); // 현재 날짜를 Date 객체로 변환
+    date.setDate(date.getDate() + 7); // 하루 추가
+    return date.toISOString().split("T")[0]; // YYYY-MM-DD 형식으로 변환
+  };
+
+  const getNextMonth = (currentDate) => {
+    let date = new Date(currentDate);
+    date.setDate(date.getDate() + 30); // 추후 변경 필요
+    return date.toISOString().split("T")[0];
+  };
+
   const getAverage = () => {
     if (data.length === 0) return 0;
     let sum = 0;
@@ -91,9 +103,9 @@ function PredictSales(props) {
       props.page === "daily"
         ? `${formatDateNum(getNextDate(props.currentDate))} `
         : props.page === "weekly"
-        ? `${formatWeek(getNextDate(props.currentDate))} `
+        ? `${formatWeek(getNextWeek(props.currentDate))} `
         : props.page === "monthly"
-        ? `${formatMonth(getNextDate(props.currentDate))} `
+        ? `${formatMonth(getNextMonth(props.currentDate))} `
         : "",
     value: GetInteger(profit / 10000),
     highlight: true,
