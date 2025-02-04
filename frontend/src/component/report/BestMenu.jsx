@@ -29,6 +29,10 @@ function BestMenu(props) {
     }
   }, [rankFirst]);
 
+  useEffect(() => {
+    console.log(firstUrl);
+  }, [firstUrl]);
+
   const navigateRankDetail = () => {
     navigate("/detail", {
       state: {
@@ -62,7 +66,7 @@ function BestMenu(props) {
           <div className="best-menu__img-div">
             <div
               className="best-menu__img"
-              style={{ backgroundImage: `url(${firstUrl})` }}
+              style={{ backgroundImage: `url(${BASE_URL}${firstUrl})` }}
             ></div>
           </div>
         </div>

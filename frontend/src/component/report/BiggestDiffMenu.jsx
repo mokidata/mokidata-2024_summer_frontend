@@ -53,19 +53,22 @@ function BiggestDiffMenu(props) {
           const todayProfit = salesDetailValue[name].price;
           const lastProfit = lastDetailValue[name].price;
           obj["diff"] = todayProfit - lastProfit;
-          if (lastProfit !== 0) {
+          if (lastProfit === 0 || todayProfit === 0) {
+            obj["percentage"] = 0;
+          } else {
             obj["percentage"] =
               Math.round(
                 ((todayProfit - lastProfit) / lastProfit) * 100 * 100
               ) / 100; //소숫점 둘째자리로 반올림
-          } else {
-            obj["percentage"] = 0;
           }
         }
+
+        console.log(obj);
 
         return obj;
       });
       setDiffArray(diff);
+      console.log(diffArray);
     }
   }, [salesDetailValue, lastDetailValue]);
 
@@ -134,7 +137,7 @@ function BiggestDiffMenu(props) {
         </div>
         <div
           className="diff-img"
-          style={{ backgroundImage: `url(${bestMenu.img})` }}
+          style={{ backgroundImage: `url(${BASE_URL}${bestMenu.img})` }}
         />
       </div>
       <div className="notice" style={{ textAlign: "right" }}>
@@ -153,7 +156,7 @@ function BiggestDiffMenu(props) {
       <div className="diff">
         <div
           className="diff-img"
-          style={{ backgroundImage: `url(${worstMenu.img})` }}
+          style={{ backgroundImage: `url(${BASE_URL}${worstMenu.img})` }}
         />
         <div className="diff-desc" style={{ textAlign: "right" }}>
           <div className="diff-desc__title">{worstMenu.name}</div>

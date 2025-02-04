@@ -27,6 +27,8 @@ function BiggestDiffDetail(props) {
 
   //1. 오늘,이번주,이번달 데이터와 어제,지난주,지난달 판매데이터 가져옴
   useEffect(() => {
+    console.log("diffSaleRank");
+    console.log(diffSaleRank);
     if (props.rankDetailValue !== null) {
       console.log(props.rankDetailValue);
       setTodayArray(props.rankDetailValue[props.page]);
@@ -54,7 +56,7 @@ function BiggestDiffDetail(props) {
           obj["todayProfit"] = todayProfit;
           obj["lastProfit"] = lastProfit;
           obj["profitDiff"] = todayProfit - lastProfit;
-          if (compareElement.count !== 0) {
+          if (compareElement.count !== 0 && element.count !== 0) {
             obj["percentage"] =
               Math.round(
                 ((element.count - compareElement.count) /
@@ -63,9 +65,20 @@ function BiggestDiffDetail(props) {
                   100
               ) / 100;
           } else {
-            obj["percentage"] = NaN;
+            obj["percentage"] = 0;
           }
+          // if (compareElement.count === 0) {
+          //   a = 1;
+          // } else {
+          //   a = compareElement.count;
+          // }
+          // if (element.count === 0) {
+          //   b = 1;
+          // } else {
+          //   b = element.count;
+          // }
 
+          // obj["percentage"] = Math.round(((b - a) / a) * 100 * 100) / 100;
           diffArray.push(obj);
         }
       });
