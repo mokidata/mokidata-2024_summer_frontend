@@ -20,7 +20,6 @@ function BestMenuDetail(props) {
     if (props.rankDetailValue !== null) {
       console.log(props.rankDetailValue[props.page]);
       const copy = [...props.rankDetailValue[props.page]];
-      //여기 소팅하는거 바꾸면 됨됨
       copy.sort((a, b) => b.count - a.count);
       setRankArray(copy);
     }
@@ -35,6 +34,8 @@ function BestMenuDetail(props) {
         obj[element.name] = index + 1;
       });
       setLastRank(obj);
+      console.log("lastRank");
+      console.log(lastRank);
     }
   }, [props, props.lastDetailValue]);
 
@@ -70,27 +71,58 @@ function BestMenuDetail(props) {
             {props.t("bestMenuDetail.profit")}
           </div>
         </div>
-        {rankArray.map((element, index) => (
-          <div
-            className="best-rank__each"
-            key={index}
-            id={(index + 1) % 2 === 0 ? "even" : "odd"}
-          >
-            <div className="best-rank__row" id="rank__rank">
-              {index + 1}
+        {rankArray
+          .filter((element) => element.count !== 0)
+          .map((element, index) => (
+            <div
+              className="best-rank__each"
+              key={index}
+              id={(index + 1) % 2 === 0 ? "even" : "odd"}
+            >
+              <div
+                className="best-rank__row"
+                id="rank__rank"
+                style={{ fontSize: "4.5vw" }}
+              >
+                {index + 1}
+              </div>
+              <div
+                className="best-rank__row"
+                id="rank__diff"
+                style={{ fontSize: "4.5vw" }}
+              >
+                {lastRank[element.name].count === 0 ? (
+                  <p>new</p>
+                ) : (
+                  <Triangle
+                    diff={lastRank[element.name] - (index + 1)}
+                    unit=""
+                  />
+                )}
+              </div>
+              <div className="best-rank__row" id="rank__menu-info">
+                <div
+                  className="best-rank__row__menu"
+                  style={{ fontSize: "3.5vw" }}
+                >
+                  {element.name}
+                </div>
+                <div
+                  className="best-rank__row__sales"
+                  style={{ fontSize: "4vw" }}
+                >
+                  {element.count}
+                </div>
+              </div>
+              <div
+                className="best-rank__row"
+                id="rank__profit"
+                style={{ fontSize: "4vw" }}
+              >
+                <Price value={element.price} unit="원" />
+              </div>
             </div>
-            <div className="best-rank__row" id="rank__diff">
-              <Triangle diff={lastRank[element.name] - (index + 1)} unit="" />
-            </div>
-            <div className="best-rank__row" id="rank__menu-info">
-              <div className="best-rank__row__menu">{element.name}</div>
-              <div className="best-rank__row__sales">{element.count}</div>
-            </div>
-            <div className="best-rank__row" id="rank__profit">
-              <Price value={element.price} unit="원" />
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </motion.div>
   );

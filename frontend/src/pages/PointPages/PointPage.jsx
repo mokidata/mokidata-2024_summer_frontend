@@ -35,7 +35,7 @@ const PointPage = () => {
     return (
       <LoadingScreen
         txt={
-          <span>
+          <span style={{ fontSize: "3.5vw" }}>
             포인트를 <br /> 조회하고 있어요!
           </span>
         }
@@ -45,9 +45,11 @@ const PointPage = () => {
 
   return (
     <div className="point_page">
-      <h3 className="point_title">{data.store_name}</h3>
-      <p style={{ fontSize: "38px", fontWeight: "bold" }}>{data.user_name}님</p>
-      <p style={{ fontSize: "28px" }}>
+      <h3 className="point_title" style={{ fontSize: "5vw" }}>
+        {data.store_name}
+      </h3>
+      <p style={{ fontSize: "9vw", fontWeight: "bold" }}>{data.user_name}님</p>
+      <p style={{ fontSize: "7vw", fontWeight: "bold" }}>
         환영합니다.{String.fromCodePoint(0x1f606)}
       </p>
       <PointCard
@@ -57,23 +59,27 @@ const PointPage = () => {
       />
       <div className="split">
         <div className="recent_visit">
-          <p style={{ fontSize: "13px", color: "grey", margin: "5px" }}>
+          <p style={{ fontSize: "3.5vw", color: "grey", margin: "5px" }}>
             최근 방문일
           </p>
-          <p style={{ fontSize: "25px", fontWeight: "bold" }}>
+          <p style={{ fontSize: "6vw", fontWeight: "bold" }}>
             {data.recent_visit}
           </p>
         </div>
         <div className="cnt">
-          <p style={{ fontSize: "13px", color: "grey", margin: "5px" }}>
+          <p style={{ fontSize: "3.5vw", color: "grey", margin: "5px" }}>
             적립 / 사용 횟수
           </p>
-          <p style={{ fontSize: "25px", fontWeight: "bold" }}>
+          <p style={{ fontSize: "6vw", fontWeight: "bold" }}>
             {data.total_count}회
           </p>
         </div>
       </div>
-      <button className="detail_button" onClick={openModal}>
+      <button
+        className="detail_button"
+        onClick={openModal}
+        style={{ fontSize: "4vw" }}
+      >
         포인트 이용내역 조회하기
       </button>
       <ReactModal
@@ -104,7 +110,9 @@ const PointPage = () => {
         <div className="modal_content">
           <PointDetails />
           <div className="modal_footer">
-            <button onClick={closeModal}>닫기</button>
+            <button onClick={closeModal} style={{ fontSize: "4vw" }}>
+              닫기
+            </button>
           </div>
         </div>
       </ReactModal>

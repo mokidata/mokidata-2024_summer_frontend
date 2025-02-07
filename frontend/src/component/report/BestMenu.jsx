@@ -16,16 +16,17 @@ function BestMenu(props) {
   useEffect(() => {
     if (props.rankDetailValue[props.page].length !== 0) {
       //여기 총액 으로 소팅하게 바꾸면 됨됨
-      rankDetail.sort((a, b) => b.price * b.count - a.price * a.count);
+      rankDetail.sort((a, b) => b.count - a.count);
       setRankFirst(rankDetail[0]);
       setRankSecond(rankDetail[1]);
       setRankThird(rankDetail[2]);
+      console.log(rankDetail);
     }
   }, [props.rankDetailValue[props.page]]);
 
   useEffect(() => {
     if (rankFirst.name && Object.keys(props.menuObject).length !== 0) {
-      setFirstUrl(props.menuObject[rankFirst.name]["img"]);
+      setFirstUrl(props.menuObject[rankFirst.name]?.["img"]);
     }
   }, [rankFirst]);
 
@@ -57,7 +58,7 @@ function BestMenu(props) {
           : props.t("bestMenu.today")}{" "}
         {props.t("bestMenu.bestSellingMenu")}
       </div>
-      <div className="best-menu">
+      <div className="best-menu" style={{ marginTop: "8vw" }}>
         <div className="best-menu__first">
           <div className="best-menu__title">{rankFirst.name}</div>
           <div className="best-menu__benefits" id="best">

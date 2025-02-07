@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ToastMessage from "../../component/common/Toast";
 import ReactModal from "react-modal";
 import SelectStore from "../../component/point/SelectStore";
 import { getData } from "../../services/loginApi";
+import { mokiApi } from "../../services/loginApi";
 
 const PONO = () => {
   const [inputValue, setInputValue] = useState("");
@@ -15,43 +16,46 @@ const PONO = () => {
   const datatosend = {
     phone_num: inputValue,
   };
-
+  const [storeList, setStoreList] = useState({ data: [] });
+  const [userId, setUserId] = useState();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const user_id = "5678";
-  const storelist = {
-    data: [
-      {
-        store_id: "0101010101",
-        store_name: "카페쇼1",
-      },
-      {
-        store_id: "0202020202",
-        store_name: "카페쇼2",
-      },
-      {
-        store_id: "4341701888",
-        store_name: "해머스미스커피 강남교보점",
-      },
-      {
-        store_id: "4831902001",
-        store_name: "해머스미스 무교다동점 ",
-      },
-      {
-        store_id: "6688133551",
-        store_name: "해머스미스 테스트",
-      },
-      {
-        store_id: "8080808080",
-        store_name: "매스 커피(80)",
-      },
-      {
-        store_id: "8472001615",
-        store_name: "해머스미스커피 압구정역점",
-      },
-    ],
-  };
+  useEffect(() => {
+    setUserId("5678");
+    setStoreList({
+      data: [
+        {
+          store_id: "0101010101",
+          store_name: "카페쇼1",
+        },
+        {
+          store_id: "0202020202",
+          store_name: "카페쇼2",
+        },
+        {
+          store_id: "4341701888",
+          store_name: "해머스미스커피 강남교보점",
+        },
+        {
+          store_id: "4831902001",
+          store_name: "해머스미스 무교다동점 ",
+        },
+        {
+          store_id: "6688133551",
+          store_name: "해머스미스 테스트",
+        },
+        {
+          store_id: "8080808080",
+          store_name: "매스 커피(80)",
+        },
+        {
+          store_id: "8472001615",
+          store_name: "해머스미스커피 압구정역점",
+        },
+      ],
+    });
+  }, []);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value.trim());
@@ -67,22 +71,21 @@ const PONO = () => {
       return;
     }
 
-    const fetchdata = getData(endpoint, datatosend);
+    // const fetchdata = getData(endpoint, datatosend);
 
-    // try{
-    //     const response = await getData(endpoint + inputValue, {})
-    //     console.log(response);
-    //     if (response.success) {
-    //         navigate('/Point');
-    //     } else {
-    //         setToast(true);
-    //     }
-    // } catch (error) {
-    //     setToast(true);
-    // }
+    try {
+      const response = await mokiApi.get(`/api/point?phone_num=${inputValue}`);
+      if (response.success) {
+        setStoreList(response.data);
+        openModal();
+      } else {
+        setToast(true);
+      }
+    } catch (error) {
+      setToast(true);
+    }
 
     if (inputValue === "01012345678") {
-      // navigate('/Point')
       openModal();
     } else {
       setToast(true);
@@ -92,8 +95,10 @@ const PONO = () => {
   return (
     <div className="PONO_input_page">
       <div className="logo_title">
-        <svg className="logo-img"></svg>
-        <h2>포인트 이용내역 조회</h2>
+        <img src="/assets/moki_logo(2024).png" style={{ width: "13vw" }} />
+        <h2 style={{ fontSize: "6vw", marginTop: "3vh" }}>
+          포인트 이용내역 조회
+        </h2>
       </div>
       <form className="PONO_input" onSubmit={handleSubmit}>
         <div>
@@ -104,6 +109,7 @@ const PONO = () => {
           type="submit"
           className={isInput ? "active" : ""}
           disabled={!isInput}
+          style={{ fontSize: "3.5vw" }}
         >
           조회하기
         </button>
@@ -139,9 +145,11 @@ const PONO = () => {
           },
         }}
       >
-        <SelectStore storelist={storelist.data} user_id={user_id} />
+        <SelectStore storelist={storeList.data} user_id={userId} />
         <div className="modal_footer">
-          <button onClick={closeModal}>닫기</button>
+          <button onClick={closeModal} style={{ fontSize: "4.5vw" }}>
+            닫기
+          </button>
         </div>
       </ReactModal>
     </div>

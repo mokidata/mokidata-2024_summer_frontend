@@ -74,10 +74,6 @@ function ReportPage(props) {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(validDateList);
-  }, [validDateList]);
-
   const handleScroll = () => {
     const items = document.querySelectorAll(".report-item");
     items.forEach((item, index) => {
@@ -145,6 +141,65 @@ function ReportPage(props) {
           </span>
         }
       ></LoadingScreen>
+    );
+  } else if (
+    !todayValue?.[props.page]?.today ||
+    !todayValue?.[props.page]?.yesterday ||
+    todayValue?.[props.page]?.today === undefined ||
+    todayValue?.[props.page]?.today === undefined
+  ) {
+    return (
+      <div className="report-page">
+        <Header
+          leftSide={openLeftSide}
+          rightSide={openRightSide}
+          currentDate={currentDate}
+          page={page}
+          t={t}
+          i18n={i18n}
+        ></Header>
+        <motion.div
+          className="side-nav__dropdown"
+          initial={{ x: "-100%", opacity: 0 }}
+          animate={{ x: leftSide ? 0 : "-100%", opacity: leftSide ? 1 : 0 }}
+          exit={{ x: "-100%", opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <DropDownMenu
+            sideList={sideList}
+            changeLanguage={changeLanguage}
+            open={openLeftSide}
+            onclickFunction={scrollToContent}
+            t={t}
+            i18n={i18n}
+          ></DropDownMenu>
+        </motion.div>
+        <motion.div
+          className="side-nav__calendar"
+          initial={{ x: "+100%", opacity: 0 }}
+          animate={{ x: rightSide ? 0 : "+100%", opacity: rightSide ? 1 : 0 }}
+          exit={{ x: "+100%", opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <CalendarContent
+            page={page}
+            validDateList={validDateList}
+            currentDate={todayDate}
+            open={openRightSide}
+            t={t}
+            i18n={i18n}
+          ></CalendarContent>
+        </motion.div>
+        <div
+          style={{
+            margin: "20vh",
+            alignItems: "center",
+            justifyItems: "center",
+          }}
+        >
+          <h1>No Data</h1>
+        </div>
+      </div>
     );
   } else {
     return (
@@ -291,14 +346,14 @@ function ReportPage(props) {
             i18n={i18n}
           ></BiggestDiffMenu>
         </motion.div>
-        <motion.div
+        {/* <motion.div
           className="top-button__div"
           initial={{ opacity: 0 }}
           animate={{ opacity: topVisible ? 1 : 0 }}
           transition={{ duration: 0.3 }}
         >
           <TopButton></TopButton>
-        </motion.div>
+        </motion.div> */}
 
         <BottomNavbar
           page={page}

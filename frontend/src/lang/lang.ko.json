@@ -73,7 +73,7 @@
         "moreSold":{
             "daily":"어제 대비 많이 팔린 메뉴",
             "weekly": "지난주 대비 많이 팔린 메뉴",
-            "monthly":"지난달 많이 팔린 메뉴"
+            "monthly":"지난달 대비 많이 팔린 메뉴"
         },
         "lessSold":{
             "daily":"어제 대비 적게 팔린 메뉴",

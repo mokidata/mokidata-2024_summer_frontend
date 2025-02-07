@@ -121,6 +121,9 @@ const PointDetails = () => {
       {
         Header: "적립내용",
         accessor: "details",
+        Cell: ({ value }) => (
+          <span style={{ fontWeight: "bold" }}>{value}</span>
+        ),
       },
       {
         Header: "포인트",

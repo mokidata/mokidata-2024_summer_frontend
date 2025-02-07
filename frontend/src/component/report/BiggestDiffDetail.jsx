@@ -4,8 +4,6 @@ import Price from "../../component/common/Price";
 import { motion } from "framer-motion";
 
 function BiggestDiffDetail(props) {
-  console.log(props);
-
   const [todayArray, setTodayArray] = useState([]);
   const [lastArray, setLastArray] = useState([]);
   const [diffSaleRank, setDiffSaleRank] = useState([]);
@@ -27,8 +25,6 @@ function BiggestDiffDetail(props) {
 
   //1. 오늘,이번주,이번달 데이터와 어제,지난주,지난달 판매데이터 가져옴
   useEffect(() => {
-    console.log("diffSaleRank");
-    console.log(diffSaleRank);
     if (props.rankDetailValue !== null) {
       console.log(props.rankDetailValue);
       setTodayArray(props.rankDetailValue[props.page]);
@@ -47,6 +43,9 @@ function BiggestDiffDetail(props) {
         const compareElement = lastArray.find(
           (item) => item.name === element.name
         );
+        if (compareElement?.count === 0) {
+          return;
+        }
         if (compareElement !== undefined) {
           obj["name"] = element.name;
           const todayProfit = element.price;
@@ -65,7 +64,7 @@ function BiggestDiffDetail(props) {
                   100
               ) / 100;
           } else {
-            obj["percentage"] = 0;
+            obj["percentage"] = -100;
           }
           // if (compareElement.count === 0) {
           //   a = 1;

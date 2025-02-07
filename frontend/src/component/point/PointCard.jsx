@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSpring, animated } from '@react-spring/web';
+import React from "react";
+import { useSpring, animated } from "@react-spring/web";
 
 const PointCard = ({ number, expired_date, is_expired }) => {
   const props = useSpring({
@@ -8,17 +8,23 @@ const PointCard = ({ number, expired_date, is_expired }) => {
     config: { duration: 1000 },
   });
 
-  const numberWithCommas = props.number.to(n => {
+  const numberWithCommas = props.number.to((n) => {
     return `${n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}p`;
   });
 
   return (
-    <div className='point_card'>
-      <p style={{ fontSize: '14px', color: 'lightgrey' }}>보유 포인트</p>
-      <animated.div style={{ fontSize: '35px', fontWeight: 'bold' }}>
-        { numberWithCommas }
+    <div className="point_card">
+      <p style={{ fontSize: "3.5vw", color: "lightgrey" }}>보유 포인트</p>
+      <animated.div style={{ fontSize: "9vw", fontWeight: "bold" }}>
+        {numberWithCommas}
       </animated.div>
-      {is_expired === 'Y' ? <p style={{ fontSize: '12px', color: 'lightgrey' }}>만료일: { expired_date }</p> : <p style={{ fontSize: '12px', color: 'black' }}>No expiration</p>}
+      {is_expired === "Y" ? (
+        <p style={{ fontSize: "3.5vw", color: "lightgrey" }}>
+          만료일: {expired_date}
+        </p>
+      ) : (
+        <p style={{ fontSize: "3.5vw", color: "black" }}>No expiration</p>
+      )}
     </div>
   );
 };

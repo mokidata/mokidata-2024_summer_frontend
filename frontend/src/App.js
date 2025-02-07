@@ -12,8 +12,27 @@ import Home from './pages/Home';
 import PointPage from './pages/PointPages/PointPage';
 import PointDetails from './pages/PointPages/PointDetails';
 import PONO from './pages/PointPages/PONO';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [alertShown, setAlertShown] = useState(false);
+
+  useEffect(() => {
+    const handleOrientation = () => {
+      const isLandscape = window.innerWidth > window.innerHeight;
+      if (isLandscape && !alertShown) {
+        alert("가로 모드는 지원되지 않습니다. 세로 모드로 전환해주세요!");
+        setAlertShown(true);
+      } else if (!isLandscape) {
+        setAlertShown(false);
+      }
+    };
+
+    window.addEventListener("resize", handleOrientation);
+    handleOrientation();
+
+    return () => window.removeEventListener("resize", handleOrientation);
+  }, [alertShown]);
 
   return (
     <BrowserRouter>

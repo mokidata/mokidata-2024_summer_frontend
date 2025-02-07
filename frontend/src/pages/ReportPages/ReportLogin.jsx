@@ -74,13 +74,18 @@ function Login() {
   return (
     <div className="login-page">
       <div className="logo-div">
-        <svg className="logo-img"></svg>
+        <img src="/assets/moki_logo(2024).png" style={{ width: "13vw" }} />
+        <h2 style={{ fontSize: "6vw", margin: "3vh" }}>
+          실시간 매출 분석 데이터
+        </h2>
       </div>
       <div className="input-div">
         <div className="login-desc" id="id">
-          <p style={{ marginBottom: "0" }}>아이디(사업자번호)</p>
+          <p style={{ marginTop: "5vw", fontSize: "3.3vw" }}>
+            아이디(사업자번호)
+          </p>
         </div>
-        <div className="login-input" id="id">
+        <div className="login-input" id="id" style={{ marginBottom: "4vw" }}>
           <input
             className="login-input-img"
             name="id"
@@ -89,9 +94,9 @@ function Login() {
           />
         </div>
         <div className="login-desc" id="pswd">
-          <p style={{ marginBottom: "0" }}>비밀번호</p>
+          <p style={{ marginTop: "5vw", fontSize: "3.3vw" }}>비밀번호</p>
         </div>
-        <div className="login-input">
+        <div className="login-input" style={{ marginBottom: "3vw" }}>
           <input
             className="login-input-img"
             name="pswd"
@@ -102,7 +107,7 @@ function Login() {
         </div>
       </div>
       <div className="auto_login">
-        <label>
+        <label style={{ fontSize: "3.5vw" }}>
           <input
             type="checkbox"
             checked={autoLogin}
@@ -125,6 +130,7 @@ function Login() {
             inputValue.id.trim() && inputValue.pswd.trim() ? "active" : ""
           }
           disabled={!(inputValue.id.trim() && inputValue.pswd.trim())}
+          style={{ fontSize: "4vw", height: "10vw" }}
         >
           로그인
         </button>

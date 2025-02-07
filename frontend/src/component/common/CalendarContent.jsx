@@ -14,58 +14,67 @@ import { totalThunks } from "../../store/salesApiSlice";
 import { useNavigate } from "react-router-dom";
 
 function CalendarContent(props) {
-  // props.currentDate = 2024-오늘-날짜
   let date = new Date(props.currentDate);
   let dateList = [];
   let monthList = [];
   let finalMap = {};
-  let i = 0;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isMonthSelect, setIsMonthSelect] = useState(false);
   const [currentMonth, setCurrentMonth] = useState("");
   const [enCurrentMonth, setEnCurrentMonth] = useState("");
+
   const HandleMonthSelect = (cur) => {
     setIsMonthSelect(!isMonthSelect);
     setCurrentMonth(cur);
   };
 
   const HandleDispatch = (date, page) => {
+    if (!date) {
+      console.error("HandleDispatch 호출 시 date 값이 없습니다.");
+      return;
+    }
     props.open();
-    // setIsMonthSelect(!isMonthSelect)
     dispatch(totalThunks(date));
+
     if (props.detail) {
       navigate("/detail", {
-        state: { currentDate: date, page: props.page, pageType: props.detail },
+        state: {
+          currentDate: date,
+          page: page || "default", // page가 없으면 기본값 설정
+          pageType: props.detail,
+        },
       });
     }
   };
 
-  //월, 주 ,일 목록 뽑아내는 코드
-  for (let validDate of props.validDateList) {
-    dateList.push(validDate);
-    monthList.push(`${formatYear(validDate)} ${formatMonth(validDate)}`);
+  // `props.validDateList`가 undefined가 아닐 때만 실행
+  if (Array.isArray(props.validDateList)) {
+    for (let validDate of props.validDateList) {
+      dateList.push(validDate);
+      monthList.push(`${formatYear(validDate)} ${formatMonth(validDate)}`);
+    }
+  } else {
+    console.warn("props.validDateList가 유효한 배열이 아닙니다.");
   }
 
   dateList.forEach((element, index) => {
     let list = [];
     const elemDate = new Date(element);
-    //해당 월의 첫날(2024년 7월 1일)
     const firstDayOfMonth = new Date(
       elemDate.getFullYear(),
       elemDate.getMonth(),
       1
     );
-    //해당 월의 마지막 날 (31일)
     const lastDayOfMonth = new Date(
       elemDate.getFullYear(),
       elemDate.getMonth() + 1,
       0
     );
     const daysInMonth = lastDayOfMonth.getDate();
-    // 해당 월의 첫 날이 속한 주의 시작일(일요일) 구하기
     const startOfWeek = new Date(firstDayOfMonth);
     startOfWeek.setDate(firstDayOfMonth.getDate() - firstDayOfMonth.getDay());
+
     switch (props.page) {
       case "daily":
         for (let day = 1; day <= daysInMonth; day++) {
@@ -78,23 +87,19 @@ function CalendarContent(props) {
             list.push(formatDate(thisDate));
           }
         }
-        finalMap[monthList[index]] = list;
+        finalMap[monthList[index]] = list || []; // undefined 방지
         break;
       case "weekly":
-        // 주 단위로 날짜를 추가
-        let cnt = 1;
         for (
           let thisDate = startOfWeek;
           thisDate <= lastDayOfMonth;
           thisDate.setDate(thisDate.getDate() + 1)
         ) {
-          // 토요일인 경우 주 배열에 추가하고 초기화
           if (thisDate.getDay() === 6 || thisDate >= lastDayOfMonth) {
             list.push(formatDate(thisDate));
-            // formatWeek(formatDate(thisDate))
           }
         }
-        finalMap[monthList[index]] = list;
+        finalMap[monthList[index]] = list || []; // undefined 방지
         break;
     }
   });
@@ -117,36 +122,40 @@ function CalendarContent(props) {
             <div
               className="side-nav__content side-pick"
               id="calendar"
-              onClick={() => {
-                setIsMonthSelect(false);
-              }}
+              onClick={() => setIsMonthSelect(false)}
             >
               {props.i18n.language === "ko" ? currentMonth : enCurrentMonth}
             </div>
-            {finalMap[currentMonth].map((date, index) => (
-              <div
-                className="side-nav__content side_detail-date"
-                id="calendar"
-                onClick={() => {
-                  props.open();
-                  HandleDispatch(date, props.page);
-                }}
-              >
-                {props.page === "daily" && props.i18n.language === "ko"
-                  ? formatDateNum(date)
-                  : props.page === "weekly" && props.i18n.language === "ko"
-                  ? formatWeek(date)
-                  : props.page === "daily" && props.i18n.language === "en"
-                  ? enDaily(date)
-                  : props.page === "weekly" && props.i18n.language === "ko"
-                  ? enWeekly(date)
-                  : ""}
-              </div>
-            ))}
+            {finalMap[currentMonth]?.map(
+              (
+                date,
+                index // undefined 체크 추가
+              ) => (
+                <div
+                  key={index} // key 추가
+                  className="side-nav__content side_detail-date"
+                  id="calendar"
+                  onClick={() => {
+                    props.open();
+                    HandleDispatch(date, props.page);
+                  }}
+                >
+                  {props.page === "daily" && props.i18n.language === "ko"
+                    ? formatDateNum(date)
+                    : props.page === "weekly" && props.i18n.language === "ko"
+                    ? formatWeek(date)
+                    : props.page === "daily" && props.i18n.language === "en"
+                    ? enDaily(date)
+                    : props.page === "weekly" && props.i18n.language === "en"
+                    ? enWeekly(date)
+                    : ""}
+                </div>
+              )
+            )}
           </div>
         ) : (
           dateList.map((date, index) => (
-            <div>
+            <div key={index}>
               <div
                 className="side-nav__content"
                 id="calendar"

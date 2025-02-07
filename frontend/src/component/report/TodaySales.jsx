@@ -27,7 +27,7 @@ function TodaySales(props) {
             <p
               id="store-name"
               style={{
-                fontSize: "32px",
+                fontSize: "6vw",
                 margin: "none",
                 fontWeight: "bold",
                 textOverflow: "ellipsis",
@@ -101,6 +101,7 @@ function TodaySales(props) {
                 : props.t("todaySales.yesterday") // 기본값
             }
           </div>
+          <div className="today-cmp__arrow" style={{ width: "22%" }}></div>
           <div
             className="today-cmp__date"
             id="today"

@@ -29,7 +29,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 20vh;
-    margin-bottom: 5vh;
+    margin-bottom: 3vh;
   }
   
   .login-page{
@@ -40,15 +40,20 @@ body {
     flex-direction: column;
     padding-inline: 10vw
   }
+
+  .login-page .child{
+    max-width: 100%;
+  }
   
   .input-div{
-    margin-top: 10vh;
+    margin-top: none;
     margin-bottom: 2vh;
-    width: 100%;
+    width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    object-fit: contain;
   }
   .input-div#admin-login{
     padding : 60px;
@@ -56,12 +61,12 @@ body {
   
   .login-desc{
     width: 100%;
-    height: 7vh;
+    height: 10vw;
   }
   
   .login-input{
     width: 100%;
-    height: 7vh;
+    height: 10vw;
   }
   .login-input-img{
     border: none;
@@ -78,14 +83,14 @@ body {
     
   }
   .button-div#report{
-    margin-top:100px;
-    margin-bottom:40px;
+    margin-top: 10vw;
+    margin-bottom: none;
     height: 42px;
     margin-inline: 100px;
   }
   .button-div#login{
-    width: 100%;
-    margin-block: 30px;
+    width: 90%;
+    margin-block: 3vh;
     height: 38px;
   }
   .button-div#login button{
@@ -133,6 +138,7 @@ body {
     color:#717171;
     border-color:#E1E1E1 ;
     border-style:solid;
+    font-size: 3.8vw;
   }
 
   .login-msg{
@@ -146,7 +152,7 @@ body {
     top: 0%;
     left: 0;
     width: 100%;
-    height: 66px;
+    height: 15vw;
     background-color: #fdfdfd;
     border: #ccc;
     z-index: 1;
@@ -162,14 +168,15 @@ body {
   }
   .header-button#Navbar{
     background-image: url('./assets/bars.png');
-    background-size: 25px;
+    background-size: 6vw;
   }
   .header-button#Calendar{
     background-image: url('./assets/calendar-alt.png');
-    background-size: 25px;
+    background-size: 6vw;
   }
   .header-desc{
-    font-size: 20px;
+    font-size: 4.5vw;
+    font-weight: "bold";
     display: flex;
     justify-content: center;
     align-items: center;
@@ -188,11 +195,9 @@ body {
   }
   
   .report-title{
-    padding-top: 10px;
-    padding-bottom: 10px;
     font-weight: 600;
-    font-size: 22px ;
-
+    font-size: 5.7vw;
+    /* margin-bottom: 5vw; */
   }
   .report-title__div{
     display: flex;
@@ -252,8 +257,7 @@ body {
     background-image: url('./assets/cheerup.gif');
   }
   .today-cmp{
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 1vh;
     display:flex;
     justify-content: space-between;
     flex-direction: column;
@@ -269,6 +273,7 @@ body {
     justify-content: space-between;
     align-items: center;
     white-space: none;
+    margin-block: 0.5vh;
   }
   .today-cmp__sales{
     width: 45%;
@@ -277,13 +282,13 @@ body {
     display: flex;
     justify-content:center;
     align-items: center;
-    margin-inline: 14%;
+    margin-inline: 13%;
     height: 28px;
-    width: 62px;
+    width: 40%;
     background-color: #D7E9FF;
     background-position: center;
     background-repeat: no-repeat;
-    font-size: 14px;
+    font-size: 4vw;
     font-weight: 600;
     color: #1881FC;
     border-radius: 25px;
@@ -293,7 +298,7 @@ body {
     justify-content: center;
     align-items: center;
     font-weight: 700;
-    font-size: 19px;
+    font-size: 5vw;
   }
   .today-cmp__arrow{
     width:10%;
@@ -317,7 +322,7 @@ body {
   .triangle-quantity{
     display: flex;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 4vw;
     /* width: 20px; */
     text-align: left;
     white-space: nowrap;
@@ -333,9 +338,9 @@ body {
   }
   
   .triangle-img{
-    width : 35px;
-    height: 20px;
-    margin-right: 10px;
+    width : 3vw;
+    height: 3vw;
+    margin-right: 1vw;
     background-color: transparent;
     background-size: cover;
     background-position: center;
@@ -382,10 +387,13 @@ body {
   }
   .chart__data#highlight{
     color: #FF4C77;
-    font-weight: 600 ;
+    font-weight: 600;
   }
-  
-  
+
+  .chart__data#highlight .price {
+    font-size: 4.5vw;
+  }
+
   .chart__element#bar{
     width: 70%;
     min-width: 40px;
@@ -395,23 +403,27 @@ body {
 
   .chart__value{
     padding-block: 10px;
+    font-size: 4.4vw;
   }
 
   .chart__column{
     height: 42px;
     padding-block: 10px;
+    font-size: 4.4vw
   }
 
   .predict__detail{
     font-size: medium;
     color:#717171;
     font-weight: 400;
+    font-size: 4vw;
   }
 
   .notice{
     font-size: small;
     font-weight: 400;
     color: #A9A9A9;
+    font-size: 3.3vw;
   }
   .report-component#best-menu{
     background-color: #F3F4F6;
@@ -428,12 +440,15 @@ body {
     margin-top: 20px;
   }
   .best-menu__first{
+    display: flex;
+    flex-direction: column;
     width: 40%;
     padding: 3%;
     margin-inline: 2%;
     border-radius: 15px;
     /* height: 160px; */
     background-color: white;
+    justify-content: center;
   }
   .best-menu__second{
     display: flex;
@@ -455,7 +470,7 @@ body {
   }
 
   .best-menu__title{
-    font-size: 15px;
+    font-size: 4vw;
     font-weight: 400;
     color:#717171;
     white-space: nowrap;
@@ -541,7 +556,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70px;
+    height: 15vw;
     bottom: 0px; 
     width: 100%;
     left: 0px;
@@ -560,7 +575,7 @@ body {
     background-color: white;
     border: none;
     font-family: Inter;
-    font-size: 18px;
+    font-size: 4.5vw;
     font-weight: 400;
     line-height: 21.78px;
     text-align: left;
@@ -571,7 +586,7 @@ body {
 
 
   .best-rank__goback{
-    font-size: 22px;
+    font-size: 5.5vw;
     font-weight: 600;
     line-height: 29.95px;
     text-align: left;
@@ -581,14 +596,14 @@ body {
     display: flex;
     width: 100%;
     height: 40px;
-    font-size: 14px;
+    font-size: 3.8vw;
     font-weight: 400;
     line-height: 18.72px;
     text-align: left;
     color : #717171;
   }
   .best-rank__table{
-    margin-top: 30px;
+    margin-top: 2vh;
     margin-bottom: 30px;
   }
   .best-rank__column{
@@ -599,7 +614,7 @@ body {
     border-bottom: 1px solid var(--gray-text-neutral-500, #717171);
   }
   #rank__rank{
-    width: 10%;
+    width: 15%;
   }
   #rank__diff{
     width: 20%;
@@ -608,10 +623,10 @@ body {
     width: 35%;
   }
   #rank__profit{
-    width: 35%;
+    width: 25%;
   }
   #rank__last-profit{
-    width: 20%;
+    width: 25%;
   }
 
   .best-rank__each{
@@ -629,7 +644,7 @@ body {
     justify-content: center;
   }
   .best-rank__row#rank__rank{
-    font-size: 15px;
+    font-size: 4vw;
     font-weight: 700;
     line-height: 18.72px;
     text-align: left;
@@ -640,7 +655,7 @@ body {
   }
 
   .best-rank__row__menu{
-    font-size: 14px;  
+    font-size: 3.5vw;  
     font-weight: 500;
     line-height: 18.72px;
     text-align: left;
@@ -658,7 +673,7 @@ body {
     text-overflow: ellipsis;
   }
   .best-rank__row__sales{
-    font-size: 16px;
+    font-size: 3.8vw;
     font-weight: 700;
     line-height: 24.96px;
     text-align: left;
@@ -669,7 +684,7 @@ body {
     padding-bottom: 15px;
   }
   .best-rank__row#rank__profit{
-    font-size: 16px;
+    font-size: 3.8vw;
     font-weight: 700;
     line-height: 24.96px;
     display: flex;
@@ -691,7 +706,7 @@ body {
     
   }
   .best-rank__row#rank__last-profit{
-    font-size: 12px;
+    font-size: 3.8vw;
     font-weight: 400;
     line-height: 19.97px;
     text-align: center;
@@ -1139,10 +1154,11 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
-    
+    font-size: 4vw;
   }
   .side-nav__title{
     font-weight: 600;
+    font-size: 4.4vw;
     display: flex;
     width: 230px;
     justify-content: left;
@@ -1157,6 +1173,7 @@ body {
 
   .side-nav__list{
     min-height: 330px;
+    font-size: 4vw;
   }
   .side-nav__content{
     margin-block: 12px;
@@ -1179,7 +1196,9 @@ body {
   }
 
   .side-nav__bottom{
+    font-size: 4vw;
     display: flex;
+    /* flex-direction: column; */
     justify-content: space-between;
   }
   .side-nav__bottom-language__div{
@@ -1197,8 +1216,6 @@ body {
   }
 
   .side-nav__bottom-name{
-    
-    font-size: 15px;
     font-weight: 600;
     line-height: 18.72px;
     text-align: left;
@@ -1264,10 +1281,10 @@ body {
     border-radius: 50%;
     display: flex;
     justify-content: center;
-    left : 83%;
-    top:81%;
-    height: 50px;
-    width: 50px;
+    right : 4vw;
+    bottom: 19vw;
+    height: 14vw;
+    width: 14vw;
     background: white;
     border: 1px solid var(--gray-border-neutral-200, #E1E1E1);
     box-shadow: 4px 4px 4px 0px #0000001A;
@@ -1364,6 +1381,11 @@ body {
   margin-bottom: 20px;
 }
 
+.logo-div-home p {
+  font-size: 5vw;
+  font-weight: bold;
+}
+
 .homepage .logo-div-home {
   margin-top: 10vh;
   flex-direction: column;
@@ -1385,7 +1407,7 @@ body {
 }
 
 .decision-div button {
-  font-size: 2.3vh;
+  font-size: 4.5vw;
   padding: 15px 15px;
   border: none;
   border-radius: 8px;
@@ -1398,10 +1420,19 @@ body {
   color: white;
 }
 
+.logo-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12vh;
+  font-size: 4vw;
+}
+
 .decision-div p {
   color: lightgrey;
   margin: 0;
-  font-size: 1.5vh;
+  font-size: 3vw;
 }
 
 video {
@@ -1429,14 +1460,15 @@ video {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 15vh;
+  margin-top: 10vh;
+  font-size: 4vw;
 }
 
 .PONO_input_page .PONO_input {
   display: flex;
   flex-direction: column;
   width: 70%;
-  margin-top: 30px;
+  margin-top: 7vh;
   margin-left: 20%;
   margin-right: 20%;
   align-items: flex-start;
@@ -1446,6 +1478,7 @@ video {
 .PONO_input_page .PONO_input p {
   margin: 0;
   align-items: flex-start;
+  font-size: 4vw;
 }
 
 .PONO_input_page .PONO_input input {
@@ -1545,7 +1578,7 @@ video {
   background-color: #006eea;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   margin: 5vh;
 }
 
@@ -1612,8 +1645,8 @@ video {
 
 .toast_message {
   position: fixed;
-  width: 75vw;
-  bottom: 30vh;
+  width: 60vw;
+  bottom: 20vh;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.8);
@@ -1622,7 +1655,7 @@ video {
   padding: 10px 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  font-size: 14px;
+  font-size: 3vw;
   z-index: 1000;
   animation: fadeInOut 1.5s ease-in-out;
   display: flex;
@@ -1662,7 +1695,7 @@ video {
 .point_details_table th, .point_details_table td {
   padding: 12px;
   text-align: center;
-  font-size: 14px;
+  font-size: 3.5vw;
   border-bottom: 1px solid grey;
 }
 
