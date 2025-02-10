@@ -13,6 +13,9 @@ function BiggestDiffDetail(props) {
   //정렬 결과를 제대로 반영하기 위한 비동기 함수
   const sorting = async (arr, key, type) => {
     await arr.sort((a, b) => {
+      if (a[key] === b[key]) {
+        return b.lastSales - a.lastSales;
+      }
       return a[key] - b[key];
     });
     console.log(arr);

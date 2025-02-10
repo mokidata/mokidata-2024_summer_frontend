@@ -53,7 +53,7 @@ function BiggestDiffMenu(props) {
           const todayProfit = salesDetailValue[name]?.price;
           const lastProfit = lastDetailValue[name]?.price;
           const todayCount = salesDetailValue[name]?.count;
-          const lastCount = salesDetailValue[name]?.count;
+          const lastCount = lastDetailValue[name]?.count;
 
           obj["diff"] = todayProfit - lastProfit;
           obj["percentage"] =
@@ -62,6 +62,7 @@ function BiggestDiffMenu(props) {
               : Math.round(
                   ((todayProfit - lastProfit) / lastProfit) * 100 * 100
                 ) / 100;
+          obj["lastCount"] = lastCount;
 
           return obj;
         });
@@ -74,7 +75,12 @@ function BiggestDiffMenu(props) {
     // 가장 상승률 높은 객체 찾기
     if (diffArray.length !== 0) {
       const maxPercentageObject = diffArray.reduce((max, item) => {
-        return item.percentage > max.percentage ? item : max;
+        if (item.percentage > max.percentage) {
+          return item;
+        } else if (item.percentage === max.percentage) {
+          return item.lastCount < max.lastCount ? item : max;
+        }
+        return max;
       });
       //가장 상승률 높은 메뉴의 이미지 찾기
       if (Object.keys(props.menuObject).length !== 0) {
@@ -84,7 +90,13 @@ function BiggestDiffMenu(props) {
 
       // 가장 낮은 객체 찾기
       const minPercentageObject = diffArray.reduce((min, item) => {
-        return item.percentage < min.percentage ? item : min;
+        if (item.percentage < min.percentage) {
+          return item; // percentage가 더 작은 경우
+        } else if (item.percentage === min.percentage) {
+          // percentage가 같을 때 diff가 작은 순으로 비교
+          return item.lastCount > min.lastCount ? item : min;
+        }
+        return min;
       });
       //가장 낮은 메뉴의 이미지 찾기
       if (Object.keys(props.menuObject).length !== 0) {

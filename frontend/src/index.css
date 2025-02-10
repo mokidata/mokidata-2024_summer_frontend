@@ -32,49 +32,45 @@ body {
     margin-bottom: 3vh;
   }
   
-  .login-page{
-    width: 80vw;
-    height: calc(100vh - 66px) ; 
+  .login-page {
+    width: 100%;
+    max-width: 80vw;
+    height: calc(100vh - 66px);
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-inline: 10vw
-  }
+    margin-inline: auto;
+}
 
   .login-page .child{
     max-width: 100%;
   }
   
-  .input-div{
-    margin-top: none;
-    margin-bottom: 2vh;
+  .input-div {
     width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    object-fit: contain;
-  }
+    max-width: 100%;
+}
   .input-div#admin-login{
     padding : 60px;
   }
   
-  .login-desc{
-    width: 100%;
-    height: 10vw;
-  }
+
   
-  .login-input{
+  .login-input {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     height: 10vw;
-  }
-  .login-input-img{
-    border: none;
-    width: 100%;
-    height: 35px;
-    font-size:larger;
-    border-bottom: 2px solid #ccc;
-  }
+}
+.login-input-img {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border: none;
+  height: 35px;
+  font-size: larger;
+  border-bottom: 2px solid #ccc;
+}
   .button-div{
     
     display: flex;

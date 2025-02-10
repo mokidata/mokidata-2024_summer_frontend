@@ -9,11 +9,15 @@ import DateConverter, {
 import Price from "../common/Price";
 
 function PredictSales(props) {
+  if (!props.value || !props.rankCompareValue || !props.page) {
+    return <div className="error">데이터를 불러올 수 없습니다.</div>;
+  }
+
   // const todayValue = props.value[props.page]['predicts'];
   // const nextValue = props.predictNextValue[props.page]['predicts'];
-  const todayValue = props.value[props.page]["today"];
-  const nextValue = props.value[props.page]["tomorrow"];
-  const compareValue = props.rankCompareValue[props.page];
+  const todayValue = props.value[props.page]["today"] ?? 0;
+  const nextValue = props.value[props.page]["tomorrow"] ?? 0;
+  const compareValue = props.rankCompareValue[props.page] ?? {};
   //   const nextDate = props.predictNextValue[props.page]["date"];
   const menuObject = props.menuObject;
   let data = [];

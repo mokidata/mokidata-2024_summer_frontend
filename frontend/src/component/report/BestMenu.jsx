@@ -15,7 +15,7 @@ function BestMenu(props) {
 
   useEffect(() => {
     if (props.rankDetailValue[props.page].length !== 0) {
-      //여기 총액 으로 소팅하게 바꾸면 됨됨
+      //여기 총액 으로 소팅하게 바꾸면 됨
       rankDetail.sort((a, b) => b.count - a.count);
       setRankFirst(rankDetail[0]);
       setRankSecond(rankDetail[1]);

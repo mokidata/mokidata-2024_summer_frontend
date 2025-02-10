@@ -5,16 +5,10 @@ import { motion } from "framer-motion";
 
 function BestMenuDetail(props) {
   console.log(props);
-  // const [pageInfo,setPageInfo] = useState("daily")
-  // const rankArray = state.rankDetail[state.page]
   const [rankArray, setRankArray] = useState([
     { name: "", count: 0, price: 0 },
   ]);
-  const [lastRank, setLastRank] = useState({
-    daily: [],
-    weekly: [],
-    monthly: [],
-  });
+  const [lastRank, setLastRank] = useState({});
 
   useEffect(() => {
     if (props.rankDetailValue !== null) {
@@ -23,21 +17,17 @@ function BestMenuDetail(props) {
       copy.sort((a, b) => b.count - a.count);
       setRankArray(copy);
     }
-
-    // setRankInfo(state.page)
-  }, [props.rankDetailValue, props]);
+  }, [props.rankDetailValue, props.page]);
 
   useEffect(() => {
-    const obj = {};
     if (props.lastDetailValue !== null) {
+      const obj = {};
       props.lastDetailValue[props.page].forEach((element, index) => {
-        obj[element.name] = index + 1;
+        obj[element.name] = { rank: index + 1, count: element.count };
       });
       setLastRank(obj);
-      console.log("lastRank");
-      console.log(lastRank);
     }
-  }, [props, props.lastDetailValue]);
+  }, [props.lastDetailValue, props.page]);
 
   return (
     <motion.div
@@ -86,20 +76,30 @@ function BestMenuDetail(props) {
               >
                 {index + 1}
               </div>
-              <div
-                className="best-rank__row"
-                id="rank__diff"
-                style={{ fontSize: "4.5vw" }}
-              >
-                {lastRank[element.name].count === 0 ? (
-                  <p>new</p>
-                ) : (
+              {lastRank[element.name]?.count === 0 ? (
+                <div
+                  className="best-rank__row"
+                  id="rank__diff"
+                  style={{
+                    fontSize: "3.5vw",
+                    color: "green",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <p>NEW</p>
+                </div>
+              ) : (
+                <div
+                  className="best-rank__row"
+                  id="rank__diff"
+                  style={{ fontSize: "4.5vw" }}
+                >
                   <Triangle
-                    diff={lastRank[element.name] - (index + 1)}
+                    diff={lastRank[element.name]?.rank - (index + 1)}
                     unit=""
                   />
-                )}
-              </div>
+                </div>
+              )}
               <div className="best-rank__row" id="rank__menu-info">
                 <div
                   className="best-rank__row__menu"

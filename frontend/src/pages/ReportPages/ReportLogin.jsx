@@ -30,6 +30,7 @@ function Login() {
     navigate("../daily");
   };
   const handleLogin = async (event, inputValue) => {
+    delete axios.defaults.headers.common["Authorization"];
     try {
       const response = await mokiApi.post("/api/auth/login", {
         id: inputValue.id,
@@ -112,8 +113,9 @@ function Login() {
             type="checkbox"
             checked={autoLogin}
             onChange={(e) => setAutoLogin(e.target.checked)}
+            style={{ width: "3.5vw", height: "3.5vw" }}
           ></input>
-          자동 로그인
+          &nbsp;자동 로그인
         </label>
       </div>
       <div
