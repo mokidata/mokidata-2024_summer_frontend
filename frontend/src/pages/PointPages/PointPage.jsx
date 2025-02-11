@@ -6,30 +6,35 @@ import PointDetails from "./PointDetails";
 import LoadingScreen from "../../component/common/LoadingScreen";
 import { useParams } from "react-router-dom";
 import InfiniteScrollWithObserver from "./InfiniteScroll";
+import axios from "axios";
+import { mokiApi } from "../../services/loginApi";
 
 const PointPage = () => {
   const [data, setData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { store_id, user_id } = useParams();
+  const { store_id, phone_num } = useParams();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setData({
-        user_id: 4380,
-        user_name: "5678",
-        store_id: "2504001328",
-        store_name: "해머스미스 송파푸르지오시티점",
-        total_point: 133780,
-        total_count: 137,
-        is_expired: "Y",
-        expired_date: "2025-03-11",
-        recent_visit: "2025-01-08",
-      });
-    }, 1000);
-  }, []);
+    const fetchData = async () => {
+      try {
+        const response = await mokiApi.get(
+          `/api/point/user?store_id=${store_id}&phone_num=${phone_num}`
+        );
+        if (response.data) {
+          setData(response.data);
+        } else {
+          console.log("No data found for:", store_id, phone_num);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [store_id, phone_num]);
 
   if (!data) {
     return (
@@ -45,7 +50,10 @@ const PointPage = () => {
 
   return (
     <div className="point_page">
-      <h3 className="point_title" style={{ fontSize: "5vw" }}>
+      <h3
+        className="point_title"
+        style={{ fontSize: "5.5vw", fontWeight: "bold" }}
+      >
         {data.store_name}
       </h3>
       <p style={{ fontSize: "9vw", fontWeight: "bold" }}>{data.user_name}님</p>

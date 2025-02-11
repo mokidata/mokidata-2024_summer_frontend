@@ -82,7 +82,7 @@ function BestMenuDetail(props) {
                   id="rank__diff"
                   style={{
                     fontSize: "3.5vw",
-                    color: "green",
+                    color: "orange",
                     fontWeight: "bold",
                   }}
                 >

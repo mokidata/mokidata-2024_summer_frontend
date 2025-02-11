@@ -12,50 +12,10 @@ const PONO = () => {
   const [toast, setToast] = useState(false);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const endpoint = "api/user/storelist.php";
-  const datatosend = {
-    phone_num: inputValue,
-  };
   const [storeList, setStoreList] = useState({ data: [] });
   const [userId, setUserId] = useState();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  useEffect(() => {
-    setUserId("5678");
-    setStoreList({
-      data: [
-        {
-          store_id: "0101010101",
-          store_name: "카페쇼1",
-        },
-        {
-          store_id: "0202020202",
-          store_name: "카페쇼2",
-        },
-        {
-          store_id: "4341701888",
-          store_name: "해머스미스커피 강남교보점",
-        },
-        {
-          store_id: "4831902001",
-          store_name: "해머스미스 무교다동점 ",
-        },
-        {
-          store_id: "6688133551",
-          store_name: "해머스미스 테스트",
-        },
-        {
-          store_id: "8080808080",
-          store_name: "매스 커피(80)",
-        },
-        {
-          store_id: "8472001615",
-          store_name: "해머스미스커피 압구정역점",
-        },
-      ],
-    });
-  }, []);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value.trim());
@@ -71,23 +31,17 @@ const PONO = () => {
       return;
     }
 
-    // const fetchdata = getData(endpoint, datatosend);
-
     try {
       const response = await mokiApi.get(`/api/point?phone_num=${inputValue}`);
-      if (response.success) {
+      if (response.data !== undefined) {
+        setUserId(inputValue.slice(-4));
         setStoreList(response.data);
         openModal();
       } else {
         setToast(true);
       }
     } catch (error) {
-      setToast(true);
-    }
-
-    if (inputValue === "01012345678") {
-      openModal();
-    } else {
+      console.log(error);
       setToast(true);
     }
   };
@@ -145,7 +99,7 @@ const PONO = () => {
           },
         }}
       >
-        <SelectStore storelist={storeList.data} user_id={userId} />
+        <SelectStore storelist={storeList.data} phone_num={inputValue} />
         <div className="modal_footer">
           <button onClick={closeModal} style={{ fontSize: "4.5vw" }}>
             닫기

@@ -47,7 +47,7 @@ function App() {
             <Route path='/detail' element={<DetailPage page="daily"/>}/>
             <Route path="/admin" element={<AdminLogin /> }></Route>
             <Route path="/admin/main" element={<AdminIndex/>}></Route>
-            <Route path='/point/store_id/:store_id/user_id/:user_id' element={<PointPage />} />
+            <Route path='/point/store_id/:store_id/phone_num/:phone_num' element={<PointPage />} />
             <Route path='/PONO' element={ <PONO /> } />
           </Routes>
 

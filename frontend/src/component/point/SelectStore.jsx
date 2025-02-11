@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
-const SelectStore = ({ storelist, user_id }) => {
+const SelectStore = ({ storelist, phone_num }) => {
   const navigate = useNavigate();
   const handleClick = (storeId) => {
     console.log(storeId);
-    navigate(`/Point/store_id/${storeId}/user_id/${user_id}`);
+    navigate(`/Point/store_id/${storeId}/phone_num/${phone_num}`);
   };
 
   return (
