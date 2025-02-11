@@ -57,7 +57,10 @@ export const totalThunks = createAsyncThunk(
     //daily_dates = 하루단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-27,...]
     //weekly_dates = 주단위 매출 얻기위한 날짜들 [2024-07-28,2024-07-21,...]
     //monthly_dates = 월단위 매출 얻기위한 날짜들 [2024-07-28,2024-06-28,...]
-    for(let i = 1; i< 4;i++){
+    daily_dates.push(formatDate(yesterday));
+    weekly_dates.push(formatDate(lastWeek));
+    monthly_dates.push(formatDate(lastMonth));
+    for(let i = 1; i< 11;i++){
       yesterday.setDate(yesterday.getDate()-1)
       lastWeek.setDate(lastWeek.getDate()-7)
       // lastMonth.setDate(lastMonth.getDate()-30)
@@ -329,25 +332,23 @@ export const totalThunks = createAsyncThunk(
       if(response.status == 200 && response.data.saleGetResList !== undefined){
         //구한 값 state에 집어 넣기
         data.lastDetail['daily'] = response.data.saleGetResList
-        compare_data[formattedYesterday] = response.data.saleGetResList
       }
     }
     catch(error){
       data.lastDetail['daily'] = []
-      compare_data[formattedYesterday] = []
       console.log(error)
     }
     
     //일단위 오늘 비교
     try{
       for(const dates of daily_dates){
-        const response = await mokiApi.get(`/api/sale/daily-detail`, {
+        const response = await mokiApi.get(`/api/date/daily`, {
           params: {
             localDate: dates,
           },
         })
-        if (response.status == 200 && response.data.saleGetResList !== undefined){
-          compare_data[dates] = response.data.saleGetResList
+        if (response.status == 200 && response.data.today !== undefined){
+          compare_data[dates] = response.data.today;
         }
       }
       //구한 값 state에 집어 넣기
@@ -369,24 +370,22 @@ export const totalThunks = createAsyncThunk(
       if(response.status == 200 && response.data.saleGetResList !== undefined){
         //구한 값 state에 집어 넣기
         data.lastDetail['weekly'] = response.data.saleGetResList
-        compare_data[formattedLastWeek] = response.data.saleGetResList
       }
     }
     catch{
       data.lastDetail['weekly'] = []
-      compare_data[formattedLastWeek] = []
     }
     
     //지난주 주간 매출 디테일
     try{
       for(const dates of weekly_dates){
-        const response = await mokiApi.get(`/api/sale/weekly-detail`, {
+        const response = await mokiApi.get(`/api/date/weekly`, {
           params: {
             localDate: dates,
           },
         })
-        if (response.status == 200 && response.data.saleGetResList !== undefined){
-          compare_data[dates] = response.data.saleGetResList
+        if (response.status == 200 && response.data.today !== undefined){
+          compare_data[dates] = response.data.today;
         }
       }
       //구한 값 state에 집어 넣기
@@ -408,12 +407,10 @@ export const totalThunks = createAsyncThunk(
       if(response.status == 200 && response.data.saleGetResList !== undefined){
         //구한 값 state에 집어 넣기
         data.lastDetail['monthly'] = response.data.saleGetResList
-        compare_data[formattedLastMonth] = response.data.saleGetResList
       }
     }
     catch{
       data.lastDetail['monthly'] = []
-      compare_data[formattedLastMonth] = []
     }
     //지난달과 이번달 비교
     try{
@@ -421,13 +418,13 @@ export const totalThunks = createAsyncThunk(
       //지난달 월간 매출 디테일
       
       for(const dates of monthly_dates){
-        const response = await mokiApi.get(`/api/sale/monthly-detail`, {
+        const response = await mokiApi.get(`/api/date/monthly`, {
           params: {
             localDate: dates,
           },
         })
-        if (response.status == 200 && response.data.saleGetResList !== undefined){
-          compare_data[dates] = response.data.saleGetResList
+        if (response.status == 200 && response.data.today !== undefined){
+          compare_data[dates] = response.data.today;
         }
       }
       //구한 값 state에 집어 넣기

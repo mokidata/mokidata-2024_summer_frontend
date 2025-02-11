@@ -72,7 +72,6 @@ body {
   border-bottom: 2px solid #ccc;
 }
   .button-div{
-    
     display: flex;
     justify-content: center;
     align-items: center; 
@@ -131,10 +130,9 @@ body {
   }
   .button#transparent{
     background-color: transparent;
-    color:#717171;
-    border-color:#E1E1E1 ;
-    border-style:solid;
-    font-size: 3.8vw;
+    color: #5384E0;
+    border: none;
+    font-size: 4.4vw;
   }
 
   .login-msg{
@@ -148,26 +146,27 @@ body {
     top: 0%;
     left: 0;
     width: 100%;
-    height: 15vw;
-    background-color: #fdfdfd;
+    height: 13vw;
+    background-color: #5672D6;
+    color: white;
     border: #ccc;
     z-index: 1;
   }
 
   .header-button{
     background-color: transparent;
-    background-image: url('./assets/bars.png');
+    background-image: url('./assets/menu.svg');
     background-size: 50px 50px;
     background-position: center;
     background-repeat:no-repeat;
     border: none;
   }
   .header-button#Navbar{
-    background-image: url('./assets/bars.png');
+    background-image: url('./assets/menu.svg');
     background-size: 6vw;
   }
   .header-button#Calendar{
-    background-image: url('./assets/calendar-alt.png');
+    background-image: url('./assets/calendar.svg');
     background-size: 6vw;
   }
   .header-desc{
@@ -253,7 +252,7 @@ body {
     background-image: url('./assets/cheerup.gif');
   }
   .today-cmp{
-    padding-top: 1vh;
+    padding-block: 0.5vh;
     display:flex;
     justify-content: space-between;
     flex-direction: column;
@@ -269,7 +268,7 @@ body {
     justify-content: space-between;
     align-items: center;
     white-space: none;
-    margin-block: 0.5vh;
+    margin-block: 1vh;
   }
   .today-cmp__sales{
     width: 45%;
@@ -559,7 +558,6 @@ body {
     border-radius: 20px 20px 0px 0px;
     box-shadow: 0px -4px 10px 0px #0000000D;
     border-bottom: none;
-    
   }
   .botton-nav__button{
     width: 33%;
@@ -572,10 +570,9 @@ body {
     border: none;
     font-family: Inter;
     font-size: 4.5vw;
-    font-weight: 400;
     line-height: 21.78px;
     text-align: left;
-    color: black;
+    color: grey;
 
 
   }
@@ -1138,7 +1135,7 @@ body {
   .side-nav{
     padding:20px;
     width: 260px;
-    max-height: 480px;
+    max-height: 500px;
     overflow-y: scroll;
     border-radius: 25px;
     border: 1px solid #E4E4E4;
@@ -1149,26 +1146,25 @@ body {
   .side-nav__top{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 40px;
     font-size: 4vw;
   }
   .side-nav__title{
     font-weight: 600;
-    font-size: 4.4vw;
+    font-size: 4vw;
     display: flex;
-    width: 230px;
-    justify-content: left;
+    justify-content: right;
     text-align: left;
     align-items: center;
+    color: red;
   }
   .side-nav__close{
-    width: 25px;
     display: flex;
-    justify-content: center;
+    color: blue;
+    font-size: 4vw;
   }
 
   .side-nav__list{
-    min-height: 330px;
+    min-height: 300px;
     font-size: 4vw;
   }
   .side-nav__content{
@@ -1203,19 +1199,25 @@ body {
     justify-content: space-between;
   }
   .side-nav__bottom-language{
-    width: 70px;
+    width: 18vw;
     padding-inline: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    border-radius: 16px;
+    padding-block: 2%;
   }
 
   .side-nav__bottom-name{
-    font-weight: 600;
+    color: lightgrey;
+    font-weight: bold;
     line-height: 18.72px;
     text-align: left;
-
+    margin-block: 10vw;
+    font-size: 4vw;
+    display: flex;
+    justify-content: center;
   }
 
   .menu-info__div{
@@ -1727,4 +1729,21 @@ video {
   font-weight: bold;
   color: #333;
   margin: 0;
+}
+
+.no_data{
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.no_data p{
+  text-align: center;
+  font-size: 3.5vw;
+  font-weight: bold;
+  margin: 0vw;
+  color: #989898;
 }

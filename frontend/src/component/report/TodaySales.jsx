@@ -18,29 +18,44 @@ function TodaySales(props) {
   }, [props.page]);
   return (
     <div className="report-component">
-      <div className="report-title__div">
+      <div
+        className="report-title__div"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <div
+          style={{
+            fontSize: "3.5vw",
+            fontWeight: "bold",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            maxWidth: "90vw",
+            justifyItems: "center",
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <p
+            id="store-name"
+            style={{
+              display: "inline-block",
+              color: "lightgrey",
+              backgroundColor: "black",
+              borderRadius: "16px",
+              paddingInline: "4vw",
+              paddingBlock: "1vw",
+            }}
+          >
+            {sessionStorage.getItem("name")}
+          </p>
+        </div>
         <div className="report-title" id="todaysales">
           <div
             className="report-title__benefit"
             style={{ flexDirection: "column" }}
           >
-            <p
-              id="store-name"
-              style={{
-                fontSize: "6vw",
-                margin: "none",
-                fontWeight: "bold",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                maxWidth: "90vw",
-                marginBottom: "10px",
-              }}
-            >
-              {" "}
-              {sessionStorage.getItem("name")}{" "}
-            </p>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               {props.page === "daily"
                 ? props.t(`todaySales.title.daily`)
                 : props.page === "weekly"
@@ -48,11 +63,11 @@ function TodaySales(props) {
                 : props.page === "monthly"
                 ? props.t("todaySales.title.monthly")
                 : ""}
-              &nbsp;
               <Price
                 value={todayTotal}
                 underline={true}
                 unit={props.t("todaySales.unit")}
+                style={800}
               >
                 {" "}
               </Price>

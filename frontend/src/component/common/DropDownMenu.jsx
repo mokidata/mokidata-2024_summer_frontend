@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearStore } from "../../store/salesApiSlice";
+import { useState } from "react";
 function DropDownMenu(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -11,17 +12,27 @@ function DropDownMenu(props) {
     dispatch(clearStore());
     navigate("/");
   };
+  const [lang, setLang] = useState("ko");
+
+  const changeLang = (lang) => {
+    setLang(lang);
+    props.changeLanguage(lang);
+  };
 
   return (
     <div className="side-nav">
       <div className="side-nav__top">
-        <div className="side-nav__title" onClick={() => logout()}>
-          &lt; {props.t("logout")}
-        </div>
         <div className="side-nav__close" onClick={() => props.open()}>
-          X
+          창 닫기
+        </div>
+        <div className="side-nav__title" onClick={() => logout()}>
+          {props.t("logout")}
         </div>
       </div>
+      <div className="side-nav__bottom-name">
+        {sessionStorage.getItem("name")}
+      </div>
+      <div style={{ marginTop: "10vw", fontWeight: "bold" }}>[바로가기]</div>
       <div className="side-nav__list">
         {props.sideList.map((element, index) => (
           <div
@@ -31,7 +42,7 @@ function DropDownMenu(props) {
               props.onclickFunction(index);
             }}
           >
-            {element}
+            {index + 1}. {element}
           </div>
         ))}
       </div>
@@ -39,20 +50,24 @@ function DropDownMenu(props) {
         <div className="side-nav__bottom-language__div">
           <div
             className="side-nav__bottom-language"
-            onClick={() => props.changeLanguage("ko")}
+            onClick={() => changeLang("ko")}
+            style={{
+              backgroundColor: lang === "ko" ? "red" : "transparent",
+              color: lang === "ko" ? "white" : "black",
+            }}
           >
             한국어
           </div>
-          |
           <div
             className="side-nav__bottom-language"
-            onClick={() => props.changeLanguage("en")}
+            onClick={() => changeLang("en")}
+            style={{
+              backgroundColor: lang === "en" ? "red" : "transparent",
+              color: lang === "en" ? "white" : "black",
+            }}
           >
             English
           </div>
-        </div>
-        <div className="side-nav__bottom-name">
-          {sessionStorage.getItem("name")}
         </div>
       </div>
     </div>

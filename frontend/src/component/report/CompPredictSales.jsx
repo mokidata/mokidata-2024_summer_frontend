@@ -60,12 +60,16 @@ function CompPredictSales(props) {
               : props.t("compPredictSales.todaySales")}{" "}
             😆
           </div>
-          <div className="report-title__benefit">
+          <div
+            className="report-title__benefit"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             <Price
               value={todayTotal - predictTotal}
               unit={props.t("compPredictSales.unit")}
+              style={800}
             ></Price>
-            &nbsp; {props.t("compPredictSales.moreEarned")}
+            {props.t("compPredictSales.moreEarned")}
           </div>
         </div>
       ) : (
@@ -81,13 +85,14 @@ function CompPredictSales(props) {
           </div>
           <div
             className="report-title__benefit"
-            style={{ flexDirection: "row" }}
+            style={{ display: "flex", flexDirection: "column" }}
           >
             <Price
               value={predictTotal - todayTotal}
               unit={props.t("compPredictSales.unit")}
+              style={800}
             ></Price>
-            &nbsp; {props.t("compPredictSales.lessEarned")}
+            {props.t("compPredictSales.lessEarned")}
           </div>
         </div>
       )}

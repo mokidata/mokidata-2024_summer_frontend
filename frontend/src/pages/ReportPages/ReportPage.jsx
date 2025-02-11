@@ -20,6 +20,7 @@ import LoadingScreen from "../../component/common/LoadingScreen";
 import { current } from "@reduxjs/toolkit";
 import { useTranslation } from "react-i18next";
 import SalesByTime from "../../component/report/SalesByTime";
+import NoData from "../../component/report/NoData";
 
 function ReportPage(props) {
   const { t, i18n } = useTranslation();
@@ -190,15 +191,14 @@ function ReportPage(props) {
             i18n={i18n}
           ></CalendarContent>
         </motion.div>
-        <div
-          style={{
-            margin: "20vh",
-            alignItems: "center",
-            justifyItems: "center",
-          }}
-        >
-          <h1>No Data</h1>
-        </div>
+        <NoData />
+        <BottomNavbar
+          page={page}
+          pageType="reportIndex"
+          currentDate={currentDate}
+          t={t}
+          i18n={i18n}
+        ></BottomNavbar>
       </div>
     );
   } else {

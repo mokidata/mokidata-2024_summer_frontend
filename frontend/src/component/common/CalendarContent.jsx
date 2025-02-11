@@ -106,8 +106,17 @@ function CalendarContent(props) {
   return (
     <div className="side-nav">
       <div className="side-nav__top">
-        <div className="side-nav__title">{props.t("calendar.selectMonth")}</div>
-        <div className="side-nav__close" onClick={() => props.open()}>
+        <div
+          className="side-nav__title"
+          style={{ color: "black", marginBottom: "5vw", fontSize: "4.5vw" }}
+        >
+          {props.t("calendar.selectMonth")}
+        </div>
+        <div
+          className="side-nav__close"
+          onClick={() => props.open()}
+          style={{ color: "black", fontSize: "4.5vw" }}
+        >
           X
         </div>
       </div>

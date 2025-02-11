@@ -50,12 +50,12 @@ function PredictSales(props) {
     return GetInteger(sum / data.length);
   };
 
-  for (const dates of Object.keys(compareValue).reverse()) {
+  for (const dates of Object.keys(compareValue).reverse().slice(-4)) {
     if (compareValue[dates].length !== 0) {
-      profit = 0;
-      compareValue[dates].forEach((element) => {
-        profit += element.price;
-      });
+      profit = compareValue[dates];
+      // compareValue[dates].forEach((element) => {
+      //   profit += element.price;
+      // });
       const obj = {
         column:
           props.page === "daily"
