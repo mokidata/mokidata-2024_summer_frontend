@@ -2,7 +2,6 @@ import axios from 'axios'
 import { BASE_URL } from '../component/Url';
 
 
-
 export const mokiApi = axios.create(
     {
         baseURL : `${BASE_URL}`,
@@ -41,7 +40,9 @@ mokiApi.interceptors.response.use(
       if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
-          const refreshResponse = await mokiApi.post("/api/auth/refresh");
+          const refreshResponse = await axios.post(`${BASE_URL}api/auth/refresh`, {},
+            {withCredentials: true}
+          );
                   if (refreshResponse.status === 200) {
                     const refreshData = refreshResponse.data;
                     sessionStorage.setItem("accessToken", refreshData.token);
@@ -56,7 +57,7 @@ mokiApi.interceptors.response.use(
         } catch (refreshError) {
           console.error("Failed to refresh token:", refreshError);
           
-          window.location.href = "/login";
+        //   window.location.href = "/login";
         }
       }
       return Promise.reject(error);
