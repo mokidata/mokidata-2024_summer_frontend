@@ -2,13 +2,19 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearStore } from "../../store/salesApiSlice";
 import { useState } from "react";
+import { mokiApi } from "../../services/loginApi";
 function DropDownMenu(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const logout = () => {
     sessionStorage.removeItem("accessToken");
     sessionStorage.removeItem("name");
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    try {
+      const response = mokiApi.delete("/api/auth/logout");
+    } catch (error) {
+      console.error(error);
+    }
+
     dispatch(clearStore());
     navigate("/");
   };
@@ -52,7 +58,7 @@ function DropDownMenu(props) {
             className="side-nav__bottom-language"
             onClick={() => changeLang("ko")}
             style={{
-              backgroundColor: lang === "ko" ? "red" : "transparent",
+              backgroundColor: lang === "ko" ? "#E96B76" : "transparent",
               color: lang === "ko" ? "white" : "black",
             }}
           >
@@ -62,7 +68,7 @@ function DropDownMenu(props) {
             className="side-nav__bottom-language"
             onClick={() => changeLang("en")}
             style={{
-              backgroundColor: lang === "en" ? "red" : "transparent",
+              backgroundColor: lang === "en" ? "#E96B76" : "transparent",
               color: lang === "en" ? "white" : "black",
             }}
           >

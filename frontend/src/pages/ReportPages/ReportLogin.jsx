@@ -8,6 +8,7 @@ import { totalThunks } from "../../store/salesApiSlice";
 import axios from "axios";
 import { formatDate } from "../../functions/DateConverter";
 import ToastMessage from "../../component/common/Toast";
+import { BASE_URL } from "../../component/Url";
 
 function Login() {
   const navigate = useNavigate();
@@ -58,10 +59,18 @@ function Login() {
   useEffect(() => {
     const refreshToken = async () => {
       try {
-        const refreshResponse = await mokiApi.post("/refresh");
+        const refreshResponse = await axios.post(
+          `${BASE_URL}api/auth/refresh`,
+          {},
+          { withCredentials: true }
+        );
         if (refreshResponse.status === 200) {
           const refreshData = refreshResponse.data;
-          sessionStorage.setItem("accessToken", refreshData.accessToken);
+          sessionStorage.setItem("accessToken", refreshData.token);
+          sessionStorage.setItem("name", refreshData.name);
+          mokiApi.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${refreshData.token}`;
           handleLoginSuccess();
         }
       } catch (error) {
@@ -71,6 +80,17 @@ function Login() {
 
     refreshToken();
   }, []);
+  let scrollPos = 0;
+
+  // 키보드가 나타날 때
+  window.addEventListener("focusin", () => {
+    scrollPos = window.scrollY; // 현재 스크롤 위치 저장
+  });
+
+  // 키보드가 사라질 때
+  window.addEventListener("focusout", () => {
+    window.scrollTo(0, scrollPos); // 저장한 위치로 스크롤 복원
+  });
 
   return (
     <div className="login-page">

@@ -41,10 +41,19 @@ function CalendarContent(props) {
     }
   };
 
-  //월, 주 ,일 목록 뽑아내는 코드
-  for (let validDate of props.validDateList) {
-    dateList.push(validDate);
-    monthList.push(`${formatYear(validDate)} ${formatMonth(validDate)}`);
+  // 이번 달부터 1년 전까지의 년월 추가하는 코드
+  let currdate = new Date(); // 현재 날짜
+  currdate.setDate(1); // 해당 월의 첫째 날로 설정
+
+  for (let i = 0; i < 12; i++) {
+    // dateList에 해당 월의 첫째 날 추가
+    dateList.push(new Date(currdate));
+
+    // monthList에 년월 추가 (예: 2025 February)
+    monthList.push(`${formatYear(currdate)} ${formatMonth(currdate)}`);
+
+    // 이전 달로 이동
+    currdate.setMonth(currdate.getMonth() - 1);
   }
 
   dateList.forEach((element, index) => {

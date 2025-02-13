@@ -94,10 +94,15 @@ const PointDetails = () => {
           const style =
             details === "적립"
               ? { color: "red" }
-              : details === "차감"
+              : details === "사용" || details === "차감"
+              ? { color: "blue" }
+              : details === "지급"
               ? { color: "blue" }
               : { color: "black", textDecoration: "line-through" };
-          const pointValue = details === "적립" ? `+${points}` : `${points}`;
+          const pointValue =
+            details === "적립" || details === "사용 취소" || details === "지급"
+              ? `+${points}`
+              : `${points}`;
 
           return <span style={style}>{pointValue}P</span>;
         },

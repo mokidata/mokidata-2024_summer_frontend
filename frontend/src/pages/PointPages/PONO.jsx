@@ -45,6 +45,17 @@ const PONO = () => {
       setToast(true);
     }
   };
+  let scrollPos = 0;
+
+  // 키보드가 나타날 때
+  window.addEventListener("focusin", () => {
+    scrollPos = window.scrollY; // 현재 스크롤 위치 저장
+  });
+
+  // 키보드가 사라질 때
+  window.addEventListener("focusout", () => {
+    window.scrollTo(0, scrollPos); // 저장한 위치로 스크롤 복원
+  });
 
   return (
     <div className="PONO_input_page">

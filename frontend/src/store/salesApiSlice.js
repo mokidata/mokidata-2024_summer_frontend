@@ -60,7 +60,7 @@ export const totalThunks = createAsyncThunk(
     daily_dates.push(formatDate(yesterday));
     weekly_dates.push(formatDate(lastWeek));
     monthly_dates.push(formatDate(lastMonth));
-    for(let i = 1; i< 11;i++){
+    for(let i = 1; i< 4;i++){
       yesterday.setDate(yesterday.getDate()-1)
       lastWeek.setDate(lastWeek.getDate()-7)
       // lastMonth.setDate(lastMonth.getDate()-30)

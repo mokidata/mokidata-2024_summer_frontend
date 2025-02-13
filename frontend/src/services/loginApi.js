@@ -29,3 +29,36 @@ export async function getData(endpoint, datatosend){
         console.error('Error fetching data', error);
     }
 }
+
+mokiApi.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      const originalRequest = error.config;
+      console.log(originalRequest)
+  
+      if (error.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        try {
+          const refreshResponse = await mokiApi.post("/api/auth/refresh");
+                  if (refreshResponse.status === 200) {
+                    const refreshData = refreshResponse.data;
+                    sessionStorage.setItem("accessToken", refreshData.token);
+                    sessionStorage.setItem("name", refreshData.name);
+                    mokiApi.defaults.headers.common[
+                      "Authorization"
+                    ] = `Bearer ${refreshData.token}`;
+                    originalRequest.headers["Authorization"] = `Bearer ${refreshData.token}`;
+                }
+          
+          return mokiApi(originalRequest);
+        } catch (refreshError) {
+          console.error("Failed to refresh token:", refreshError);
+          
+          window.location.href = "/login";
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
