@@ -109,15 +109,19 @@ function BiggestDiffDetail(props) {
       className="report-component"
       id="best-rank"
     >
-      <div className="best-rank__goback" onClick={props.goBack}>
-        &lt;{" "}
-        {props.page === "daily"
-          ? props.t("biggestDiff.diffTitle.daily")
-          : props.page === "weekly"
-          ? props.t("biggestDiff.diffTitle.weekly")
-          : props.page === "monthly"
-          ? props.t("biggestDiff.diffTitle.monthly")
-          : props.t("biggestDiff.diffTitle.daily")}
+      <div className="best-rank__header">
+        <div className="best-rank__back-icon" onClick={props.goBack}>
+          &lt;
+        </div>
+        <div className="best-rank__title">
+          {props.page === "daily"
+            ? props.t("biggestDiff.diffTitle.daily")
+            : props.page === "weekly"
+            ? props.t("biggestDiff.diffTitle.weekly")
+            : props.page === "monthly"
+            ? props.t("biggestDiff.diffTitle.monthly")
+            : props.t("biggestDiff.diffTitle.daily")}
+        </div>
       </div>
       <div className="best-rank__notice">
         <div className="notice">{props.t("biggestDiff.notice")}</div>
