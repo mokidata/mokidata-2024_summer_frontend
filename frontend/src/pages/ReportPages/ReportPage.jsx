@@ -120,13 +120,9 @@ function ReportPage(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setComponentFade([true, false, false, false, false]);
+    setComponentFade([true, true, false, false, false]);
   }, [props.page]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    setComponentFade([true, false, false, false, false]);
-  }, []);
   //페이지 옮길 때 스크롤 맨 위로 올림
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
