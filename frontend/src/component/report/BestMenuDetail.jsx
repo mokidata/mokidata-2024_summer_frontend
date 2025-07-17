@@ -37,9 +37,14 @@ function BestMenuDetail(props) {
       className="report-component"
       id="best-rank"
     >
-      <div className="best-rank__goback" onClick={props.goBack}>
-        &lt; {props.t(`bestMenuDetail.${props.page}`)}{" "}
-        {props.t("bestMenuDetail.back")}
+      <div className="best-rank__header">
+        <div className="best-rank__back-icon" onClick={props.goBack}>
+          &lt;
+        </div>
+        <div className="best-rank__title">
+          {props.t(`bestMenuDetail.${props.page}`)}{" "}
+          {props.t("bestMenuDetail.back")}
+        </div>
       </div>
       <div className="best-rank__table">
         <div className="best-rank__column-info">
